@@ -1,8 +1,8 @@
-// To parse this JSON data, do
-//
-//     final category = categoryFromMap(jsonString);
-
 import 'dart:convert';
+
+List<Category> listCaterogyFromMap(List<dynamic> json) {
+  return List<Category>.from(json.map((item) => Category.fromMap(item)));
+}
 
 class Category {
   Category({
@@ -21,8 +21,8 @@ class Category {
 
   String id;
   String name;
-  String shopId;
-  String parentId;
+  String? shopId;
+  String? parentId;
   int? priority;
   dynamic childs;
   bool isActive;
