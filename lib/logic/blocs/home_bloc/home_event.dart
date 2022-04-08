@@ -8,3 +8,5 @@ abstract class HomeEvent extends Equatable {
 }
 
 class LoadBannerAndCategory extends HomeEvent {}
+
+class LoadNewestProduct extends HomeEvent {}

@@ -19,3 +19,12 @@ class BannerAndCategoryLoaded extends HomeState {
   @override
   List<Object> get props => [listBanner, listCategory];
 }
+
+class NewestProductLoaded extends HomeState {
+  final List<Product> listProduct;
+
+  const NewestProductLoaded({required this.listProduct});
+
+  @override
+  List<Object> get props => [listProduct];
+}

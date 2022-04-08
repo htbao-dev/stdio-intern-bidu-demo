@@ -35,7 +35,7 @@ class SystemBanner {
   String name;
   String? promoLink;
   bool isActive;
-  List<Image>? images;
+  List<ImageBanner>? images;
   List<dynamic>? products;
   dynamic startTime;
   dynamic shopId;
@@ -59,7 +59,8 @@ class SystemBanner {
         name: json["name"],
         promoLink: json["promo_link"],
         isActive: json["is_active"],
-        images: List<Image>.from(json["images"].map((x) => Image.fromMap(x))),
+        images: List<ImageBanner>.from(
+            json["images"].map((x) => ImageBanner.fromMap(x))),
         products: List<dynamic>.from(json["products"].map((x) => x)),
         startTime: json["start_time"],
         shopId: json["shop_id"],
@@ -96,8 +97,8 @@ class SystemBanner {
   // };
 }
 
-class Image {
-  Image({
+class ImageBanner {
+  ImageBanner({
     required this.top,
     required this.middle,
     required this.detail,
@@ -109,11 +110,12 @@ class Image {
   String? detail;
   String? lang;
 
-  factory Image.fromJson(String str) => Image.fromMap(json.decode(str));
+  factory ImageBanner.fromJson(String str) =>
+      ImageBanner.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory Image.fromMap(Map<String, dynamic> json) => Image(
+  factory ImageBanner.fromMap(Map<String, dynamic> json) => ImageBanner(
         top: json["top"],
         middle: json["middle"],
         detail: json["detail"],

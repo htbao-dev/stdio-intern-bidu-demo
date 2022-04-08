@@ -14,6 +14,7 @@ class HomeFloatingButton extends StatelessWidget {
         padding: const EdgeInsets.all(10.0),
         child: FloatingActionButton(
           onPressed: null,
+          elevation: 0,
           child: Stack(children: [
             Container(
                 decoration: const BoxDecoration(
