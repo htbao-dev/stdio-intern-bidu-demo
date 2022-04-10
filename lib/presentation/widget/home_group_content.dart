@@ -1,3 +1,5 @@
+import 'package:bidu_demo/data/models/product.dart';
+import 'package:bidu_demo/presentation/widget/item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -32,7 +34,7 @@ class HomeGroupContent extends StatelessWidget {
               Text(
                 title,
                 style:
-                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               if (seeMore != null)
                 GestureDetector(
@@ -43,22 +45,44 @@ class HomeGroupContent extends StatelessWidget {
                         'Xem tất cả',
                         style: TextStyle(
                           fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.grey,
+                          fontWeight: FontWeight.normal,
+                          // color: Colors.grey,
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 5),
-                        child:
-                            SvgPicture.asset('assets/icons/icon_seemore.svg'),
+                        child: SvgPicture.asset(
+                          'assets/icons/icon_seemore.svg',
+                        ),
                       ),
                     ],
                   ),
                 )
             ],
           ),
+          child,
         ],
       ),
+    );
+  }
+}
+
+class MyListView extends StatelessWidget {
+  final int itemCount;
+  final Widget Function(BuildContext, int) itemBuilder;
+  const MyListView(
+      {Key? key, required this.itemBuilder, required this.itemCount})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 230,
+      child: ListView.builder(
+          itemBuilder: itemBuilder,
+          itemCount: itemCount,
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal),
     );
   }
 }

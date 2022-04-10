@@ -108,11 +108,24 @@ class PriceMinMax {
 class Shop {
   Shop({
     required this.id,
-    this.country,
-  });
+    required String country,
+  }) {
+    _country = country;
+  }
 
   String id;
-  String? country;
+  String? _country;
+
+  String get country {
+    switch (_country) {
+      case "VN":
+        return "Việt Nam";
+      case "KO":
+        return "Hàn Quốc";
+      default:
+        return "";
+    }
+  }
 
   factory Shop.fromJson(String str) => Shop.fromMap(json.decode(str));
 

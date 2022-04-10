@@ -4,8 +4,8 @@ import 'package:bidu_demo/data/models/banner_category.dart';
 import 'dart:convert';
 
 import 'package:bidu_demo/data/models/category.dart';
+import 'package:bidu_demo/data/models/keyword.dart';
 import 'package:bidu_demo/data/models/product.dart';
-import 'package:bidu_demo/presentation/widget/home_product.dart';
 
 class HomeRepository {
   final HomeProvider _homeProvider = HomeProvider();
@@ -26,7 +26,9 @@ class HomeRepository {
       }
       return BannerAndCategory(listBanner: [], listCategory: []);
     } catch (e, s) {
+      // ignore: avoid_print
       print(e);
+      // ignore: avoid_print
       print(s);
       return BannerAndCategory(listBanner: [], listCategory: []);
     }
@@ -42,7 +44,45 @@ class HomeRepository {
       }
       return [];
     } catch (e, s) {
+      // ignore: avoid_print
       print(e);
+      // ignore: avoid_print
+      print(s);
+      return [];
+    }
+  }
+
+  Future<List<Product>> loadTopProduct() async {
+    try {
+      final rawData = await _homeProvider.loadTopProduct();
+      final dataDecode = json.decode(rawData);
+      if (dataDecode['success'] == true) {
+        final listProduct = listProductFromMap(dataDecode['data']);
+        return listProduct;
+      }
+      return [];
+    } catch (e, s) {
+      // ignore: avoid_print
+      print(e);
+      // ignore: avoid_print
+      print(s);
+      return [];
+    }
+  }
+
+  Future<List<Keyword>> loadTopSearch() async {
+    try {
+      final rawData = await _homeProvider.loadTopSearch();
+      final dataDecode = json.decode(rawData);
+      if (dataDecode['success'] == true) {
+        final listProduct = listKeywordFromMap(dataDecode['data']);
+        return listProduct;
+      }
+      return [];
+    } catch (e, s) {
+      // ignore: avoid_print
+      print(e);
+      // ignore: avoid_print
       print(s);
       return [];
     }

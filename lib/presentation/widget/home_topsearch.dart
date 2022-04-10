@@ -4,31 +4,28 @@ import 'package:bidu_demo/presentation/widget/item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomeNewest extends StatelessWidget {
-  const HomeNewest({Key? key}) : super(key: key);
+class HomeTopSearch extends StatelessWidget {
+  const HomeTopSearch({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return HomeGroupContent(
-      title: 'Sản Phẩm Mới Nhất',
+      title: 'Top Tìm Kiếm',
       seeMore: () {
-        // ignore: avoid_print
         print('see more');
       },
       child: SizedBox(
-        height: 230,
+        height: 175,
         child: BlocBuilder<HomeBloc, HomeState>(
-          buildWhen: (previous, current) => current is NewestProductLoaded,
+          buildWhen: (previous, current) => current is TopSearchLoaded,
           builder: (context, state) {
-            if (state is NewestProductLoaded) {
+            if (state is TopSearchLoaded) {
+              final listKeyword = state.listTopKeyword;
               return MyListView(
-                itemCount: state.listProduct.length,
-                itemBuilder: (context, index) {
-                  return ListItem.forNewestProduct(
-                    product: state.listProduct[index],
-                  );
-                },
-              );
+                  itemCount: listKeyword.length,
+                  itemBuilder: (context, index) => ListItem.forTopSearch(
+                        keyword: listKeyword[index],
+                      ));
             }
             return Container();
           },

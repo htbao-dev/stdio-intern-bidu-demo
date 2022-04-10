@@ -10,3 +10,7 @@ abstract class HomeEvent extends Equatable {
 class LoadBannerAndCategory extends HomeEvent {}
 
 class LoadNewestProduct extends HomeEvent {}
+
+class LoadTopProduct extends HomeEvent {}
+
+class LoadTopSearch extends HomeEvent {}

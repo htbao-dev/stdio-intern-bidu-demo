@@ -1,4 +1,3 @@
-import 'package:bidu_demo/data/models/product.dart';
 import 'package:bidu_demo/data/repositories/home_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -10,6 +9,15 @@ void main() {
     });
     test('test newest product', () async {
       var res = await bannerRepository.loadNewestProduct();
+      expect(res, isNotEmpty);
+    });
+    test('test top product', () async {
+      var res = await bannerRepository.loadTopProduct();
+      expect(res, isNotEmpty);
+    });
+
+    test('test top keyword', () async {
+      var res = await bannerRepository.loadTopSearch();
       expect(res, isNotEmpty);
     });
   });

@@ -2,7 +2,6 @@
 //
 //     final category = categoryFromMap(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 List<SystemBanner> listBannerFromMap(List<dynamic> json) {

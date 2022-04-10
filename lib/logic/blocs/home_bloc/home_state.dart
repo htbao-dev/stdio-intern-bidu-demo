@@ -28,3 +28,21 @@ class NewestProductLoaded extends HomeState {
   @override
   List<Object> get props => [listProduct];
 }
+
+class TopProductLoaded extends HomeState {
+  final List<Product> listProduct;
+
+  const TopProductLoaded({required this.listProduct});
+
+  @override
+  List<Object> get props => [listProduct];
+}
+
+class TopSearchLoaded extends HomeState {
+  final List<Keyword> listTopKeyword;
+
+  const TopSearchLoaded({required this.listTopKeyword});
+
+  @override
+  List<Object> get props => [listTopKeyword];
+}
