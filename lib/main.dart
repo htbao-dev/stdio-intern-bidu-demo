@@ -1,4 +1,5 @@
-import 'package:bidu_demo/presentation/screen/home_screen.dart';
+// import 'package:bidu_demo/presentation/screen/home_screen.dart';
+import 'package:bidu_demo/presentation/screen/home_screen.dart' as refactor;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -15,7 +16,7 @@ class BiduApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const HomeScreen(),
+      home: const refactor.HomeScreen(),
       theme: ThemeData(
           primaryColor: Colors.white,
           colorScheme: ColorScheme.fromSwatch(accentColor: Colors.grey),

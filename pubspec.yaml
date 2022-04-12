@@ -39,6 +39,7 @@ dependencies:
   carousel_slider: ^4.0.0
   http:
   intl:
+  provider:
 
 dev_dependencies:
   flutter_test:
