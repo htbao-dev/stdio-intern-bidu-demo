@@ -19,9 +19,11 @@ class BiduApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: const refactor.HomeScreen(),
       theme: ThemeData(
-          primaryColor: Colors.white,
-          colorScheme: ColorScheme.fromSwatch(accentColor: Colors.grey),
-          fontFamily: 'Lexend'),
+        primaryColor: Colors.white,
+        colorScheme: ColorScheme.fromSwatch(accentColor: Colors.grey),
+        fontFamily: 'Lexend',
+        // textButtonTheme:
+      ),
     );
   }
 }

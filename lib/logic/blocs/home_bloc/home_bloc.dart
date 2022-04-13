@@ -4,15 +4,19 @@ import 'package:bidu_demo/data/models/banner.dart';
 import 'package:bidu_demo/data/models/category.dart';
 import 'package:bidu_demo/data/models/keyword.dart';
 import 'package:bidu_demo/data/models/product.dart';
+import 'package:bidu_demo/data/models/suggest_product.dart';
 import 'package:bidu_demo/data/repositories/home_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc with ChangeNotifier {
   final HomeRepository homeRepository = HomeRepository();
+
+  final RefreshController refreshController;
 
   final _homeEventController = StreamController<HomeEvent>();
   final _suggestProductController = StreamController<HomeState>();
@@ -30,7 +34,7 @@ class HomeBloc with ChangeNotifier {
   Stream<HomeState> get topProductStream => _topProductController.stream;
   Stream<HomeState> get topSearchStream => _topSearchController.stream;
 
-  HomeBloc() {
+  HomeBloc({required this.refreshController}) {
     _homeEventController.stream.listen(_mapEventToState);
     _bannerAndCategoryStream =
         _bannerAndCategoryController.stream.asBroadcastStream();
@@ -45,38 +49,64 @@ class HomeBloc with ChangeNotifier {
   final List<Product> _suggestList = [];
 
   void _mapEventToState(HomeEvent event) async {
-    if (event is LoadBannerAndCategory) {
-      final bannerAndCategory = await homeRepository.loadBannerAndCategory();
-      _bannerAndCategoryController.sink.add(BannerAndCategoryLoaded(
-          listBanner: bannerAndCategory.listBanner,
-          listCategory: bannerAndCategory.listCategory));
-    } else if (event is LoadNewestProduct) {
-      final listnewestProduct = await homeRepository.loadNewestProduct();
-      _newestProductController.sink
-          .add(NewestProductLoaded(listProduct: listnewestProduct));
-    } else if (event is LoadTopSearch) {
-      final listTopKeyword = await homeRepository.loadTopSearch();
-      _topSearchController.sink
-          .add(TopSearchLoaded(listTopKeyword: listTopKeyword));
-    } else if (event is LoadTopProduct) {
-      final listTopProduct = await homeRepository.loadTopProduct();
-      _topProductController.sink
-          .add(TopProductLoaded(listProduct: listTopProduct));
+    if (event is InitLoad) {
+      _loadBannerAndCategory();
+      _loadNewestProduct();
+      _loadTopSearch();
+      _loadTopProduct();
+      _loadSuggestProduct();
     } else if (event is LoadSuggestProduct) {
-      if (_suggestCurrentPage <= _suggestTotalPage) {
-        final suggestProduct = await homeRepository.loadSuggestProducts(
-            page: _suggestCurrentPage + 1);
-        if (suggestProduct != null) {
-          _suggestCurrentPage = suggestProduct.currentPage;
-          _suggestTotalPage = suggestProduct.totalPage;
-          _suggestList.addAll(suggestProduct.listProduct);
-          _suggestProductController.sink
-              .add(SuggestProductLoaded(listProduct: _suggestList));
-        } else {
-          _suggestProductController.sink
-              .add(const SuggestProductLoaded(listProduct: []));
-        }
+      _loadSuggestProduct();
+    } else if (event is Refresh) {
+      final newest = _loadNewestProduct();
+      final topSearch = _loadTopSearch();
+      final topProduct = _loadTopProduct();
+      _suggestCurrentPage = 1;
+      _suggestTotalPage = 99999;
+      _suggestList.clear();
+      final suggest = _loadSuggestProduct();
+      await Future.wait([newest, topSearch, topProduct]);
+      refreshController.refreshCompleted();
+    }
+  }
+
+  void _loadBannerAndCategory() async {
+    final bannerAndCategory = await homeRepository.loadBannerAndCategory();
+    _bannerAndCategoryController.sink.add(BannerAndCategoryLoaded(
+        listBanner: bannerAndCategory.listBanner,
+        listCategory: bannerAndCategory.listCategory));
+  }
+
+  Future _loadNewestProduct() async {
+    final listnewestProduct = await homeRepository.loadNewestProduct();
+    _newestProductController.sink
+        .add(NewestProductLoaded(listProduct: listnewestProduct));
+  }
+
+  Future _loadTopSearch() async {
+    final listTopKeyword = await homeRepository.loadTopSearch();
+    _topSearchController.sink
+        .add(TopSearchLoaded(listTopKeyword: listTopKeyword));
+  }
+
+  Future _loadTopProduct() async {
+    final listTopProduct = await homeRepository.loadTopProduct();
+    _topProductController.sink
+        .add(TopProductLoaded(listProduct: listTopProduct));
+  }
+
+  Future _loadSuggestProduct() async {
+    final SuggestProduct? suggestProduct;
+    if (_suggestCurrentPage <= _suggestTotalPage) {
+      suggestProduct = await homeRepository.loadSuggestProducts(
+          page: _suggestCurrentPage + 1);
+      if (suggestProduct != null) {
+        _suggestCurrentPage = suggestProduct.currentPage;
+        _suggestTotalPage = suggestProduct.totalPage;
+        _suggestList.addAll(suggestProduct.listProduct);
       }
+      _suggestProductController.sink
+          .add(SuggestProductLoaded(listProduct: _suggestList));
     }
   }
 

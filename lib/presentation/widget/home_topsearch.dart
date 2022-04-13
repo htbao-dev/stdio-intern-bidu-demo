@@ -16,6 +16,7 @@ class _HomeTopSearchState extends State<HomeTopSearch>
     with AutomaticKeepAliveClientMixin<HomeTopSearch> {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return HomeGroupContent(
       title: 'Top Tìm Kiếm',
       seeMore: () {
