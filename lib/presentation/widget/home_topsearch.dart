@@ -37,7 +37,7 @@ class _HomeTopSearchState extends State<HomeTopSearch>
               return MyListView(
                 itemCount: listItem.length,
                 itemBuilder: (context, index) {
-                  return ListItem.forTopSearch(
+                  return TopSearchItem(
                     keyword: listItem[index],
                   );
                 },

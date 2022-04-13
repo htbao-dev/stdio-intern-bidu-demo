@@ -46,6 +46,7 @@ class _HomeBannerState extends State<HomeBanner>
                 scrollDirection: Axis.horizontal,
                 onPageChanged: (index, reason) {
                   setState(() {
+                    //TODO: dung stream
                     _currentIndex = index;
                   });
                 },

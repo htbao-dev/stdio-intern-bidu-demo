@@ -24,19 +24,22 @@ class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _scrollController = ScrollController();
   final RefreshController _refreshController = RefreshController();
   late final HomeBloc _homeBloc;
-  bool _showBackToTopButton = false;
-
+  bool _showBackToTopButton = false; //TODO: han che dung setstate
+//TODO: livestream background toi
   @override
   void initState() {
-    _homeBloc = HomeBloc(refreshController: _refreshController);
     super.initState();
+    _homeBloc = HomeBloc(
+      refreshController: _refreshController,
+    );
     _scrollController.addListener(_onScroll);
   }
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<HomeBloc>(
-        create: (context) => _homeBloc..add(InitLoad()),
+        create: (context) => _homeBloc
+          ..add(InitLoad()), //TODO: Provider quan ly state, tiem phu tuoc
         child: Scaffold(
           extendBody: true,
           appBar: appBar(),

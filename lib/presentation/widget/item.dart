@@ -7,23 +7,6 @@ import 'package:flutter_svg/svg.dart';
 abstract class ListItem extends StatelessWidget {
   const ListItem({Key? key}) : super(key: key);
 
-  factory ListItem.forNewestProduct({required Product product}) {
-    return _NewestProductItem(product: product);
-  }
-  factory ListItem.forTopProduct({required Product product, int? index}) {
-    return _TopProductItem(
-      product: product,
-      index: index,
-    );
-  }
-  factory ListItem.forTopSearch({required Keyword keyword}) {
-    return _TopSearchItem(keyword: keyword);
-  }
-
-  factory ListItem.forSuggestProduct({required Product product}) {
-    return _SuggestProductItem(product: product);
-  }
-
   Widget productImage(String src, {double? width, double? height}) {
     double _width = width ?? 120;
     double _height = height ?? 120;
@@ -172,10 +155,9 @@ class __BookMartState extends State<_BookMart> {
   }
 }
 
-class _NewestProductItem extends ListItem {
+class NewestProductItem extends ListItem {
   final Product product;
-  const _NewestProductItem({Key? key, required this.product}) : super(key: key);
-
+  const NewestProductItem({Key? key, required this.product}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -197,10 +179,10 @@ class _NewestProductItem extends ListItem {
   }
 }
 
-class _TopSearchItem extends ListItem {
+class TopSearchItem extends ListItem {
   final Keyword keyword;
 
-  const _TopSearchItem({Key? key, required this.keyword}) : super(key: key);
+  const TopSearchItem({Key? key, required this.keyword}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -241,10 +223,10 @@ class _TopSearchItem extends ListItem {
   }
 }
 
-class _TopProductItem extends ListItem {
+class TopProductItem extends ListItem {
   final Product product;
   final int? index;
-  const _TopProductItem({Key? key, required this.product, this.index})
+  const TopProductItem({Key? key, required this.product, this.index})
       : super(key: key);
 
   @override
@@ -279,10 +261,9 @@ class _TopProductItem extends ListItem {
   }
 }
 
-class _SuggestProductItem extends ListItem {
+class SuggestProductItem extends ListItem {
   final Product product;
-  const _SuggestProductItem({Key? key, required this.product})
-      : super(key: key);
+  const SuggestProductItem({Key? key, required this.product}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;

@@ -34,7 +34,7 @@ class _HomeTopProductState extends State<HomeTopProduct>
             child: MyListView(
               itemCount: listProduct.length,
               itemBuilder: (context, index) {
-                return ListItem.forTopProduct(
+                return TopProductItem(
                   product: listProduct[index],
                   index: index,
                 );

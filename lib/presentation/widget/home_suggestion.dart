@@ -12,6 +12,7 @@ class HomeSuggestion extends StatefulWidget {
   State<HomeSuggestion> createState() => _HomeSuggestionState();
 }
 
+//TODO: item chieu cao cung hang
 class _HomeSuggestionState extends State<HomeSuggestion>
     with AutomaticKeepAliveClientMixin {
   @override
@@ -43,8 +44,7 @@ class _HomeSuggestionState extends State<HomeSuggestion>
                     mainAxisSpacing: 16),
                 itemCount: listProduct.length,
                 itemBuilder: (context, index) {
-                  return ListItem.forSuggestProduct(
-                      product: listProduct[index]);
+                  return SuggestProductItem(product: listProduct[index]);
                 },
                 physics: const ClampingScrollPhysics(),
               ),

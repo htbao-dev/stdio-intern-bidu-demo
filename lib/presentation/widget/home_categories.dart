@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomeCategories extends StatefulWidget {
+  //TODO: co 3 cham
   const HomeCategories({Key? key}) : super(key: key);
 
   @override
@@ -24,10 +25,13 @@ class _HomeCategoriesState extends State<HomeCategories>
               (snapshot.data as BannerAndCategoryLoaded).listCategory;
         } else {
           listCategory = [];
+          // Provider.of<HomeBloc>(context).
+          // context.read<HomeBloc>().add(event);
         }
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 13),
           child: SingleChildScrollView(
+            //TODO: listview.buidler
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [

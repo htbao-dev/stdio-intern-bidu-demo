@@ -39,7 +39,7 @@ class _HomeNewestState extends State<HomeNewest>
                 return MyListView(
                   itemCount: listItem.length,
                   itemBuilder: (context, index) {
-                    return ListItem.forNewestProduct(
+                    return NewestProductItem(
                       product: listItem[index],
                     );
                   },
