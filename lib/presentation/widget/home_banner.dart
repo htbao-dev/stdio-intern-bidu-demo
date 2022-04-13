@@ -19,6 +19,7 @@ class _HomeBannerState extends State<HomeBanner>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return StreamBuilder<HomeState>(
       stream: Provider.of<HomeBloc>(context).bannerAndCategoryStream,
       builder: (BuildContext context, AsyncSnapshot<HomeState> snapshot) {

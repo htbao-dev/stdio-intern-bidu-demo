@@ -3,11 +3,18 @@ import 'package:bidu_demo/logic/blocs/home_bloc/home_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HomeCategories extends StatelessWidget {
+class HomeCategories extends StatefulWidget {
   const HomeCategories({Key? key}) : super(key: key);
 
   @override
+  State<HomeCategories> createState() => _HomeCategoriesState();
+}
+
+class _HomeCategoriesState extends State<HomeCategories>
+    with AutomaticKeepAliveClientMixin {
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return StreamBuilder<HomeState>(
       stream: Provider.of<HomeBloc>(context).bannerAndCategoryStream,
       builder: (BuildContext context, AsyncSnapshot<HomeState> snapshot) {
@@ -37,10 +44,6 @@ class HomeCategories extends StatelessWidget {
     return Container(
       width: 60,
       margin: const EdgeInsets.symmetric(horizontal: 5),
-      // padding: const EdgeInsets.symmetric(horizontal: 17),
-      // decoration: BoxDecoration(
-      //   border: Border.all(),
-      // ),
       child: Column(
         children: [
           Image.network(
@@ -59,4 +62,7 @@ class HomeCategories extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

@@ -2,7 +2,6 @@ import 'package:bidu_demo/data/models/product.dart';
 import 'package:bidu_demo/logic/blocs/home_bloc/home_bloc.dart';
 import 'package:bidu_demo/presentation/widget/home_group_content.dart';
 import 'package:bidu_demo/presentation/widget/item.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

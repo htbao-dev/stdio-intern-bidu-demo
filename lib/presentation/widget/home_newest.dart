@@ -16,6 +16,7 @@ class _HomeNewestState extends State<HomeNewest>
     with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return HomeGroupContent(
       title: 'Sản Phẩm Mới Nhất',
       seeMore: () {
