@@ -11,7 +11,8 @@ class HomeBanner extends StatefulWidget {
   State<HomeBanner> createState() => _HomeBannerState();
 }
 
-class _HomeBannerState extends State<HomeBanner> {
+class _HomeBannerState extends State<HomeBanner>
+    with AutomaticKeepAliveClientMixin {
   final CarouselController _controller = CarouselController();
 
   int _currentIndex = 0;
@@ -80,4 +81,7 @@ class _HomeBannerState extends State<HomeBanner> {
       }).toList(),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

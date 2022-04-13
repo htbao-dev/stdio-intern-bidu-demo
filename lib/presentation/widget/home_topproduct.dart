@@ -5,11 +5,18 @@ import 'package:bidu_demo/presentation/widget/item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HomeTopProduct extends StatelessWidget {
+class HomeTopProduct extends StatefulWidget {
   const HomeTopProduct({Key? key}) : super(key: key);
 
   @override
+  State<HomeTopProduct> createState() => _HomeTopProductState();
+}
+
+class _HomeTopProductState extends State<HomeTopProduct>
+    with AutomaticKeepAliveClientMixin {
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return HomeGroupContent(
       title: 'Top Sản Phẩm',
       child: StreamBuilder<HomeState>(
@@ -36,27 +43,9 @@ class HomeTopProduct extends StatelessWidget {
           );
         },
       ),
-      // BlocBuilder<HomeBloc, HomeState>(
-      //   buildWhen: (previous, current) => current is TopProductLoaded,
-      //   builder: (context, state) {
-      //     if (state is TopProductLoaded) {
-      //       final listProduct = state.listProduct;
-      //       return SizedBox(
-      //         height: 245,
-      //         child: MyListView(
-      //           itemCount: listProduct.length,
-      //           itemBuilder: (context, index) {
-      //             return ListItem.forTopProduct(
-      //               product: listProduct[index],
-      //               index: index,
-      //             );
-      //           },
-      //         ),
-      //       );
-      //     }
-      //     return Container();
-      //   },
-      // ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

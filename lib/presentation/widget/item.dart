@@ -20,10 +20,16 @@ abstract class ListItem extends StatelessWidget {
     return _TopSearchItem(keyword: keyword);
   }
 
-  Widget productImage(String src) {
+  factory ListItem.forSuggestProduct({required Product product}) {
+    return _SuggestProductItem(product: product);
+  }
+
+  Widget productImage(String src, {double? width, double? height}) {
+    double _width = width ?? 120;
+    double _height = height ?? 120;
     return Container(
-      height: 120,
-      width: 120,
+      height: _height,
+      width: _width,
       padding: const EdgeInsets.only(bottom: 5),
       child: Image.network(
         src, fit: BoxFit.cover,
@@ -79,10 +85,10 @@ abstract class ListItem extends StatelessWidget {
     );
   }
 
-  Widget imageWithBookmark(String src) {
+  Widget imageWithBookmark(String src, {double? width, double? height}) {
     return Stack(
       children: [
-        productImage(src),
+        productImage(src, width: width, height: height),
         const Positioned(child: _BookMart(), top: 7, right: 7)
       ],
     );
@@ -118,6 +124,16 @@ abstract class ListItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 5),
       child: child,
+    );
+  }
+
+  Widget productSold(int sold) {
+    return Text(
+      'Đã bán $sold',
+      style: const TextStyle(
+        fontSize: 10,
+        color: Color(0xffC9C9C9),
+      ),
     );
   }
 }
@@ -164,7 +180,7 @@ class _NewestProductItem extends ListItem {
   Widget build(BuildContext context) {
     return Container(
       width: 120,
-      margin: const EdgeInsets.all(8.0),
+      margin: const EdgeInsets.only(left: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -181,6 +197,50 @@ class _NewestProductItem extends ListItem {
   }
 }
 
+class _TopSearchItem extends ListItem {
+  final Keyword keyword;
+
+  const _TopSearchItem({Key? key, required this.keyword}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 120,
+      margin: const EdgeInsets.only(left: 15),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          productImage(keyword.avatar),
+          productName(keyword.keyword),
+          totalProduct(keyword.totalProduct),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget productName(String name) {
+    return Text(
+      name,
+      style: const TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+      ),
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+    );
+  }
+
+  Widget totalProduct(int totalProduct) {
+    return Text(
+      '$totalProduct sản phẩm',
+      style: const TextStyle(
+        fontSize: 12,
+      ),
+    );
+  }
+}
+
 class _TopProductItem extends ListItem {
   final Product product;
   final int? index;
@@ -191,7 +251,7 @@ class _TopProductItem extends ListItem {
   Widget build(BuildContext context) {
     return Container(
       width: 120,
-      margin: const EdgeInsets.all(8.0),
+      margin: const EdgeInsets.only(left: 15),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -217,65 +277,42 @@ class _TopProductItem extends ListItem {
       ),
     );
   }
-
-  Widget productSold(int sold) {
-    return Text(
-      'Đã bán $sold',
-      style: const TextStyle(
-        fontSize: 10,
-        color: Color(0xffC9C9C9),
-      ),
-    );
-  }
 }
 
-class _TopSearchItem extends ListItem {
-  final Keyword keyword;
-
-  const _TopSearchItem({Key? key, required this.keyword}) : super(key: key);
-
+class _SuggestProductItem extends ListItem {
+  final Product product;
+  const _SuggestProductItem({Key? key, required this.product})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 120,
-      margin: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          productImage(keyword.avatar),
-          productName(keyword.keyword),
-          totalProduct(keyword.totalProduct),
-        ],
-      ),
-    );
-  }
-
-  @override
-  Widget productName(String name) {
-    return Text(
-      name,
-      style: const TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.w600,
-      ),
-    );
-  }
-
-  Widget totalProduct(int totalProduct) {
-    return Text(
-      '$totalProduct sản phẩm',
-      style: const TextStyle(
-        fontSize: 12,
-      ),
+    final screenSize = MediaQuery.of(context).size;
+    var width = (screenSize.width - 30) / 2;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Stack(
+          children: [
+            imageWithBookmark(product.images[0], height: width, width: width),
+          ],
+        ),
+        productTag(
+            isGenuineItem: product.isGenuineItem,
+            isGuaranteedItem: product.isGuaranteedItem),
+        productName(product.name),
+        productPrice(product.salePrice),
+        productLocation(product.shop.country),
+        productSold(product.sold),
+        productLocation(product.shop.country),
+      ],
     );
   }
 }
 
-class _TopSellerItem extends ListItem{
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
-  }
-
-}
+// class _TopSellerItem extends ListItem {
+//   @override
+//   Widget build(BuildContext context) {
+//     // TODO: implement build
+//     throw UnimplementedError();
+//   }
+// }

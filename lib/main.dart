@@ -16,6 +16,7 @@ class BiduApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: const refactor.HomeScreen(),
       theme: ThemeData(
           primaryColor: Colors.white,

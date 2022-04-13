@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'package:bidu_demo/data/models/category.dart';
 import 'package:bidu_demo/data/models/keyword.dart';
 import 'package:bidu_demo/data/models/product.dart';
+import 'package:bidu_demo/data/models/suggest_product.dart';
 
 class HomeRepository {
   final HomeProvider _homeProvider = HomeProvider();
@@ -85,6 +86,26 @@ class HomeRepository {
       // ignore: avoid_print
       print(s);
       return [];
+    }
+  }
+
+  Future<SuggestProduct?> loadSuggestProducts(
+      {required int page, int limit = 20, int randomNumber = 11}) async {
+    try {
+      final rawData =
+          await _homeProvider.loadSuggestProducts(page, limit, randomNumber);
+      final dataDecode = json.decode(rawData);
+      if (dataDecode['success'] == true) {
+        final suggestProduct = SuggestProduct.fromMap(dataDecode);
+        return suggestProduct;
+      }
+      return null;
+    } catch (e, s) {
+      // ignore: avoid_print
+      print(e);
+      // ignore: avoid_print
+      print(s);
+      return null;
     }
   }
 }

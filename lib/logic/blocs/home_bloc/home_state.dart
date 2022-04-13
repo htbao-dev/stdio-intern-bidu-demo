@@ -46,3 +46,12 @@ class TopSearchLoaded extends HomeState {
   @override
   List<Object> get props => [listTopKeyword];
 }
+
+class SuggestProductLoaded extends HomeState {
+  final List<Product> listProduct;
+
+  const SuggestProductLoaded({required this.listProduct});
+
+  @override
+  List<Object> get props => [listProduct];
+}

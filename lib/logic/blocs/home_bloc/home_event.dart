@@ -14,3 +14,5 @@ class LoadNewestProduct extends HomeEvent {}
 class LoadTopProduct extends HomeEvent {}
 
 class LoadTopSearch extends HomeEvent {}
+
+class LoadSuggestProduct extends HomeEvent {}

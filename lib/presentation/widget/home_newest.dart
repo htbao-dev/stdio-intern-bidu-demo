@@ -5,9 +5,15 @@ import 'package:bidu_demo/presentation/widget/item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class HomeNewest extends StatelessWidget {
+class HomeNewest extends StatefulWidget {
   const HomeNewest({Key? key}) : super(key: key);
 
+  @override
+  State<HomeNewest> createState() => _HomeNewestState();
+}
+
+class _HomeNewestState extends State<HomeNewest>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     return HomeGroupContent(
@@ -37,24 +43,10 @@ class HomeNewest extends StatelessWidget {
                     );
                   },
                 );
-              })
-          // BlocBuilder<HomeBloc, HomeState>(
-          //   buildWhen: (previous, current) => current is NewestProductLoaded,
-          //   builder: (context, state) {
-          //     if (state is NewestProductLoaded) {
-          //       return MyListView(
-          //         itemCount: state.listProduct.length,
-          //         itemBuilder: (context, index) {
-          //           return ListItem.forNewestProduct(
-          //             product: state.listProduct[index],
-          //           );
-          //         },
-          //       );
-          //     }
-          //     return Container();
-          //   },
-          // ),
-          ),
+              })),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

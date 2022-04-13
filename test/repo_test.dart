@@ -20,5 +20,10 @@ void main() {
       var res = await bannerRepository.loadTopSearch();
       expect(res, isNotEmpty);
     });
+
+    test('test suggest product', () async {
+      var res = await bannerRepository.loadSuggestProducts(page: 1);
+      expect(res, isNotNull);
+    });
   });
 }
