@@ -7,12 +7,8 @@ abstract class HomeEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadBannerAndCategory extends HomeEvent {}
-
-class LoadNewestProduct extends HomeEvent {}
-
-class LoadTopProduct extends HomeEvent {}
-
-class LoadTopSearch extends HomeEvent {}
-
 class LoadSuggestProduct extends HomeEvent {}
+
+class InitLoad extends HomeEvent {}
+
+class Refresh extends HomeEvent {}
