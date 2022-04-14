@@ -55,7 +55,6 @@ class HomeProvider {
   Future<String> loadSuggestProducts(
       int page, int limit, int randomNumber) async {
     try {
-      print('test');
       // throw Exception();
       final String url =
           '$endPoint$_suggestProductUrl?page=$page&limit=$limit&random_number=$randomNumber';

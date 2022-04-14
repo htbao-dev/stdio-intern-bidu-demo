@@ -1,3 +1,4 @@
+import 'package:bidu_demo/data/models/banner_category.dart';
 import 'package:bidu_demo/data/models/category.dart';
 import 'package:bidu_demo/logic/blocs/home_bloc/home_bloc.dart';
 import 'package:flutter/material.dart';
@@ -16,18 +17,11 @@ class _HomeCategoriesState extends State<HomeCategories>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return StreamBuilder<HomeState>(
+    return StreamBuilder<BannerAndCategory>(
       stream: Provider.of<HomeBloc>(context).bannerAndCategoryStream,
-      builder: (BuildContext context, AsyncSnapshot<HomeState> snapshot) {
-        final List<Category> listCategory;
-        if (snapshot.data is BannerAndCategoryLoaded) {
-          listCategory =
-              (snapshot.data as BannerAndCategoryLoaded).listCategory;
-        } else {
-          listCategory = [];
-          // Provider.of<HomeBloc>(context).
-          // context.read<HomeBloc>().add(event);
-        }
+      builder:
+          (BuildContext context, AsyncSnapshot<BannerAndCategory> snapshot) {
+        final List<Category> listCategory = snapshot.data?.listCategory ?? [];
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 13),
           child: SingleChildScrollView(

@@ -1,4 +1,5 @@
 import 'package:bidu_demo/data/models/banner.dart';
+import 'package:bidu_demo/data/models/banner_category.dart';
 import 'package:bidu_demo/logic/blocs/home_bloc/home_bloc.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -20,15 +21,11 @@ class _HomeBannerState extends State<HomeBanner>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return StreamBuilder<HomeState>(
-      stream: Provider.of<HomeBloc>(context).bannerAndCategoryStream,
-      builder: (BuildContext context, AsyncSnapshot<HomeState> snapshot) {
-        final List<SystemBanner> listBanner;
-        if (snapshot.data is BannerAndCategoryLoaded) {
-          listBanner = (snapshot.data as BannerAndCategoryLoaded).listBanner;
-        } else {
-          listBanner = [];
-        }
+    return StreamBuilder<BannerAndCategory>(
+      stream: context.read<HomeBloc>().bannerAndCategoryStream,
+      builder:
+          (BuildContext context, AsyncSnapshot<BannerAndCategory> snapshot) {
+        final List<SystemBanner> listBanner = snapshot.data?.listBanner ?? [];
         return Stack(
           children: [
             CarouselSlider(

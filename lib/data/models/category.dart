@@ -31,15 +31,16 @@ class Category {
 
   factory Category.fromJson(String str) => Category.fromMap(json.decode(str));
 
-  factory Category.fromMap(Map<String, dynamic> json) => Category(
-        id: json["_id"],
-        name: json["name"],
-        shopId: json["shop_id"],
-        parentId: json["parent_id"],
-        priority: json["priority"],
-        childs: json["childs"],
-        isActive: json["is_active"],
-        avatar: json["avatar"],
-        pdfAvatar: json["pdfAvatar"],
-      );
+  Category.fromMap(Map<String, dynamic> json)
+      : this(
+          id: json["_id"],
+          name: json["name"],
+          shopId: json["shop_id"],
+          parentId: json["parent_id"],
+          priority: json["priority"],
+          childs: json["childs"],
+          isActive: json["is_active"],
+          avatar: json["avatar"],
+          pdfAvatar: json["pdfAvatar"],
+        );
 }

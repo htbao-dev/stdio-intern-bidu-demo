@@ -1,7 +1,7 @@
 import 'package:bidu_demo/data/models/keyword.dart';
 import 'package:bidu_demo/logic/blocs/home_bloc/home_bloc.dart';
-import 'package:bidu_demo/presentation/widget/home_group_content.dart';
-import 'package:bidu_demo/presentation/widget/item.dart';
+import 'package:bidu_demo/modules/home/widget/group_content.dart';
+import 'package:bidu_demo/modules/home/widget/item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,21 +19,14 @@ class _HomeTopSearchState extends State<HomeTopSearch>
     super.build(context);
     return HomeGroupContent(
       title: 'Top Tìm Kiếm',
-      seeMore: () {
-        print('see more');
-      },
+      seeMore: () {},
       child: SizedBox(
         height: 200,
-        child: StreamBuilder<HomeState>(
+        child: StreamBuilder<List<Keyword>>(
             stream: Provider.of<HomeBloc>(context).topSearchStream,
-            builder: (BuildContext context, AsyncSnapshot<HomeState> snapshot) {
-              final List<Keyword> listItem;
-              if (snapshot.data is TopSearchLoaded) {
-                listItem = (snapshot.data as TopSearchLoaded).listTopKeyword;
-              } else {
-                listItem = [];
-              }
-
+            builder:
+                (BuildContext context, AsyncSnapshot<List<Keyword>> snapshot) {
+              final List<Keyword> listItem = snapshot.data ?? [];
               return MyListView(
                 itemCount: listItem.length,
                 itemBuilder: (context, index) {
