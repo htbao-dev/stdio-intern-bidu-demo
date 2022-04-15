@@ -21,11 +21,11 @@ abstract class ListItem extends StatelessWidget {
     );
   }
 
-  Widget productName(String name) {
+  Widget productName(String? name) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 5.0),
       child: Text(
-        name,
+        name ?? '',
         style: const TextStyle(
           fontSize: 12,
           fontWeight: FontWeight.normal,
@@ -52,7 +52,7 @@ abstract class ListItem extends StatelessWidget {
     );
   }
 
-  Widget productLocation(String country) {
+  Widget productLocation(String? country) {
     return Row(
       children: [
         const Icon(
@@ -61,25 +61,29 @@ abstract class ListItem extends StatelessWidget {
           color: Color(0xffC9C9C9),
         ),
         Text(
-          country,
+          country ?? '',
           style: const TextStyle(fontSize: 10),
         )
       ],
     );
   }
 
-  Widget imageWithBookmark(String src, {double? width, double? height}) {
-    return Stack(
-      children: [
-        productImage(src, width: width, height: height),
-        const Positioned(child: _BookMart(), top: 7, right: 7)
-      ],
-    );
+  Widget imageWithBookmark(String? src, {double? width, double? height}) {
+    return src != null
+        ? Stack(
+            children: [
+              productImage(src, width: width, height: height),
+              const Positioned(child: _BookMart(), top: 7, right: 7)
+            ],
+          )
+        : const SizedBox();
   }
 
   Widget productTag(
-      {required bool isGuaranteedItem, required bool isGenuineItem}) {
+      {required bool? isGuaranteedItem, required bool? isGenuineItem}) {
     final Widget child;
+    isGenuineItem ??= false;
+    isGuaranteedItem ??= false;
     if (!isGuaranteedItem && !isGenuineItem) {
       child = const SizedBox();
     } else {
@@ -110,7 +114,8 @@ abstract class ListItem extends StatelessWidget {
     );
   }
 
-  Widget productSold(int sold) {
+  Widget productSold(int? sold) {
+    sold ??= 0;
     return Text(
       'Đã bán $sold',
       style: const TextStyle(
@@ -166,13 +171,13 @@ class NewestProductItem extends ListItem {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          imageWithBookmark(product.images[0]),
+          imageWithBookmark(product.images?[0]),
           productTag(
               isGenuineItem: product.isGenuineItem,
               isGuaranteedItem: product.isGuaranteedItem),
           productName(product.name),
           productPrice(product.salePrice),
-          productLocation(product.shop.country)
+          productLocation(product.shop?.country)
         ],
       ),
     );
@@ -201,9 +206,9 @@ class TopSearchItem extends ListItem {
   }
 
   @override
-  Widget productName(String name) {
+  Widget productName(String? name) {
     return Text(
-      name,
+      name ?? '',
       style: const TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w600,
@@ -239,7 +244,7 @@ class TopProductItem extends ListItem {
         children: [
           Stack(
             children: [
-              imageWithBookmark(product.images[0]),
+              imageWithBookmark(product.images?[0]),
               if (index != null && index! < 5)
                 Positioned(
                   child: _Rank(index: index!),
@@ -253,7 +258,7 @@ class TopProductItem extends ListItem {
               isGuaranteedItem: product.isGuaranteedItem),
           productName(product.name),
           productPrice(product.salePrice),
-          productLocation(product.shop.country),
+          productLocation(product.shop?.country),
           productSold(product.sold),
         ],
       ),
@@ -274,7 +279,7 @@ class SuggestProductItem extends ListItem {
       children: [
         Stack(
           children: [
-            imageWithBookmark(product.images[0], height: width, width: width),
+            imageWithBookmark(product.images?[0], height: width, width: width),
           ],
         ),
         productTag(
@@ -282,9 +287,9 @@ class SuggestProductItem extends ListItem {
             isGuaranteedItem: product.isGuaranteedItem),
         productName(product.name),
         productPrice(product.salePrice),
-        productLocation(product.shop.country),
+        productLocation(product.shop?.country),
         productSold(product.sold),
-        productLocation(product.shop.country),
+        productLocation(product.shop?.country),
       ],
     );
   }

@@ -1,19 +1,15 @@
 import 'dart:async';
 
-import 'package:bidu_demo/data/models/banner.dart';
 import 'package:bidu_demo/data/models/banner_category.dart';
-import 'package:bidu_demo/data/models/category.dart';
 import 'package:bidu_demo/data/models/keyword.dart';
 import 'package:bidu_demo/data/models/product.dart';
 import 'package:bidu_demo/data/models/suggest_product.dart';
-import 'package:bidu_demo/data/repositories/home_repository.dart';
-import 'package:equatable/equatable.dart';
-
-part 'home_event.dart';
-part 'home_state.dart';
+import 'package:bidu_demo/data/repositories/category_repository.dart';
+import 'package:bidu_demo/data/repositories/product_repository.dart';
 
 class HomeBloc {
-  final HomeRepository homeRepository;
+  final ProductRepository productRepository;
+  final CategoryRepository categoryRepository;
   bool _backToTop = false;
   final _suggestProductController = StreamController<List<Product>>();
   final _bannerAndCategoryController = StreamController<BannerAndCategory>();
@@ -21,9 +17,10 @@ class HomeBloc {
   final _topProductController = StreamController<List<Product>>();
   final _topSearchController = StreamController<List<Keyword>>();
   final _backToTopController = StreamController<bool>();
-
+  final _bannerIndicatorController = StreamController<int>();
   late final Stream<BannerAndCategory> _bannerAndCategoryStream;
 
+  Stream<int> get bannerIndicatorStream => _bannerIndicatorController.stream;
   Stream<List<Product>> get suggestProductStream =>
       _suggestProductController.stream;
   Stream<BannerAndCategory> get bannerAndCategoryStream =>
@@ -34,7 +31,10 @@ class HomeBloc {
   Stream<List<Keyword>> get topSearchStream => _topSearchController.stream;
   Stream<bool> get backToTopStream => _backToTopController.stream;
 
-  HomeBloc({required this.homeRepository}) {
+  HomeBloc({
+    required this.productRepository,
+    required this.categoryRepository,
+  }) {
     _bannerAndCategoryStream =
         _bannerAndCategoryController.stream.asBroadcastStream();
   }
@@ -55,14 +55,21 @@ class HomeBloc {
     _loadSuggestProduct();
   }
 
-  void refesh() async {
-    _loadNewestProduct();
-    _loadTopSearch();
-    _loadTopProduct();
+  void onBannerChanged(int index) {
+    _bannerIndicatorController.sink.add(index);
+  }
+
+  Future refesh() async {
     _suggestCurrentPage = 1;
     _suggestTotalPage = 1;
     _suggestList.clear();
-    _loadSuggestProduct();
+
+    final _newest = _loadNewestProduct();
+    final _topSearch = _loadTopSearch();
+    final topProduct = _loadTopProduct();
+    final suggest = _loadSuggestProduct();
+    await Future.wait([_newest, _topSearch, topProduct, suggest]);
+    return;
   }
 
   void showBackToTop(bool isShow) {
@@ -71,29 +78,29 @@ class HomeBloc {
   }
 
   Future _loadBannerAndCategory() async {
-    final bannerAndCategory = await homeRepository.loadBannerAndCategory();
+    final bannerAndCategory = await categoryRepository.loadBannerAndCategory();
     _bannerAndCategoryController.sink.add(bannerAndCategory);
   }
 
   Future _loadNewestProduct() async {
-    final listnewestProduct = await homeRepository.loadNewestProduct();
+    final listnewestProduct = await productRepository.loadNewestProduct();
     _newestProductController.sink.add(listnewestProduct);
   }
 
   Future _loadTopSearch() async {
-    final listTopKeyword = await homeRepository.loadTopSearch();
+    final listTopKeyword = await productRepository.loadTopSearch();
     _topSearchController.sink.add(listTopKeyword);
   }
 
   Future _loadTopProduct() async {
-    final listTopProduct = await homeRepository.loadTopProduct();
+    final listTopProduct = await productRepository.loadTopProduct();
     _topProductController.sink.add(listTopProduct);
   }
 
   Future _loadSuggestProduct() async {
     final SuggestProduct? suggestProduct;
     if (_suggestCurrentPage <= _suggestTotalPage) {
-      suggestProduct = await homeRepository.loadSuggestProducts(
+      suggestProduct = await productRepository.loadSuggestProducts(
           page: _suggestCurrentPage + 1);
       if (suggestProduct != null) {
         _suggestCurrentPage = suggestProduct.currentPage;
