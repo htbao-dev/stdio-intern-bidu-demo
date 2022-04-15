@@ -6,28 +6,26 @@ List<Category> listCaterogyFromMap(List<dynamic> json) {
 
 class Category {
   Category({
-    required this.id,
+    this.id,
     required this.name,
-    // @required this.nameLocalized,
-    required this.shopId,
-    // @required this.permalink,
-    required this.parentId,
-    required this.priority,
-    required this.childs,
-    required this.isActive,
+    this.shopId,
+    this.parentId,
+    this.priority,
+    this.childs,
+    this.isActive,
     required this.avatar,
-    required this.pdfAvatar,
+    this.pdfAvatar,
   });
 
-  String id;
+  String? id;
   String name;
   String? shopId;
   String? parentId;
   int? priority;
   dynamic childs;
-  bool isActive;
+  bool? isActive;
   String avatar;
-  String pdfAvatar;
+  String? pdfAvatar;
 
   factory Category.fromJson(String str) => Category.fromMap(json.decode(str));
 

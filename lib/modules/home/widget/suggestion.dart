@@ -1,5 +1,5 @@
 import 'package:bidu_demo/data/models/product.dart';
-import 'package:bidu_demo/logic/blocs/home_bloc/home_bloc.dart';
+import 'package:bidu_demo/logic/blocs/home_bloc.dart';
 import 'package:bidu_demo/modules/home/widget/group_content.dart';
 import 'package:bidu_demo/modules/home/widget/item.dart';
 import 'package:flutter/material.dart';

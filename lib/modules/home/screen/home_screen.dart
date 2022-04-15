@@ -1,4 +1,4 @@
-import 'package:bidu_demo/logic/blocs/home_bloc/home_bloc.dart';
+import 'package:bidu_demo/logic/blocs/home_bloc.dart';
 import 'package:bidu_demo/modules/home/widget/appbar.dart';
 import 'package:bidu_demo/modules/home/widget/back_to_top.dart';
 import 'package:bidu_demo/modules/home/widget/banner.dart';
@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomeScreen extends StatefulWidget {
+  static String routeName = '/home-screen';
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
@@ -91,8 +92,9 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  void _onRefresh() {
-    context.read<HomeBloc>().refesh();
+  void _onRefresh() async {
+    await context.read<HomeBloc>().refesh();
+    _refreshController.refreshCompleted();
   }
 
   void _scrollToTop() {
@@ -102,8 +104,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
-    context.read<HomeBloc>().dispose();
     _scrollController.dispose();
+    _refreshController.dispose();
     super.dispose();
   }
 }

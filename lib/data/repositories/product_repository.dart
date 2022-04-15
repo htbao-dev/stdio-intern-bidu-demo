@@ -1,4 +1,5 @@
-import 'package:bidu_demo/data/data_providers/home_provider.dart';
+import 'package:bidu_demo/data/data_providers/category_provider.dart';
+import 'package:bidu_demo/data/data_providers/product_provider.dart';
 import 'package:bidu_demo/data/models/banner.dart';
 import 'package:bidu_demo/data/models/banner_category.dart';
 import 'dart:convert';
@@ -6,38 +7,34 @@ import 'dart:convert';
 import 'package:bidu_demo/data/models/category.dart';
 import 'package:bidu_demo/data/models/keyword.dart';
 import 'package:bidu_demo/data/models/product.dart';
+import 'package:bidu_demo/data/models/product_detail.dart';
 import 'package:bidu_demo/data/models/suggest_product.dart';
 
-class HomeRepository {
-  final HomeProvider _homeProvider = HomeProvider();
-  Future<BannerAndCategory> loadBannerAndCategory() async {
+class ProductRepository {
+  final ProductProvider _productProvider = ProductProvider();
+  final CategoryProvider _categoryProvider = CategoryProvider();
+
+  Future<ProductDetail?> loadProductDetail(String productId) async {
     try {
-      final rawData = await _homeProvider.loadBannerAndCategory();
+      final rawData = await _productProvider.loadProductDetail(productId);
       final dataDecode = json.decode(rawData);
       if (dataDecode['success'] == true) {
-        final listBanner =
-            listBannerFromMap(dataDecode['data']['system_banner']);
-
-        final listCategory =
-            listCaterogyFromMap(dataDecode['data']['system_category']);
-        return BannerAndCategory(
-          listBanner: listBanner,
-          listCategory: listCategory,
-        );
+        final productDetail = ProductDetail.fromMap(dataDecode['data']);
+        return productDetail;
       }
-      return BannerAndCategory(listBanner: [], listCategory: []);
+      return null;
     } catch (e, s) {
       // ignore: avoid_print
       print(e);
       // ignore: avoid_print
       print(s);
-      return BannerAndCategory(listBanner: [], listCategory: []);
+      return null;
     }
   }
 
   Future<List<Product>> loadNewestProduct() async {
     try {
-      final rawData = await _homeProvider.loadNewestProduct();
+      final rawData = await _productProvider.loadNewestProduct();
       final dataDecode = json.decode(rawData);
       if (dataDecode['success'] == true) {
         final listProduct = listProductFromMap(dataDecode['data']);
@@ -55,7 +52,7 @@ class HomeRepository {
 
   Future<List<Product>> loadTopProduct() async {
     try {
-      final rawData = await _homeProvider.loadTopProduct();
+      final rawData = await _productProvider.loadTopProduct();
       final dataDecode = json.decode(rawData);
       if (dataDecode['success'] == true) {
         final listProduct = listProductFromMap(dataDecode['data']);
@@ -73,7 +70,7 @@ class HomeRepository {
 
   Future<List<Keyword>> loadTopSearch() async {
     try {
-      final rawData = await _homeProvider.loadTopSearch();
+      final rawData = await _productProvider.loadTopSearch();
       final dataDecode = json.decode(rawData);
       if (dataDecode['success'] == true) {
         final listProduct = listKeywordFromMap(dataDecode['data']);
@@ -93,7 +90,7 @@ class HomeRepository {
       {required int page, int limit = 20, int randomNumber = 11}) async {
     try {
       final rawData =
-          await _homeProvider.loadSuggestProducts(page, limit, randomNumber);
+          await _productProvider.loadSuggestProducts(page, limit, randomNumber);
       final dataDecode = json.decode(rawData);
       if (dataDecode['success'] == true) {
         final suggestProduct = SuggestProduct.fromMap(dataDecode);
