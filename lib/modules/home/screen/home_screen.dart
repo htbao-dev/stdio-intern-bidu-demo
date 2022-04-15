@@ -47,13 +47,15 @@ class _HomeScreenState extends State<HomeScreen> {
           onRefresh: () => _onRefresh(),
           child: ListView(
             controller: _scrollController,
-            children: const [
-              HomeBanner(),
-              HomeCategories(),
-              HomeNewest(),
-              HomeTopSearch(),
-              HomeTopProduct(),
-              HomeSuggestion()
+            children: [
+              const HomeBanner(),
+              HomeCategories(
+                scrollController: _scrollController,
+              ),
+              const HomeNewest(),
+              const HomeTopSearch(),
+              const HomeTopProduct(),
+              const HomeSuggestion()
             ],
           ),
         ),
