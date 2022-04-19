@@ -8,8 +8,8 @@ import 'package:bidu_demo/data/repositories/category_repository.dart';
 import 'package:bidu_demo/data/repositories/product_repository.dart';
 
 class HomeBloc {
-  final ProductRepository productRepository;
-  final CategoryRepository categoryRepository;
+  final IProductRepository productRepository;
+  final ICategoryRepository categoryRepository;
   bool _backToTop = false;
   final _suggestProductController = StreamController<List<Product>>();
   final _bannerAndCategoryController = StreamController<BannerAndCategory>();

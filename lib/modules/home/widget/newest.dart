@@ -5,6 +5,8 @@ import 'package:bidu_demo/modules/home/widget/item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+const double kHomeNewestItemHeight = 320;
+
 class HomeNewest extends StatefulWidget {
   const HomeNewest({Key? key}) : super(key: key);
 
@@ -16,15 +18,15 @@ class _HomeNewestState extends State<HomeNewest>
     with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    String title = 'Sản phẩm mới';
     super.build(context);
     return HomeGroupContent(
-      title: 'Sản Phẩm Mới Nhất',
+      title: title,
       seeMore: () {
-        // ignore: avoid_print
-        print('see more');
+        debugPrint('seemore');
       },
       child: SizedBox(
-          height: 230,
+          height: kHomeNewestItemHeight,
           child: StreamBuilder<List<Product>>(
               stream: Provider.of<HomeBloc>(context).newestProductStream,
               builder: (BuildContext context,

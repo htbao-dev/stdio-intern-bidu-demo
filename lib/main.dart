@@ -21,48 +21,62 @@ class BiduApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productRepository = ProductRepository();
-    final categoryRepository = CategoryRepository();
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      routes: {
-        HomeScreen.routeName: (context) => MultiProvider(
-              providers: [
-                Provider<ProductRepository>.value(value: productRepository),
-                Provider<CategoryRepository>.value(value: categoryRepository),
-                ProxyProvider2<ProductRepository, CategoryRepository, HomeBloc>(
-                  update: (BuildContext _, ProductRepository productRepo,
-                          categoryRepo, HomeBloc? oldWidget) =>
-                      oldWidget ??
-                      HomeBloc(
-                        productRepository: productRepo,
-                        categoryRepository: categoryRepo,
-                      ),
-                  dispose: (context, HomeBloc bloc) => bloc.dispose(),
-                ),
-              ],
-              child: MultiProvider(providers: [
-                Provider<ProductRepository>.value(value: productRepository),
-                ProxyProvider<ProductRepository, ProductDetailBloc>(
+    return MultiProvider(
+      providers: [
+        Provider<IProductRepository>(create: (_) => ProductRepository()),
+        Provider<ICategoryRepository>(
+            create: (context) => CategoryRepository()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        onGenerateRoute: (settings) {
+          switch (settings.name) {
+            case HomeScreen.routeName:
+              return MaterialPageRoute(
+                  builder: (context) => ProxyProvider2<IProductRepository,
+                          ICategoryRepository, HomeBloc>(
+                        update: (BuildContext _, productRepo, categoryRepo,
+                                HomeBloc? oldWidget) =>
+                            oldWidget ??
+                            HomeBloc(
+                              productRepository: productRepo,
+                              categoryRepository: categoryRepo,
+                            ),
+                        dispose: (context, HomeBloc bloc) => bloc.dispose(),
+                      ));
+            case ProductDetailsScreen.routeName:
+              return MaterialPageRoute(
+                builder: (context) =>
+                    ProxyProvider<IProductRepository, ProductDetailBloc>(
                   update: (context, value, previous) =>
-                      previous ??
-                      ProductDetailBloc(
-                        productRepository: value,
-                      ),
+                      ProductDetailBloc(productRepository: value),
+                  child: ProductDetailsScreen(
+                    productId: settings.arguments as String,
+                  ),
                 ),
-              ], child: const HomeScreen()),
-            ),
-        ProductDetailsScreen.routeName: (context) =>
-            const ProductDetailsScreen(),
-      },
-      initialRoute: HomeScreen.routeName,
-      theme: ThemeData(
-        //TODO: edit iconTheme,...
-        primaryColor: Colors.white,
-        colorScheme: ColorScheme.fromSwatch(accentColor: Colors.grey),
-        fontFamily: 'Lexend',
-        iconTheme: const IconThemeData(
-          color: Colors.grey,
+              );
+            default:
+              throw Exception('Unknown route: ${settings.name}');
+          }
+        },
+        theme: ThemeData(
+          //TODO: edit iconTheme,...
+          primaryColor: Colors.white,
+          colorScheme: ColorScheme.fromSwatch(
+            accentColor: Colors.grey,
+          ),
+          fontFamily: 'Lexend',
+          iconTheme: const IconThemeData(
+            color: Colors.grey,
+          ),
+          appBarTheme: const AppBarTheme(
+            color: Colors.white,
+            //   elevation: 0,
+            //   brightness: Brightness.light,
+            //   iconTheme: IconThemeData(
+            //     color: Colors.grey,
+            //   ),
+          ),
         ),
       ),
     );

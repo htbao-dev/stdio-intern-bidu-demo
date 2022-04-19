@@ -1,3 +1,5 @@
+import 'package:bidu_demo/data/models/shop.dart';
+
 List<Product> listProductFromMap(List<dynamic> json) {
   return json.map((e) => Product.fromMap(e)).toList();
 }
@@ -73,31 +75,31 @@ class PriceMinMax {
         );
 }
 
-class Shop {
-  Shop({
-    required this.id,
-    required String country,
-  }) {
-    _country = country;
-  }
+// class Shop {
+//   Shop({
+//     required this.id,
+//     required String country,
+//   }) {
+//     _country = country;
+//   }
 
-  String id;
-  String? _country;
+//   String id;
+//   String? _country;
 
-  String get country {
-    switch (_country) {
-      case "VN":
-        return "Việt Nam";
-      case "KO":
-        return "Hàn Quốc";
-      default:
-        return "";
-    }
-  }
+//   String get country {
+//     switch (_country) {
+//       case "VN":
+//         return "Việt Nam";
+//       case "KO":
+//         return "Hàn Quốc";
+//       default:
+//         return "";
+//     }
+//   }
 
-  Shop.fromMap(Map<String, dynamic> json)
-      : this(
-          id: json["_id"],
-          country: json["country"],
-        );
-}
+//   Shop.fromMap(Map<String, dynamic> json)
+//       : this(
+//           id: json["_id"],
+//           country: json["country"],
+//         );
+// }

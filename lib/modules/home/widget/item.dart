@@ -1,8 +1,9 @@
 import 'package:bidu_demo/common/formatter.dart';
 import 'package:bidu_demo/data/models/keyword.dart';
 import 'package:bidu_demo/data/models/product.dart';
+import 'package:bidu_demo/modules/common_widget/bookmark.dart';
+import 'package:bidu_demo/modules/product_detail/screen/product_detail_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 abstract class ListItem extends StatelessWidget {
   const ListItem({Key? key}) : super(key: key);
@@ -73,7 +74,7 @@ abstract class ListItem extends StatelessWidget {
         ? Stack(
             children: [
               productImage(src, width: width, height: height),
-              const Positioned(child: _BookMart(), top: 7, right: 7)
+              const Positioned(child: BookMark(), top: 7, right: 7)
             ],
           )
         : const SizedBox();
@@ -144,41 +145,31 @@ class _Rank extends StatelessWidget {
   }
 }
 
-class _BookMart extends StatefulWidget {
-  const _BookMart({Key? key}) : super(key: key);
-
-  @override
-  State<_BookMart> createState() => __BookMartState();
-}
-
-class __BookMartState extends State<_BookMart> {
-  @override
-  Widget build(BuildContext context) {
-    return SvgPicture.asset(
-      'assets/icons/icon_bookmark.svg',
-    );
-  }
-}
-
 class NewestProductItem extends ListItem {
   final Product product;
   const NewestProductItem({Key? key, required this.product}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 120,
-      margin: const EdgeInsets.only(left: 15),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          imageWithBookmark(product.images?[0]),
-          productTag(
-              isGenuineItem: product.isGenuineItem,
-              isGuaranteedItem: product.isGuaranteedItem),
-          productName(product.name),
-          productPrice(product.salePrice),
-          productLocation(product.shop?.country)
-        ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context)
+            .pushNamed(ProductDetailsScreen.routeName, arguments: product.id);
+      },
+      child: Container(
+        width: 120,
+        margin: const EdgeInsets.only(left: 15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            imageWithBookmark(product.images?[0]),
+            productTag(
+                isGenuineItem: product.isGenuineItem,
+                isGuaranteedItem: product.isGuaranteedItem),
+            productName(product.name),
+            productPrice(product.salePrice),
+            productLocation(product.shop?.country)
+          ],
+        ),
       ),
     );
   }
@@ -236,31 +227,37 @@ class TopProductItem extends ListItem {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 120,
-      margin: const EdgeInsets.only(left: 15),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Stack(
-            children: [
-              imageWithBookmark(product.images?[0]),
-              if (index != null && index! < 5)
-                Positioned(
-                  child: _Rank(index: index!),
-                  top: 7,
-                  left: 7,
-                ),
-            ],
-          ),
-          productTag(
-              isGenuineItem: product.isGenuineItem,
-              isGuaranteedItem: product.isGuaranteedItem),
-          productName(product.name),
-          productPrice(product.salePrice),
-          productLocation(product.shop?.country),
-          productSold(product.sold),
-        ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context)
+            .pushNamed(ProductDetailsScreen.routeName, arguments: product.id);
+      },
+      child: Container(
+        width: 120,
+        margin: const EdgeInsets.only(left: 15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              children: [
+                imageWithBookmark(product.images?[0]),
+                if (index != null && index! < 5)
+                  Positioned(
+                    child: _Rank(index: index!),
+                    top: 7,
+                    left: 7,
+                  ),
+              ],
+            ),
+            productTag(
+                isGenuineItem: product.isGenuineItem,
+                isGuaranteedItem: product.isGuaranteedItem),
+            productName(product.name),
+            productPrice(product.salePrice),
+            productLocation(product.shop?.country),
+            productSold(product.sold),
+          ],
+        ),
       ),
     );
   }
@@ -273,24 +270,31 @@ class SuggestProductItem extends ListItem {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     var width = (screenSize.width - 30) / 2;
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Stack(
-          children: [
-            imageWithBookmark(product.images?[0], height: width, width: width),
-          ],
-        ),
-        productTag(
-            isGenuineItem: product.isGenuineItem,
-            isGuaranteedItem: product.isGuaranteedItem),
-        productName(product.name),
-        productPrice(product.salePrice),
-        productLocation(product.shop?.country),
-        productSold(product.sold),
-        productLocation(product.shop?.country),
-      ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context)
+            .pushNamed(ProductDetailsScreen.routeName, arguments: product.id);
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Stack(
+            children: [
+              imageWithBookmark(product.images?[0],
+                  height: width, width: width),
+            ],
+          ),
+          productTag(
+              isGenuineItem: product.isGenuineItem,
+              isGuaranteedItem: product.isGuaranteedItem),
+          productName(product.name),
+          productPrice(product.salePrice),
+          productLocation(product.shop?.country),
+          productSold(product.sold),
+          productLocation(product.shop?.country),
+        ],
+      ),
     );
   }
 }

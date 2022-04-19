@@ -5,6 +5,7 @@ class Formatter {
     if (price == null) {
       return "";
     }
-    return NumberFormat.decimalPattern().format(price) + ' đ';
+    // return NumberFormat.decimalPattern().format(price) + ' đ';
+    return NumberFormat.currency(locale: 'vi', symbol: '₫').format(price);
   }
 }

@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomeScreen extends StatefulWidget {
-  static String routeName = '/home-screen';
+  static const routeName = '/';
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
