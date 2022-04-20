@@ -2,7 +2,7 @@ import 'package:bidu_demo/common/formatter.dart';
 import 'package:bidu_demo/data/models/keyword.dart';
 import 'package:bidu_demo/data/models/product.dart';
 import 'package:bidu_demo/modules/common_widget/bookmark.dart';
-import 'package:bidu_demo/modules/product_detail/screen/product_detail_screen.dart';
+import 'package:bidu_demo/modules/product_detail/product_detail_screen.dart';
 import 'package:flutter/material.dart';
 
 abstract class ListItem extends StatelessWidget {

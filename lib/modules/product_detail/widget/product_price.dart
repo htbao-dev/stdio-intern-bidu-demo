@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
-class ProductTitle extends StatelessWidget {
-  const ProductTitle({Key? key}) : super(key: key);
+class ProductPrice extends StatelessWidget {
+  const ProductPrice({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class ProductTitle extends StatelessWidget {
                 icon: SvgPicture.asset('assets/icons/icon_exclamation.svg'),
                 style: ButtonStyle(
                   padding: MaterialStateProperty.all<EdgeInsets>(
-                    const EdgeInsets.symmetric(vertical: 8),
+                    const EdgeInsets.only(bottom: 24),
                   ),
                 ),
               ),
@@ -58,7 +58,7 @@ class ProductTitle extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     if (name != null) {
       return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8),
+        padding: const EdgeInsets.only(bottom: 16),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -92,7 +92,7 @@ class ProductTitle extends StatelessWidget {
   }) {
     if (price != null) {
       return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8),
+        padding: const EdgeInsets.only(bottom: 16),
         child: Column(
           children: [
             Row(
@@ -101,7 +101,7 @@ class ProductTitle extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      padding: const EdgeInsets.only(bottom: 8),
                       child: Text(
                         Formatter.currency(price),
                         style: const TextStyle(
@@ -110,17 +110,14 @@ class ProductTitle extends StatelessWidget {
                         ),
                       ),
                     ),
-                    // if (beforePrice != null)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: Text(
-                        Formatter.currency(700000),
+                    if (beforePrice != null)
+                      Text(
+                        Formatter.currency(beforePrice),
                         style: const TextStyle(
                             fontSize: 14,
                             color: Color(0xffC4C4C4),
                             decoration: TextDecoration.lineThrough),
                       ),
-                    ),
                   ],
                 ),
                 if (discountPercent != null)

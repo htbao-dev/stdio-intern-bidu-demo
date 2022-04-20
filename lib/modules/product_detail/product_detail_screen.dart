@@ -1,6 +1,9 @@
 import 'package:bidu_demo/logic/blocs/product_detail_bloc.dart';
 import 'package:bidu_demo/modules/product_detail/widget/appbar.dart';
-import 'package:bidu_demo/modules/product_detail/widget/product_title.dart';
+import 'package:bidu_demo/modules/product_detail/widget/bottom_appbar.dart';
+import 'package:bidu_demo/modules/product_detail/widget/delivery_info.dart';
+import 'package:bidu_demo/modules/product_detail/widget/group_content.dart';
+import 'package:bidu_demo/modules/product_detail/widget/product_price.dart';
 import 'package:bidu_demo/modules/product_detail/widget/shop_name.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +16,7 @@ class ProductDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<ProductDetailBloc>().initLoad(productId);
+    // context.read<ProductDetailBloc>().initLoad(productId);
     return Scaffold(
       body: StreamBuilder<bool>(
           stream: context.read<ProductDetailBloc>().isDataNullStream,
@@ -29,25 +32,25 @@ class ProductDetailsScreen extends StatelessWidget {
                 SliverList(
                   delegate: SliverChildListDelegate(
                     [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 16, horizontal: 16),
-                        child: const ShopName(),
-                        decoration: const BoxDecoration(
-                            border: Border(
-                                bottom: BorderSide(color: Color(0xffF1F1F1)))),
+                      const GroupContent(
+                        child: ShopName(),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                        borderType: BorderType.thin,
                       ),
-                      Container(
-                        child: const ProductTitle(),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 16),
+                      const GroupContent(
+                        child: ProductPrice(),
+                        borderType: BorderType.thin,
                       ),
+                      // const GroupContent(child: Evaluation()),
+                      const GroupContent(child: DeliveryInfo()),
                     ],
                   ),
                 ),
               ],
             );
           }),
+      bottomNavigationBar: const BottmAppBar(),
     );
   }
 }

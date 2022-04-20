@@ -53,6 +53,7 @@ class ProductDetail extends Product {
             json["shop"],
           ),
           salePrice: json["sale_price"],
+          beforeSalePrice: json["before_sale_price"],
         );
 }
 
