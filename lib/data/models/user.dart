@@ -1,25 +1,26 @@
 class User {
-  User({
-    required this.id,
-    required this.userName,
-    required this.avatar,
-    required this.email,
-    required this.gender,
-    required this.isNewbie,
-    required this.shortenLink,
-    required this.shopId,
-    required this.galleryImage,
-  });
+  User(
+      {this.id,
+      this.userName,
+      this.avatar,
+      this.email,
+      this.gender,
+      this.isNewbie,
+      this.shortenLink,
+      this.shopId,
+      this.galleryImage,
+      required this.followCount});
 
-  String id;
-  String userName;
-  String avatar;
-  String email;
-  int gender;
-  bool isNewbie;
-  String shortenLink;
+  String? id;
+  String? userName;
+  String? avatar;
+  String? email;
+  int? gender;
+  bool? isNewbie;
+  String? shortenLink;
   dynamic shopId;
-  GalleryImage galleryImage;
+  GalleryImage? galleryImage;
+  int followCount;
 
   User.fromMap(Map<String, dynamic> json)
       : this(
@@ -31,7 +32,10 @@ class User {
           isNewbie: json["is_newbie"],
           shortenLink: json["shorten_link"],
           shopId: json["shop_id"],
-          galleryImage: GalleryImage.fromMap(json["gallery_image"]),
+          galleryImage: json["gallery_image"] != null
+              ? GalleryImage.fromMap(json["gallery_image"])
+              : null,
+          followCount: json["follow_count"],
         );
 }
 

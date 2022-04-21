@@ -2,6 +2,7 @@ import 'package:bidu_demo/data/data_providers/product_cloud_data.dart';
 import 'package:bidu_demo/data/models/keyword.dart';
 import 'package:bidu_demo/data/models/product.dart';
 import 'package:bidu_demo/data/models/product_detail.dart';
+import 'package:bidu_demo/data/models/shop.dart';
 import 'package:bidu_demo/data/models/suggest_product.dart';
 import 'package:flutter/widgets.dart';
 
@@ -12,6 +13,7 @@ abstract class IProductRepository {
   Future<SuggestProduct?> loadSuggestProducts(
       {required int page, int limit, int randomNumber});
   Future<ProductDetail?> loadProductDetail(String productId);
+  Future<List<Shop>> loadTopSeller({int page, int limit});
 }
 
 class ProductRepository implements IProductRepository {
@@ -77,6 +79,18 @@ class ProductRepository implements IProductRepository {
       debugPrint(e.toString());
       debugPrint(s.toString());
       return null;
+    }
+  }
+
+  @override
+  Future<List<Shop>> loadTopSeller({int page = 1, int limit = 5}) async {
+    try {
+      final listTopSeller = await _productCloudData.loadTopSeller(page, limit);
+      return listTopSeller;
+    } catch (e, s) {
+      debugPrint(e.toString());
+      debugPrint(s.toString());
+      return [];
     }
   }
 }

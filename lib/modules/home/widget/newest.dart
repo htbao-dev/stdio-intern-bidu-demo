@@ -5,7 +5,7 @@ import 'package:bidu_demo/modules/home/widget/item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-const double kHomeNewestItemHeight = 320;
+const double kHomeNewestItemHeight = 220;
 
 class HomeNewest extends StatefulWidget {
   const HomeNewest({Key? key}) : super(key: key);

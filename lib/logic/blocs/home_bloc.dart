@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bidu_demo/data/models/banner_category.dart';
 import 'package:bidu_demo/data/models/keyword.dart';
 import 'package:bidu_demo/data/models/product.dart';
+import 'package:bidu_demo/data/models/shop.dart';
 import 'package:bidu_demo/data/models/suggest_product.dart';
 import 'package:bidu_demo/data/repositories/category_repository.dart';
 import 'package:bidu_demo/data/repositories/product_repository.dart';
@@ -18,6 +19,7 @@ class HomeBloc {
   final _topSearchController = StreamController<List<Keyword>>();
   final _backToTopController = StreamController<bool>();
   final _bannerIndicatorController = StreamController<int>();
+  final _topSellerController = StreamController<List<Shop>>();
   late final Stream<BannerAndCategory> _bannerAndCategoryStream;
 
   Stream<int> get bannerIndicatorStream => _bannerIndicatorController.stream;
@@ -30,6 +32,7 @@ class HomeBloc {
   Stream<List<Product>> get topProductStream => _topProductController.stream;
   Stream<List<Keyword>> get topSearchStream => _topSearchController.stream;
   Stream<bool> get backToTopStream => _backToTopController.stream;
+  Stream<List<Shop>> get topSellerStream => _topSellerController.stream;
 
   HomeBloc({
     required this.productRepository,
@@ -49,6 +52,7 @@ class HomeBloc {
     _loadTopSearch();
     _loadTopProduct();
     _loadSuggestProduct();
+    _loadTopSeller();
   }
 
   void loadSuggestProduct() {
@@ -67,8 +71,9 @@ class HomeBloc {
     final _newest = _loadNewestProduct();
     final _topSearch = _loadTopSearch();
     final topProduct = _loadTopProduct();
-    final suggest = _loadSuggestProduct();
-    await Future.wait([_newest, _topSearch, topProduct, suggest]);
+    final _suggest = _loadSuggestProduct();
+    final _topSeller = _loadTopSeller();
+    await Future.wait([_newest, _topSearch, topProduct, _suggest, _topSeller]);
     return;
   }
 
@@ -111,6 +116,11 @@ class HomeBloc {
     }
   }
 
+  Future _loadTopSeller() async {
+    final listTopSeller = await productRepository.loadTopSeller();
+    _topSellerController.sink.add(listTopSeller);
+  }
+
   void dispose() {
     _suggestProductController.close();
     _bannerAndCategoryController.close();
@@ -118,5 +128,6 @@ class HomeBloc {
     _topProductController.close();
     _topSearchController.close();
     _backToTopController.close();
+    _bannerIndicatorController.close();
   }
 }
