@@ -1,6 +1,9 @@
 import 'package:bidu_demo/common/formatter.dart';
 import 'package:bidu_demo/data/models/keyword.dart';
 import 'package:bidu_demo/data/models/product.dart';
+import 'package:bidu_demo/data/models/shop.dart';
+import 'package:bidu_demo/modules/common_widget/bookmark.dart';
+import 'package:bidu_demo/modules/product_detail/product_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -73,7 +76,7 @@ abstract class ListItem extends StatelessWidget {
         ? Stack(
             children: [
               productImage(src, width: width, height: height),
-              const Positioned(child: _BookMart(), top: 7, right: 7)
+              const Positioned(child: BookMark(), top: 7, right: 7)
             ],
           )
         : const SizedBox();
@@ -133,29 +136,15 @@ class _Rank extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+      width: 20,
+      height: 20,
+      alignment: Alignment.center,
       decoration: BoxDecoration(
         color: const Color(0xff1A1A1A),
         borderRadius: BorderRadius.circular(5),
       ),
-      child: Text('${index + 1}',
+      child: Text('$index',
           style: const TextStyle(fontSize: 14, color: Colors.white)),
-    );
-  }
-}
-
-class _BookMart extends StatefulWidget {
-  const _BookMart({Key? key}) : super(key: key);
-
-  @override
-  State<_BookMart> createState() => __BookMartState();
-}
-
-class __BookMartState extends State<_BookMart> {
-  @override
-  Widget build(BuildContext context) {
-    return SvgPicture.asset(
-      'assets/icons/icon_bookmark.svg',
     );
   }
 }
@@ -165,20 +154,27 @@ class NewestProductItem extends ListItem {
   const NewestProductItem({Key? key, required this.product}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 120,
-      margin: const EdgeInsets.only(left: 15),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          imageWithBookmark(product.images?[0]),
-          productTag(
-              isGenuineItem: product.isGenuineItem,
-              isGuaranteedItem: product.isGuaranteedItem),
-          productName(product.name),
-          productPrice(product.salePrice),
-          productLocation(product.shop?.country)
-        ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context)
+            .pushNamed(ProductDetailsScreen.routeName, arguments: product.id);
+      },
+      child: Container(
+        width: 120,
+        margin: const EdgeInsets.only(left: 15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            imageWithBookmark(product.images?[0]),
+            productTag(
+                isGenuineItem: product.isGenuineItem,
+                isGuaranteedItem: product.isGuaranteedItem),
+            productName(product.name),
+            productPrice(product.salePrice),
+            productLocation(product.shop?.country)
+          ],
+        ),
       ),
     );
   }
@@ -236,31 +232,37 @@ class TopProductItem extends ListItem {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 120,
-      margin: const EdgeInsets.only(left: 15),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Stack(
-            children: [
-              imageWithBookmark(product.images?[0]),
-              if (index != null && index! < 5)
-                Positioned(
-                  child: _Rank(index: index!),
-                  top: 7,
-                  left: 7,
-                ),
-            ],
-          ),
-          productTag(
-              isGenuineItem: product.isGenuineItem,
-              isGuaranteedItem: product.isGuaranteedItem),
-          productName(product.name),
-          productPrice(product.salePrice),
-          productLocation(product.shop?.country),
-          productSold(product.sold),
-        ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context)
+            .pushNamed(ProductDetailsScreen.routeName, arguments: product.id);
+      },
+      child: Container(
+        width: 120,
+        margin: const EdgeInsets.only(left: 15),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              children: [
+                imageWithBookmark(product.images?[0]),
+                if (index != null && index! < 5)
+                  Positioned(
+                    child: _Rank(index: index! + 1),
+                    top: 7,
+                    left: 7,
+                  ),
+              ],
+            ),
+            productTag(
+                isGenuineItem: product.isGenuineItem,
+                isGuaranteedItem: product.isGuaranteedItem),
+            productName(product.name),
+            productPrice(product.salePrice),
+            productLocation(product.shop?.country),
+            productSold(product.sold),
+          ],
+        ),
       ),
     );
   }
@@ -273,32 +275,183 @@ class SuggestProductItem extends ListItem {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     var width = (screenSize.width - 30) / 2;
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Stack(
-          children: [
-            imageWithBookmark(product.images?[0], height: width, width: width),
-          ],
-        ),
-        productTag(
-            isGenuineItem: product.isGenuineItem,
-            isGuaranteedItem: product.isGuaranteedItem),
-        productName(product.name),
-        productPrice(product.salePrice),
-        productLocation(product.shop?.country),
-        productSold(product.sold),
-        productLocation(product.shop?.country),
-      ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context)
+            .pushNamed(ProductDetailsScreen.routeName, arguments: product.id);
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Stack(
+            children: [
+              imageWithBookmark(product.images?[0],
+                  height: width, width: width),
+            ],
+          ),
+          productTag(
+              isGenuineItem: product.isGenuineItem,
+              isGuaranteedItem: product.isGuaranteedItem),
+          productName(product.name),
+          productPrice(product.salePrice),
+          productLocation(product.shop?.country),
+          productSold(product.sold),
+          productLocation(product.shop?.country),
+        ],
+      ),
     );
   }
 }
 
-// class _TopSellerItem extends ListItem {
-//   @override
-//   Widget build(BuildContext context) {
-//     // TODO: implement build
-//     throw UnimplementedError();
-//   }
-// }
+class TopSellerItem extends ListItem {
+  final Shop shop;
+  final int rank;
+  const TopSellerItem({
+    Key? key,
+    required this.shop,
+    required this.rank,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTextStyle(
+      style: const TextStyle(
+        fontSize: 12,
+        color: Color(0xff1A1A1A),
+      ),
+      child: Container(
+        decoration: const BoxDecoration(
+            border: Border(
+          bottom: BorderSide(color: Color(0xffF5F5F5), width: 2),
+        )),
+        padding: const EdgeInsets.only(bottom: 10, top: 20),
+        child: Row(
+          children: [
+            _Rank(
+              index: rank,
+            ),
+            Container(
+              height: 82,
+              width: 68,
+              margin: const EdgeInsets.only(left: 20, right: 16),
+              child: Stack(
+                children: [
+                  Align(
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(
+                        shop.user?.avatar ?? '',
+                      ),
+                      radius: 34,
+                    ),
+                  ),
+                  Positioned(child: _rankIcon(rank), top: 0, right: 9),
+                  Align(
+                    child: SvgPicture.asset('assets/icons/icon_add.svg'),
+                    alignment: const Alignment(0, 1.5),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              width: 170,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    shop.user?.userName ?? '',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Row(
+                    children: [
+                      SvgPicture.asset(
+                        'assets/icons/icon-heart-2.svg',
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 3.69),
+                        child: Text(shop.avgRating.toString()),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 6),
+                        color: const Color(0xff1A1A1A),
+                        width: 1,
+                        height: 11,
+                      ),
+                      Text(
+                        shop.user!.followCount.toString() + ' lượt theo dõi',
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const Text('Xem shop'),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 8),
+                        child: SvgPicture.asset(
+                          'assets/icons/icon_seemore.svg',
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+            const Spacer(),
+            _rankChange(shop.rankingYesterday!, shop.rankingToday!),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _rankIcon(int rank) {
+    String path;
+    if (rank == 1) {
+      path = 'assets/icons/icon_no1.svg';
+    } else if (rank == 2) {
+      path = 'assets/icons/icon_no2.svg';
+    } else {
+      path = 'assets/icons/icon_no3.svg';
+    }
+    return SvgPicture.asset(
+      path,
+    );
+  }
+
+  Widget _rankChange(int oldRank, int newRank) {
+    int change = newRank - oldRank;
+    if (change > 0) {
+      return Row(
+        children: [
+          const Icon(
+            Icons.arrow_drop_up,
+            color: Color(0xff12B74A),
+          ),
+          Text(
+            change.abs().toString(),
+            style: const TextStyle(
+              color: Color(0xff12B74A),
+            ),
+          ),
+        ],
+      );
+    } else if (change < 0) {
+      return Row(
+        children: [
+          const Icon(Icons.arrow_drop_down, color: Color(0xffFF3232)),
+          Text(
+            change.abs().toString(),
+            style: const TextStyle(color: Color(0xffFF3232)),
+          ),
+        ],
+      );
+    } else {
+      return const SizedBox();
+    }
+  }
+}

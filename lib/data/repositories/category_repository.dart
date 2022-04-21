@@ -1,34 +1,23 @@
-import 'dart:convert';
-
-import 'package:bidu_demo/data/data_providers/category_provider.dart';
-import 'package:bidu_demo/data/models/banner.dart';
+import 'package:bidu_demo/data/data_providers/category_cloud_data.dart';
 import 'package:bidu_demo/data/models/banner_category.dart';
-import 'package:bidu_demo/data/models/category.dart';
+import 'package:flutter/material.dart';
 
-class CategoryRepository {
-  final _categoryProvider = CategoryProvider();
+abstract class ICategoryRepository {
+  Future<BannerAndCategory> loadBannerAndCategory();
+}
 
+class CategoryRepository implements ICategoryRepository {
+  final _categoryCloudData = CategoryCloudDataSource();
+
+  @override
   Future<BannerAndCategory> loadBannerAndCategory() async {
     try {
-      final rawData = await _categoryProvider.loadBannerAndCategory();
-      final dataDecode = json.decode(rawData);
-      if (dataDecode['success'] == true) {
-        final listBanner =
-            listBannerFromMap(dataDecode['data']['system_banner']);
-
-        final listCategory =
-            listCaterogyFromMap(dataDecode['data']['system_category']);
-        return BannerAndCategory(
-          listBanner: listBanner,
-          listCategory: listCategory,
-        );
-      }
-      return BannerAndCategory(listBanner: [], listCategory: []);
+      final bannerAndCategory =
+          await _categoryCloudData.loadBannerAndCategory();
+      return bannerAndCategory;
     } catch (e, s) {
-      // ignore: avoid_print
-      print(e);
-      // ignore: avoid_print
-      print(s);
+      debugPrint(e.toString());
+      debugPrint(s.toString());
       return BannerAndCategory(listBanner: [], listCategory: []);
     }
   }

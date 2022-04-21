@@ -2,6 +2,7 @@ import 'package:bidu_demo/logic/blocs/home_bloc.dart';
 import 'package:bidu_demo/modules/home/widget/appbar.dart';
 import 'package:bidu_demo/modules/home/widget/back_to_top.dart';
 import 'package:bidu_demo/modules/home/widget/banner.dart';
+import 'package:bidu_demo/modules/home/widget/bidu_live.dart';
 import 'package:bidu_demo/modules/home/widget/categories.dart';
 import 'package:bidu_demo/modules/home/widget/fab.dart';
 import 'package:bidu_demo/modules/home/widget/navbar.dart';
@@ -9,12 +10,13 @@ import 'package:bidu_demo/modules/home/widget/newest.dart';
 import 'package:bidu_demo/modules/home/widget/suggestion.dart';
 import 'package:bidu_demo/modules/home/widget/topproduct.dart';
 import 'package:bidu_demo/modules/home/widget/topsearch.dart';
+import 'package:bidu_demo/modules/home/widget/topseller.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomeScreen extends StatefulWidget {
-  static String routeName = '/home-screen';
+  static const routeName = '/';
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
@@ -24,7 +26,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _scrollController = ScrollController();
   final RefreshController _refreshController = RefreshController();
-//TODO: livestream background toi
   @override
   void initState() {
     super.initState();
@@ -47,13 +48,17 @@ class _HomeScreenState extends State<HomeScreen> {
           onRefresh: () => _onRefresh(),
           child: ListView(
             controller: _scrollController,
-            children: const [
-              HomeBanner(),
-              HomeCategories(),
-              HomeNewest(),
-              HomeTopSearch(),
-              HomeTopProduct(),
-              HomeSuggestion()
+            children: [
+              const HomeBanner(),
+              HomeCategories(
+                scrollController: _scrollController,
+              ),
+              const BiduLive(),
+              const HomeNewest(),
+              const HomeTopSearch(),
+              const HomeTopSeller(),
+              const HomeTopProduct(),
+              const HomeSuggestion()
             ],
           ),
         ),

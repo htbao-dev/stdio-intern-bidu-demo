@@ -1,108 +1,96 @@
-import 'package:bidu_demo/data/data_providers/category_provider.dart';
-import 'package:bidu_demo/data/data_providers/product_provider.dart';
-import 'package:bidu_demo/data/models/banner.dart';
-import 'package:bidu_demo/data/models/banner_category.dart';
-import 'dart:convert';
-
-import 'package:bidu_demo/data/models/category.dart';
+import 'package:bidu_demo/data/data_providers/product_cloud_data.dart';
 import 'package:bidu_demo/data/models/keyword.dart';
 import 'package:bidu_demo/data/models/product.dart';
 import 'package:bidu_demo/data/models/product_detail.dart';
+import 'package:bidu_demo/data/models/shop.dart';
 import 'package:bidu_demo/data/models/suggest_product.dart';
+import 'package:flutter/widgets.dart';
 
-class ProductRepository {
-  final ProductProvider _productProvider = ProductProvider();
-  final CategoryProvider _categoryProvider = CategoryProvider();
+abstract class IProductRepository {
+  Future<List<Product>> loadNewestProduct();
+  Future<List<Product>> loadTopProduct();
+  Future<List<Keyword>> loadTopSearch();
+  Future<SuggestProduct?> loadSuggestProducts(
+      {required int page, int limit, int randomNumber});
+  Future<ProductDetail?> loadProductDetail(String productId);
+  Future<List<Shop>> loadTopSeller({int page, int limit});
+}
 
+class ProductRepository implements IProductRepository {
+  final ProductCloudDataSource _productCloudData = ProductCloudDataSource();
+
+  @override
   Future<ProductDetail?> loadProductDetail(String productId) async {
     try {
-      final rawData = await _productProvider.loadProductDetail(productId);
-      final dataDecode = json.decode(rawData);
-      if (dataDecode['success'] == true) {
-        final productDetail = ProductDetail.fromMap(dataDecode['data']);
-        return productDetail;
-      }
-      return null;
+      final productDetail =
+          await _productCloudData.loadProductDetail(productId);
+      return productDetail;
     } catch (e, s) {
-      // ignore: avoid_print
-      print(e);
-      // ignore: avoid_print
-      print(s);
+      debugPrint(e.toString());
+      debugPrint(s.toString());
       return null;
     }
   }
 
+  @override
   Future<List<Product>> loadNewestProduct() async {
     try {
-      final rawData = await _productProvider.loadNewestProduct();
-      final dataDecode = json.decode(rawData);
-      if (dataDecode['success'] == true) {
-        final listProduct = listProductFromMap(dataDecode['data']);
-        return listProduct;
-      }
-      return [];
+      final listProudct = await _productCloudData.loadNewestProduct();
+      return listProudct;
     } catch (e, s) {
-      // ignore: avoid_print
-      print(e);
-      // ignore: avoid_print
-      print(s);
+      debugPrint(e.toString());
+      debugPrint(s.toString());
       return [];
     }
   }
 
+  @override
   Future<List<Product>> loadTopProduct() async {
     try {
-      final rawData = await _productProvider.loadTopProduct();
-      final dataDecode = json.decode(rawData);
-      if (dataDecode['success'] == true) {
-        final listProduct = listProductFromMap(dataDecode['data']);
-        return listProduct;
-      }
-      return [];
+      final listProduct = await _productCloudData.loadTopProduct();
+      return listProduct;
     } catch (e, s) {
-      // ignore: avoid_print
-      print(e);
-      // ignore: avoid_print
-      print(s);
+      debugPrint(e.toString());
+      debugPrint(s.toString());
       return [];
     }
   }
 
+  @override
   Future<List<Keyword>> loadTopSearch() async {
     try {
-      final rawData = await _productProvider.loadTopSearch();
-      final dataDecode = json.decode(rawData);
-      if (dataDecode['success'] == true) {
-        final listProduct = listKeywordFromMap(dataDecode['data']);
-        return listProduct;
-      }
-      return [];
+      final listKeyword = await _productCloudData.loadTopSearch();
+      return listKeyword;
     } catch (e, s) {
-      // ignore: avoid_print
-      print(e);
-      // ignore: avoid_print
-      print(s);
+      debugPrint(e.toString());
+      debugPrint(s.toString());
       return [];
     }
   }
 
+  @override
   Future<SuggestProduct?> loadSuggestProducts(
       {required int page, int limit = 20, int randomNumber = 11}) async {
     try {
-      final rawData =
-          await _productProvider.loadSuggestProducts(page, limit, randomNumber);
-      final dataDecode = json.decode(rawData);
-      if (dataDecode['success'] == true) {
-        final suggestProduct = SuggestProduct.fromMap(dataDecode);
-        return suggestProduct;
-      }
-      return null;
+      final suggestProduct = await _productCloudData.loadSuggestProducts(
+          page, limit, randomNumber);
+      return suggestProduct;
     } catch (e, s) {
-      // ignore: avoid_print
-      print(e);
-      // ignore: avoid_print
-      print(s);
+      debugPrint(e.toString());
+      debugPrint(s.toString());
       return null;
+    }
+  }
+
+  @override
+  Future<List<Shop>> loadTopSeller({int page = 1, int limit = 5}) async {
+    try {
+      final listTopSeller = await _productCloudData.loadTopSeller(page, limit);
+      return listTopSeller;
+    } catch (e, s) {
+      debugPrint(e.toString());
+      debugPrint(s.toString());
+      return [];
     }
   }
 }
