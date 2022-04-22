@@ -20,7 +20,7 @@ class User {
   String? shortenLink;
   dynamic shopId;
   GalleryImage? galleryImage;
-  int followCount;
+  int? followCount;
 
   User.fromMap(Map<String, dynamic> json)
       : this(

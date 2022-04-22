@@ -4,6 +4,7 @@ import 'package:bidu_demo/data/models/product.dart';
 import 'package:bidu_demo/data/models/shop.dart';
 import 'package:bidu_demo/modules/common_widget/bookmark.dart';
 import 'package:bidu_demo/modules/product_detail/product_detail_screen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -17,8 +18,8 @@ abstract class ListItem extends StatelessWidget {
       height: _height,
       width: _width,
       padding: const EdgeInsets.only(bottom: 5),
-      child: Image.network(
-        src, fit: BoxFit.cover,
+      child: CachedNetworkImage(
+        imageUrl: src, fit: BoxFit.cover,
         // height: ,
       ),
     );
@@ -336,17 +337,47 @@ class TopSellerItem extends ListItem {
               margin: const EdgeInsets.only(left: 20, right: 16),
               child: Stack(
                 children: [
+                  // Container(
+
+                  // ),
                   Align(
-                    child: CircleAvatar(
-                      backgroundImage: NetworkImage(
-                        shop.user?.avatar ?? '',
+                      child: CachedNetworkImage(
+                    imageUrl: shop.user?.avatar ?? '',
+                    fit: BoxFit.cover,
+                    imageBuilder: (context, imageProvider) => Container(
+                      width: 68,
+                      height: 68,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                              color: const Color(0xffBBBBBB).withOpacity(0.25),
+                              blurRadius: 5,
+                              offset: const Offset(2, 2),
+                              spreadRadius: 0),
+                        ],
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                      radius: 34,
                     ),
-                  ),
+                  )),
                   Positioned(child: _rankIcon(rank), top: 0, right: 9),
                   Align(
-                    child: SvgPicture.asset('assets/icons/icon_add.svg'),
+                    child: Container(
+                      child: SvgPicture.asset('assets/icons/icon_add.svg'),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                              color: const Color(0xffBBBBBB).withOpacity(0.25),
+                              blurRadius: 5,
+                              offset: const Offset(1, 1),
+                              spreadRadius: 0),
+                        ],
+                      ),
+                    ),
                     alignment: const Alignment(0, 1.5),
                   ),
                 ],

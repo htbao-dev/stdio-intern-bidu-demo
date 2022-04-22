@@ -1,6 +1,7 @@
 import 'package:bidu_demo/data/models/banner_category.dart';
 import 'package:bidu_demo/data/models/category.dart';
 import 'package:bidu_demo/logic/blocs/home_bloc.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
@@ -75,8 +76,8 @@ class _HomeCategoriesState extends State<HomeCategories>
                     width: 32,
                     height: 32,
                   )
-                : Image.network(
-                    category.avatar,
+                : CachedNetworkImage(
+                    imageUrl: category.avatar,
                     width: 32,
                     height: 32,
                   ),
