@@ -4,6 +4,7 @@ import 'package:bidu_demo/common/server.dart';
 import 'package:bidu_demo/data/models/keyword.dart';
 import 'package:bidu_demo/data/models/product.dart';
 import 'package:bidu_demo/data/models/product_detail.dart';
+import 'package:bidu_demo/data/models/shop.dart';
 import 'package:bidu_demo/data/models/suggest_product.dart';
 import 'package:http/http.dart' as http;
 
@@ -14,6 +15,8 @@ class ProductCloudDataSource {
   final _suggestProductUrl = 'api/v2/mobile/suggest-products';
   final _productDetailUrl = 'api/v1/mobile/products/';
   final _productDetailUrl1 = 'api/v1/mobile/product-explores/';
+  final _topSellerUrl = 'api/v1/mobile/home/ranking-seller/';
+  final _rankingUrl = '/api/v1/mobile/home/ranking';
 
   Future<ProductDetail?> loadProductDetail(String productId) async {
     try {
@@ -98,6 +101,23 @@ class ProductCloudDataSource {
         return suggestProduct;
       }
       return null;
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<List<Shop>> loadTopSeller(int page, int limit) async {
+    try {
+      final String url = '$endPoint$_topSellerUrl?page=$page&limit=$limit';
+      final response = await http.get(
+        Uri.parse(url),
+      );
+      final dataDecode = json.decode(response.body);
+      if (dataDecode['success'] == true) {
+        final listShop = listShopFromMap(dataDecode['data']);
+        return listShop;
+      }
+      return [];
     } catch (e) {
       rethrow;
     }

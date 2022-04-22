@@ -12,7 +12,6 @@ class HomeSuggestion extends StatefulWidget {
   State<HomeSuggestion> createState() => _HomeSuggestionState();
 }
 
-//TODO: item chieu cao cung hang
 class _HomeSuggestionState extends State<HomeSuggestion>
     with AutomaticKeepAliveClientMixin {
   @override
@@ -29,21 +28,14 @@ class _HomeSuggestionState extends State<HomeSuggestion>
           builder:
               (BuildContext context, AsyncSnapshot<List<Product>> snapshot) {
             final List<Product> listProduct = snapshot.data ?? [];
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: GridView.builder(
-                shrinkWrap: true,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisExtent: 310,
-                    crossAxisSpacing: 16,
-                    mainAxisSpacing: 16),
-                itemCount: listProduct.length,
-                itemBuilder: (context, index) {
-                  return SuggestProductItem(product: listProduct[index]);
-                },
-                physics: const ClampingScrollPhysics(),
-              ),
+            return Wrap(
+              spacing: 16,
+              runSpacing: 16,
+              children: List.generate(listProduct.length, (index) {
+                return SizedBox(
+                    width: MediaQuery.of(context).size.width / 2 - 16,
+                    child: SuggestProductItem(product: listProduct[index]));
+              }),
             );
           }),
     );

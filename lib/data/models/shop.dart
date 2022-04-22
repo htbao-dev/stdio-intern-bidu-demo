@@ -1,5 +1,13 @@
 import 'package:bidu_demo/data/models/user.dart';
 
+List<Shop> listShopFromMap(List<dynamic> listMap) {
+  List<Shop> listShop = [];
+  for (var map in listMap) {
+    listShop.add(Shop.fromMap(map));
+  }
+  return listShop;
+}
+
 class Shop {
   Shop({
     required this.id,
@@ -7,7 +15,7 @@ class Shop {
     // required this.refundMoneyMode,
     // required this.refundMoneyRegulations,
     // required this.pauseMode,
-    required String country,
+    required String? country,
     // required this.isApproved,
     this.name,
     this.description,

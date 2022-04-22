@@ -28,6 +28,10 @@ void main() {
           await productRepository.loadProductDetail('621307d6e817a50012f5bb57');
       expect(res, isNotNull);
     });
+    test('test top seller', () async {
+      var res = await productRepository.loadTopSeller();
+      expect(res, isNotEmpty);
+    });
   });
 
   group('test category repo', () {
