@@ -17,8 +17,9 @@ class ProductDetailBloc {
   ProductDetailBloc({required this.productRepository});
 
   void initLoad(String productId) async {
-    productId = '621307d6e817a50012f5bb57'; //test
+    // productId = '621307d6e817a50012f5bb57'; //test
     _productDetail = await productRepository.loadProductDetail(productId);
+    print('_productDetail: $_productDetail');
     if (_productDetail == null) {
       _isDataNullController.add(true);
     } else {

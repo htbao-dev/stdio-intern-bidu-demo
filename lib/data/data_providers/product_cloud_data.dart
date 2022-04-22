@@ -13,16 +13,18 @@ class ProductCloudDataSource {
   final _topSearchUrl = 'api/v2/mobile/home/top-keyword';
   final _suggestProductUrl = 'api/v2/mobile/suggest-products';
   final _productDetailUrl = 'api/v1/mobile/products/';
+  final _productDetailUrl1 = 'api/v1/mobile/product-explores/';
 
   Future<ProductDetail?> loadProductDetail(String productId) async {
     try {
       final response = await http.get(
-        Uri.parse('$endPoint$_productDetailUrl$productId'),
-        headers: {
-          'Authorization':
-              'Bidu eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNTI5YWEyMzU4M2E5MDAxOTBiMTg0ZSIsImlhdCI6MTY0NTY5NjEyNCwiZXhwIjoxNjc3MjMyMTI0fQ.1dkYz3sf1KxxciFBLoamHO0Y_5XDRn5L9kCipmV7F-w',
-        },
+        Uri.parse('$endPoint$_productDetailUrl1$productId'),
+        // headers: {
+        //   'Authorization':
+        //       'Bidu eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNTI5YWEyMzU4M2E5MDAxOTBiMTg0ZSIsImlhdCI6MTY0NTY5NjEyNCwiZXhwIjoxNjc3MjMyMTI0fQ.1dkYz3sf1KxxciFBLoamHO0Y_5XDRn5L9kCipmV7F-w',
+        // },
       );
+      print(response.body);
       final dataDecode = json.decode(response.body);
       if (dataDecode['success'] == true) {
         final productDetail = ProductDetail.fromMap(dataDecode['data']);
