@@ -1,3 +1,4 @@
+import 'package:bidu_demo/data/models/product.dart';
 import 'package:bidu_demo/data/repositories/category_repository.dart';
 import 'package:bidu_demo/data/repositories/product_repository.dart';
 import 'package:bidu_demo/logic/blocs/home_bloc.dart';
@@ -52,7 +53,7 @@ class BiduApp extends StatelessWidget {
                         oldWidget ??
                         ProductDetailBloc(productRepository: productRepo),
                     child: ProductDetailsScreen(
-                      productId: settings.arguments as String,
+                      product: settings.arguments as Product,
                     ),
                   ),
                 );

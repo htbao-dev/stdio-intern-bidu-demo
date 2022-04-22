@@ -1,6 +1,5 @@
 import 'package:bidu_demo/data/models/product_detail.dart';
 import 'package:bidu_demo/logic/blocs/product_detail_bloc.dart';
-import 'package:bidu_demo/modules/product_detail/widget/group_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -55,6 +54,7 @@ class ShopName extends StatelessWidget {
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
               ),
+              maxLines: 2,
             ),
             Row(
               children: [

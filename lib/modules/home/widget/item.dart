@@ -157,7 +157,7 @@ class NewestProductItem extends ListItem {
     return GestureDetector(
       onTap: () {
         Navigator.of(context)
-            .pushNamed(ProductDetailsScreen.routeName, arguments: product.id);
+            .pushNamed(ProductDetailsScreen.routeName, arguments: product);
       },
       child: Container(
         width: 120,
@@ -235,7 +235,7 @@ class TopProductItem extends ListItem {
     return GestureDetector(
       onTap: () {
         Navigator.of(context)
-            .pushNamed(ProductDetailsScreen.routeName, arguments: product.id);
+            .pushNamed(ProductDetailsScreen.routeName, arguments: product);
       },
       child: Container(
         width: 120,
@@ -278,7 +278,7 @@ class SuggestProductItem extends ListItem {
     return GestureDetector(
       onTap: () {
         Navigator.of(context)
-            .pushNamed(ProductDetailsScreen.routeName, arguments: product.id);
+            .pushNamed(ProductDetailsScreen.routeName, arguments: product);
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,
