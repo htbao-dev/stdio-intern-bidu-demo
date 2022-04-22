@@ -78,12 +78,13 @@ class _LiveItem extends StatelessWidget {
           height: 200,
           width: 140,
           decoration: BoxDecoration(
-            gradient: LinearGradient(
+            color: Colors.transparent.withOpacity(0.5),
+            gradient: const LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
                 Colors.transparent,
-                Colors.black.withOpacity(0.5),
+                Colors.black,
               ],
             ),
           ),
