@@ -1,3 +1,4 @@
+import 'package:bidu_demo/common/assets_path.dart';
 import 'package:bidu_demo/common/formatter.dart';
 import 'package:bidu_demo/data/models/product_detail.dart';
 import 'package:bidu_demo/logic/blocs/product_detail_bloc.dart';
@@ -9,6 +10,9 @@ import 'package:provider/provider.dart';
 
 class ProductPrice extends StatelessWidget {
   const ProductPrice({Key? key}) : super(key: key);
+
+  final String discountInputText = 'Nhập mã khuyến mãi giảm giá tối đa 200k';
+  final String refundText = 'Đổi trả trong vòng 3 ngày';
 
   @override
   Widget build(BuildContext context) {
@@ -29,19 +33,19 @@ class ProductPrice extends StatelessWidget {
                   discountPercent: discountPercent),
               TextButton.icon(
                 onPressed: () {},
-                label: const GradientText(
-                  'Đổi trả trong vòng 3 ngày',
-                  gradient: LinearGradient(
+                label: GradientText(
+                  refundText,
+                  gradient: const LinearGradient(
                     colors: [
                       Color(0xffFD37AE),
                       Color(0xffFD374F),
                     ],
                   ),
-                  style: TextStyle(
+                  style: const TextStyle(
                     decoration: TextDecoration.underline,
                   ),
                 ),
-                icon: SvgPicture.asset('assets/icons/icon_exclamation.svg'),
+                icon: SvgPicture.asset(iconExclamation),
                 style: ButtonStyle(
                   padding: MaterialStateProperty.all<EdgeInsets>(
                     const EdgeInsets.only(bottom: 24),
@@ -96,6 +100,7 @@ class ProductPrice extends StatelessWidget {
         child: Column(
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,6 +128,7 @@ class ProductPrice extends StatelessWidget {
                 if (discountPercent != null)
                   Container(
                     color: const Color(0xffFD37AE),
+                    margin: const EdgeInsets.only(left: 5),
                     padding:
                         const EdgeInsets.symmetric(vertical: 2, horizontal: 4),
                     child: Text(
@@ -154,9 +160,9 @@ class ProductPrice extends StatelessWidget {
       ).createShader(bounds),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: const Text(
-          'Nhập mã khuyến mãi giảm giá tối đa 200k',
-          style: TextStyle(
+        child: Text(
+          discountInputText,
+          style: const TextStyle(
             fontSize: 14,
           ),
         ),

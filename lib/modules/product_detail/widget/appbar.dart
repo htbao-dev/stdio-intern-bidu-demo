@@ -1,5 +1,6 @@
 import 'package:bidu_demo/data/models/product_detail.dart';
 import 'package:bidu_demo/logic/blocs/product_detail_bloc.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -39,9 +40,9 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
                 ),
                 itemBuilder: (context, index, _) {
                   return images.isNotEmpty
-                      ? Image.network(
-                          images[index],
-                          fit: BoxFit.cover,
+                      ? CachedNetworkImage(
+                          imageUrl: images[index],
+                          fit: BoxFit.contain,
                         )
                       : const SizedBox();
                 },

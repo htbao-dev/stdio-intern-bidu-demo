@@ -3,16 +3,19 @@ import 'package:flutter/material.dart';
 class DeliveryInfo extends StatelessWidget {
   const DeliveryInfo({Key? key}) : super(key: key);
 
+  final String deliveryInfoText = 'Thông tin giao hàng';
+  final String deliveryTimeText = 'Thời gian vận chuyển';
+
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Expanded(
           child: Column(
-            children: const [
+            children: [
               Text(
-                'Thông tin giao hàng',
-                style: TextStyle(
+                deliveryInfoText,
+                style: const TextStyle(
                   fontSize: 12,
                 ),
               )
@@ -23,7 +26,7 @@ class DeliveryInfo extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                'Thời gian vận chuyển',
+                deliveryTimeText,
                 // style: TextStyle(fontSize: 12),
                 style: Theme.of(context).textTheme.bodyText1,
               ),

@@ -1,5 +1,7 @@
+import 'package:bidu_demo/common/assets_path.dart';
 import 'package:bidu_demo/data/models/product_detail.dart';
 import 'package:bidu_demo/logic/blocs/product_detail_bloc.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -32,9 +34,16 @@ class ShopName extends StatelessWidget {
 
   Widget _avatar(String? url) {
     if (url != null) {
-      return CircleAvatar(
-        backgroundImage: NetworkImage(url),
-        radius: 18,
+      return CachedNetworkImage(
+        imageUrl: url,
+        imageBuilder: (context, imageProvider) {
+          return CircleAvatar(
+            backgroundImage: imageProvider,
+            radius: 18,
+          );
+        },
+        placeholder: (context, url) => const CircularProgressIndicator(),
+        errorWidget: (context, url, error) => const Icon(Icons.error),
       );
     } else {
       return const SizedBox();
@@ -71,7 +80,7 @@ class ShopName extends StatelessWidget {
                   margin: const EdgeInsets.symmetric(horizontal: 6),
                 ),
                 Text(
-                  'Tỷ lệ phản hồi Chat $chatResponseByPercent %',
+                  _chatResponeText(chatResponseByPercent),
                   style: const TextStyle(
                     fontSize: 12,
                   ),
@@ -86,12 +95,16 @@ class ShopName extends StatelessWidget {
     }
   }
 
+  String _chatResponeText(int? chatResponseByPercent) {
+    return 'Tỷ lệ phản hồi Chat $chatResponseByPercent %';
+  }
+
   Widget _ranking(int? ranking) {
     if (ranking != null) {
       return Column(
         children: [
           SvgPicture.asset(
-            'assets/icons/icon-heart.svg',
+            iconHeartAsset,
             color: const Color(0xffE812A4),
           ),
           Text(

@@ -17,7 +17,7 @@ class ProductDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<ProductDetailBloc>().initLoad(product.id ?? '');
+    context.read<ProductDetailBloc>().initLoad(product);
     return Scaffold(
       body: StreamBuilder<bool>(
           stream: context.read<ProductDetailBloc>().isDataNullStream,
