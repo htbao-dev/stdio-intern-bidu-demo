@@ -4,58 +4,60 @@ import 'package:bidu_demo/data/models/product_detail.dart';
 import 'package:bidu_demo/logic/blocs/product_detail_bloc.dart';
 import 'package:bidu_demo/modules/common_widget/bookmark.dart';
 import 'package:bidu_demo/modules/common_widget/gradient_text.dart';
+import 'package:bidu_demo/modules/product_detail/widget/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 class ProductPrice extends StatelessWidget {
-  const ProductPrice({Key? key}) : super(key: key);
+  final ProductDetail productDetail;
+  const ProductPrice(this.productDetail, {Key? key}) : super(key: key);
 
   final String discountInputText = 'Nhập mã khuyến mãi giảm giá tối đa 200k';
   final String refundText = 'Đổi trả trong vòng 3 ngày';
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<ProductDetail>(
-        stream: context.read<ProductDetailBloc>().productDetailStream,
-        builder: (context, snapshot) {
-          final name = snapshot.data?.name;
-          final price = snapshot.data?.salePrice;
-          final beforePrice = snapshot.data?.beforeSalePrice;
-          final discountPercent = snapshot.data?.discountPercent;
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _productName(context, name),
-              _price(
-                  beforePrice: beforePrice,
-                  price: price,
-                  discountPercent: discountPercent),
-              TextButton.icon(
-                onPressed: () {},
-                label: GradientText(
-                  refundText,
-                  gradient: const LinearGradient(
-                    colors: [
-                      Color(0xffFD37AE),
-                      Color(0xffFD374F),
-                    ],
-                  ),
-                  style: const TextStyle(
-                    decoration: TextDecoration.underline,
-                  ),
-                ),
-                icon: SvgPicture.asset(iconExclamation),
-                style: ButtonStyle(
-                  padding: MaterialStateProperty.all<EdgeInsets>(
-                    const EdgeInsets.only(bottom: 24),
-                  ),
-                ),
+    final name = productDetail.name;
+    final price = productDetail.salePrice;
+    final beforePrice = productDetail.beforeSalePrice;
+    final discountPercent = productDetail.discountPercent;
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+          vertical: kVerticalPadding, horizontal: kHorizontalPadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _productName(context, name),
+          _price(
+              beforePrice: beforePrice,
+              price: price,
+              discountPercent: discountPercent),
+          TextButton.icon(
+            onPressed: () {},
+            label: GradientText(
+              refundText,
+              gradient: const LinearGradient(
+                colors: [
+                  Color(0xffFD37AE),
+                  Color(0xffFD374F),
+                ],
               ),
-              Center(child: _discountInputButton()),
-            ],
-          );
-        });
+              style: const TextStyle(
+                decoration: TextDecoration.underline,
+              ),
+            ),
+            icon: SvgPicture.asset(iconExclamation),
+            style: ButtonStyle(
+              padding: MaterialStateProperty.all<EdgeInsets>(
+                const EdgeInsets.only(bottom: 24),
+              ),
+            ),
+          ),
+          Center(child: _discountInputButton()),
+        ],
+      ),
+    );
   }
 
   Widget _productName(BuildContext context, String? name) {

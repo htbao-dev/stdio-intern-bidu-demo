@@ -84,7 +84,7 @@ class _LiveItem extends StatelessWidget {
               end: Alignment.bottomCenter,
               colors: [
                 Colors.transparent,
-                Colors.black,
+                Colors.red,
               ],
             ),
           ),

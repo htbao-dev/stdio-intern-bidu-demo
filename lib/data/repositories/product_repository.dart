@@ -1,4 +1,4 @@
-import 'package:bidu_demo/data/data_providers/product_cloud_data.dart';
+import 'package:bidu_demo/data/cloud_data/product_cloud_data.dart';
 import 'package:bidu_demo/data/models/keyword.dart';
 import 'package:bidu_demo/data/models/product.dart';
 import 'package:bidu_demo/data/models/product_detail.dart';

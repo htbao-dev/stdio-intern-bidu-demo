@@ -2,23 +2,25 @@ import 'package:bidu_demo/data/models/product.dart';
 import 'package:bidu_demo/data/models/shop.dart';
 
 class ProductDetail extends Product {
-  ProductDetail(
-      {String? id,
-      String? name,
-      List<String>? images,
-      bool? isGuaranteedItem,
-      bool? isGenuineItem,
-      bool? isBookmarked,
-      DateTime? createdAt,
-      int? quantity,
-      String? shopId,
-      int? discountPercent,
-      PriceMinMax? priceMinMax,
-      Shop? shop,
-      int? sold,
-      int? beforeSalePrice,
-      int? salePrice})
-      : super(
+  List<TimePrepareOrder>? timePrepareOrder;
+  ProductDetail({
+    String? id,
+    String? name,
+    List<String>? images,
+    bool? isGuaranteedItem,
+    bool? isGenuineItem,
+    bool? isBookmarked,
+    DateTime? createdAt,
+    int? quantity,
+    String? shopId,
+    int? discountPercent,
+    PriceMinMax? priceMinMax,
+    Shop? shop,
+    int? sold,
+    int? beforeSalePrice,
+    int? salePrice,
+    this.timePrepareOrder,
+  }) : super(
             id: id,
             name: name,
             images: images,
@@ -54,6 +56,10 @@ class ProductDetail extends Product {
           ),
           salePrice: json["sale_price"],
           beforeSalePrice: json["before_sale_price"],
+          timePrepareOrder: json["time_prepare_order"] == null
+              ? null
+              : List<TimePrepareOrder>.from(json["time_prepare_order"]
+                  .map((x) => TimePrepareOrder.fromMap(x))),
         );
 }
 
@@ -100,4 +106,49 @@ class ShippingMethod {
         "name_query": nameQuery,
         "code": code,
       };
+}
+
+class TimePrepareOrder {
+  TimePrepareOrderDay day;
+  double value;
+  String unit;
+
+  TimePrepareOrder({
+    required this.day,
+    required this.value,
+    required this.unit,
+  });
+
+  factory TimePrepareOrder.fromMap(Map<String, dynamic> json) {
+    TimePrepareOrderDay day;
+    switch (json['day']) {
+      case '1':
+        day = TimePrepareOrderDay.oneDay;
+        break;
+      case '2':
+        day = TimePrepareOrderDay.twoDay;
+        break;
+      case '3':
+        day = TimePrepareOrderDay.threeDay;
+        break;
+      case '4':
+        day = TimePrepareOrderDay.fourDay;
+        break;
+      default:
+        day = TimePrepareOrderDay.greaterThanFourDay;
+    }
+    return TimePrepareOrder(
+      day: day,
+      value: json["value"].toDouble(),
+      unit: json["unit"],
+    );
+  }
+}
+
+enum TimePrepareOrderDay {
+  oneDay,
+  twoDay,
+  threeDay,
+  fourDay,
+  greaterThanFourDay
 }

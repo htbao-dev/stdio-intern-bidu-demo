@@ -1,4 +1,4 @@
-import 'package:bidu_demo/data/data_providers/category_cloud_data.dart';
+import 'package:bidu_demo/data/cloud_data/category_cloud_data.dart';
 import 'package:bidu_demo/data/models/banner_category.dart';
 import 'package:flutter/material.dart';
 

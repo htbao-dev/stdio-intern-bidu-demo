@@ -13,10 +13,8 @@ class ProductCloudDataSource {
   final _topProductUrl = 'api/v2/mobile/home/top-product';
   final _topSearchUrl = 'api/v2/mobile/home/top-keyword';
   final _suggestProductUrl = 'api/v2/mobile/suggest-products';
-  final _productDetailUrl = 'api/v1/mobile/products/';
   final _productDetailUrl1 = 'api/v1/mobile/product-explores/';
   final _topSellerUrl = 'api/v1/mobile/home/ranking-seller/';
-  final _rankingUrl = '/api/v1/mobile/home/ranking';
 
   Future<ProductDetail?> loadProductDetail(String productId) async {
     try {
@@ -27,10 +25,21 @@ class ProductCloudDataSource {
         //       'Bidu eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNTI5YWEyMzU4M2E5MDAxOTBiMTg0ZSIsImlhdCI6MTY0NTY5NjEyNCwiZXhwIjoxNjc3MjMyMTI0fQ.1dkYz3sf1KxxciFBLoamHO0Y_5XDRn5L9kCipmV7F-w',
         // },
       );
-      print(response.body);
       final dataDecode = json.decode(response.body);
       if (dataDecode['success'] == true) {
         final productDetail = ProductDetail.fromMap(dataDecode['data']);
+        productDetail.timePrepareOrder = [
+          TimePrepareOrder(
+              day: TimePrepareOrderDay.oneDay, value: 80, unit: '%'),
+          TimePrepareOrder(
+              day: TimePrepareOrderDay.twoDay, value: 10, unit: '%'),
+          TimePrepareOrder(
+              day: TimePrepareOrderDay.threeDay, value: 10, unit: '%'),
+          TimePrepareOrder(
+              day: TimePrepareOrderDay.fourDay, value: 0, unit: '%'),
+          TimePrepareOrder(
+              day: TimePrepareOrderDay.greaterThanFourDay, value: 0, unit: '%'),
+        ];
         return productDetail;
       }
       return null;

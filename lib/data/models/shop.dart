@@ -12,62 +12,36 @@ class Shop {
   Shop({
     required this.id,
     this.shopType,
-    // required this.refundMoneyMode,
-    // required this.refundMoneyRegulations,
-    // required this.pauseMode,
     required String? country,
-    // required this.isApproved,
     this.name,
     this.description,
     this.userId,
-    // required this.shippingMethods,
-    // required this.refundConditions,
-    // required this.createdAt,
-    // required this.updatedAt,
     this.ranking,
     this.rankingToday,
     this.rankingYesterday,
     this.avgRating,
-    // required this.shortenLink,
-    // required this.allowShowOnTop,
     this.rankPolicy,
     this.rankingCriteria,
-    // required this.systemBanner,
-    // required this.middleBanner,
-    // required this.avgShippedTime,
-    // required this.biggestPrice,
     this.user,
+    this.avgShippingTime,
   }) {
     _country = country;
   }
 
   String id;
   int? shopType;
-  // bool refundMoneyMode;
-  // dynamic refundMoneyRegulations;
-  // bool pauseMode;
   String? _country;
-  // bool isApproved;
   String? name;
   String? description;
   String? userId;
-  // List<ShippingMethod> shippingMethods;
-  // List<dynamic> refundConditions;
-  // DateTime createdAt;
-  // DateTime updatedAt;
   int? ranking;
   int? rankingToday;
   int? rankingYesterday;
   double? avgRating;
-  // String shortenLink;
-  // bool allowShowOnTop;
   RankPolicy? rankPolicy;
   RankingCriteria? rankingCriteria;
-  // dynamic systemBanner;
-  // String middleBanner;
-  // int avgShippedTime;
-  // int biggestPrice;
   User? user;
+  AvgShippingTime? avgShippingTime;
 
   String get country {
     switch (_country) {
@@ -84,37 +58,37 @@ class Shop {
       : this(
           id: json["_id"],
           shopType: json["shop_type"],
-          // refundMoneyMode: json["refund_money_mode"],
-          // refundMoneyRegulations: json["refund_money_regulations"],
-          // pauseMode: json["pause_mode"],
           country: json["country"],
-          // isApproved: json["is_approved"],
           name: json["name"],
           description: json["description"],
           userId: json["user_id"],
-          // shippingMethods: List<ShippingMethod>.from(
-          //     json["shipping_methods"].map((x) => ShippingMethod.fromMap(x))),
-          // refundConditions:
-          //     List<dynamic>.from(json["refund_conditions"].map((x) => x)),
-          // createdAt: DateTime.parse(json["createdAt"]),
-          // updatedAt: DateTime.parse(json["updatedAt"]),
           ranking: json["ranking"],
           rankingToday: json["ranking_today"],
           rankingYesterday: json["ranking_yesterday"],
           avgRating: json["avg_rating"]?.toDouble(),
-          // shortenLink: json["shorten_link"],
-          // allowShowOnTop: json["allow_show_on_top"],
           rankPolicy: json["rank_policy"] != null
               ? RankPolicy.fromMap(json["rank_policy"])
               : null,
           rankingCriteria: json["ranking_criteria"] != null
               ? RankingCriteria.fromMap(json["ranking_criteria"])
               : null,
-          // systemBanner: json["system_banner"],
-          // middleBanner: json["middle_banner"],
-          // avgShippedTime: json["avg_shipped_time"],
-          // biggestPrice: json["biggest_price"],
           user: json["user"] != null ? User.fromMap(json["user"]) : null,
+          avgShippingTime: json["avg_shipping_time"] != null
+              ? AvgShippingTime.fromMap(json["avg_shipping_time"])
+              : null,
+        );
+}
+
+class AvgShippingTime {
+  final int min;
+  final int max;
+
+  AvgShippingTime({required this.min, required this.max});
+
+  AvgShippingTime.fromMap(Map<String, dynamic> json)
+      : this(
+          min: json["min"],
+          max: json["max"],
         );
 }
 
@@ -153,7 +127,7 @@ class Data {
   int chatResponseByPercent;
   double shopRating;
   double unSuccessOrderByPercent;
-  int lateDelivery;
+  double lateDelivery;
   double penaltyOrderByPercent;
   int preOrderByPercent;
 
@@ -165,7 +139,7 @@ class Data {
           chatResponseByPercent: json["chatResponseByPercent"],
           shopRating: json["shopRating"].toDouble(),
           unSuccessOrderByPercent: json["unSuccessOrderByPercent"].toDouble(),
-          lateDelivery: json["lateDelivery"],
+          lateDelivery: json["lateDelivery"].toDouble(),
           penaltyOrderByPercent: json["penaltyOrderByPercent"].toDouble(),
           preOrderByPercent: json["preOrderByPercent"],
         );

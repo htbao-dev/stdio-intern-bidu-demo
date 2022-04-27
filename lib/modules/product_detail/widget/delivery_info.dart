@@ -1,38 +1,317 @@
+import 'package:bidu_demo/data/models/product_detail.dart';
+import 'package:bidu_demo/data/models/shop.dart';
+import 'package:bidu_demo/logic/blocs/product_detail_bloc.dart';
+import 'package:bidu_demo/modules/common_widget/gradient_text.dart';
+import 'package:bidu_demo/modules/product_detail/widget/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DeliveryInfo extends StatelessWidget {
-  const DeliveryInfo({Key? key}) : super(key: key);
+  final ProductDetail productDetail;
+  const DeliveryInfo(this.productDetail, {Key? key, required})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final avgShippingTime = productDetail.shop?.avgShippingTime;
+    final timePrepareOrder = productDetail.timePrepareOrder;
+    final country = productDetail.shop?.country;
+    return DefaultTextStyle(
+      style: Theme.of(context).textTheme.bodyText2!,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: kHorizontalPadding,
+          vertical: kVerticalPadding,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _InfoText(
+              avgShippingTime: avgShippingTime,
+              country: country,
+            ),
+            const SizedBox(
+              height: 24,
+            ),
+            _InfoChart(
+              timePrepareOrders: timePrepareOrder,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _InfoChart extends StatelessWidget {
+  final List<TimePrepareOrder>? timePrepareOrders;
+  final String kPrepareText = 'Thời gian chuẩn bị hàng';
+  const _InfoChart({Key? key, required this.timePrepareOrders})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    if (timePrepareOrders != null) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(kPrepareText),
+          const SizedBox(
+            height: 10,
+          ),
+          _chart()
+        ],
+      );
+    } else {
+      return const SizedBox();
+    }
+  }
+
+  Widget _rowItem(String title, double value, {bool isPrimary = false}) {
+    if (isPrimary) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Flexible(
+            child: GradientText(
+              title,
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+              ),
+              gradient: const LinearGradient(
+                colors: [
+                  Color(0xffFD37AE),
+                  Color(0xffFD374F),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
+            flex: 1,
+          ),
+          Flexible(
+              flex: 4,
+              child: Container(
+                height: 8,
+                decoration: BoxDecoration(
+                  color: const Color(0xffF1F1F1),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                // color: Colors.red,
+                child: LayoutBuilder(
+                    builder: (context, constraints) => Row(
+                          children: [
+                            Container(
+                              width: constraints.maxWidth * value / 100,
+                              height: 8,
+                              decoration: BoxDecoration(
+                                // color: const Color(0xffC9C9C9),
+                                gradient: const LinearGradient(
+                                    colors: [
+                                      Color(0xffFF7C79),
+                                      Color(0xffE812A4)
+                                    ],
+                                    begin: Alignment.centerLeft,
+                                    end: Alignment.centerRight),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ],
+                        )),
+              )),
+        ],
+      );
+    } else {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Flexible(
+            child: Text(title),
+            flex: 1,
+          ),
+          Flexible(
+              flex: 4,
+              child: Container(
+                height: 8,
+                decoration: BoxDecoration(
+                  color: const Color(0xffF1F1F1),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                // color: Colors.red,
+                child: LayoutBuilder(
+                    builder: (context, constraints) => Row(
+                          children: [
+                            Container(
+                              width: constraints.maxWidth * value / 100,
+                              height: 8,
+                              decoration: BoxDecoration(
+                                color: const Color(0xffC9C9C9),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ],
+                        )),
+              )),
+        ],
+      );
+    }
+  }
+
+  Widget _chart() {
+    int primary = 0;
+    Map<TimePrepareOrderDay, String> mapOrderDay = {
+      TimePrepareOrderDay.oneDay: '1 ngày',
+      TimePrepareOrderDay.twoDay: '2 ngày',
+      TimePrepareOrderDay.threeDay: '3 ngày',
+      TimePrepareOrderDay.fourDay: '4 ngày',
+      TimePrepareOrderDay.greaterThanFourDay: 'Sau 4 ngày',
+    };
+    for (var i = 1; i < timePrepareOrders!.length; i++) {
+      if (timePrepareOrders![i].value > timePrepareOrders![primary].value) {
+        primary = i;
+      }
+    }
+    return ListView.separated(
+      padding: EdgeInsets.zero,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (BuildContext context, int index) => _rowItem(
+          mapOrderDay[timePrepareOrders![index].day]!,
+          timePrepareOrders![index].value,
+          isPrimary: index == primary),
+      itemCount: timePrepareOrders!.length,
+      separatorBuilder: (BuildContext context, int index) => const SizedBox(
+        height: 8,
+      ),
+    );
+  }
+}
+
+class _InfoText extends StatelessWidget {
+  final AvgShippingTime? avgShippingTime;
+  final String? country;
 
   final String deliveryInfoText = 'Thông tin giao hàng';
   final String deliveryTimeText = 'Thời gian vận chuyển';
+  const _InfoText({Key? key, this.avgShippingTime, this.country})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Expanded(
-          child: Column(
-            children: [
-              Text(
-                deliveryInfoText,
-                style: const TextStyle(
-                  fontSize: 12,
-                ),
-              )
-            ],
-          ),
+        Flexible(
+          child: shippingInfo(),
         ),
-        Expanded(
-          child: Column(
+        Flexible(
+          child: shippingTime(context,
+              avgShippingTime: avgShippingTime, country: country),
+        ),
+      ],
+    );
+  }
+
+  Widget shippingInfo() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          deliveryInfoText,
+        ),
+        const SizedBox(
+          height: 4,
+        ),
+        RichText(
+          text: const TextSpan(
             children: [
-              Text(
-                deliveryTimeText,
-                // style: TextStyle(fontSize: 12),
-                style: Theme.of(context).textTheme.bodyText1,
+              TextSpan(
+                text: 'GHTK ',
+                style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 12,
+                    color: Colors.black),
+              ),
+              TextSpan(
+                text: 'đ 30k ~ đ 60k',
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 12,
+                  color: Color(0xff9a9a9a),
+                ),
               ),
             ],
           ),
         ),
+        RichText(
+          text: const TextSpan(
+            children: [
+              TextSpan(
+                text: 'J&T ',
+                style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 12,
+                    color: Colors.black),
+              ),
+              TextSpan(
+                text: 'đ 30k ~ đ 60k',
+                style: TextStyle(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 12,
+                  color: Color(0xff9a9a9a),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget shippingTime(BuildContext context,
+      {required AvgShippingTime? avgShippingTime, required String? country}) {
+    const String shippingTimeText = 'Trung bình ';
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          deliveryTimeText,
+        ),
+        const SizedBox(
+          height: 4,
+        ),
+        if (avgShippingTime != null)
+          RichText(
+            text: TextSpan(
+              style: Theme.of(context).textTheme.bodyText2!,
+              children: [
+                const TextSpan(
+                  text: shippingTimeText,
+                ),
+                TextSpan(
+                  text: '${avgShippingTime.min}-${avgShippingTime.max} ngày',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        if (country != null)
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(
+                Icons.location_on,
+                size: 14,
+              ),
+              Text(country),
+            ],
+          )
       ],
     );
   }

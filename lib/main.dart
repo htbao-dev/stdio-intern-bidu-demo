@@ -79,7 +79,12 @@ class BiduApp extends StatelessWidget {
                 //     color: Colors.grey,
                 //   ),
               ),
-              textTheme: const TextTheme()),
+              textTheme: const TextTheme(
+                bodyText2: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                ),
+              )),
         ));
   }
 }

@@ -5,6 +5,7 @@ import 'package:bidu_demo/modules/home/widget/item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+//TODO: padding, const data,//TODO: button full width
 class HomeTopSeller extends StatefulWidget {
   const HomeTopSeller({Key? key}) : super(key: key);
 

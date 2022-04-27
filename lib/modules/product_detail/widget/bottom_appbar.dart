@@ -3,10 +3,10 @@ import 'package:bidu_demo/modules/common_widget/gradient_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class BottmAppBar extends StatelessWidget {
+class MyBottomAppBar extends StatelessWidget {
   final String addToCartText = 'Thêm vào giỏ';
   final String buyNowText = 'Mua ngay';
-  const BottmAppBar({
+  const MyBottomAppBar({
     Key? key,
   }) : super(key: key);
 

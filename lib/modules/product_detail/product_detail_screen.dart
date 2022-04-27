@@ -1,10 +1,12 @@
 import 'package:bidu_demo/data/models/product.dart';
+import 'package:bidu_demo/data/models/product_detail.dart';
 import 'package:bidu_demo/logic/blocs/product_detail_bloc.dart';
 import 'package:bidu_demo/modules/product_detail/widget/appbar.dart';
 import 'package:bidu_demo/modules/product_detail/widget/bottom_appbar.dart';
 import 'package:bidu_demo/modules/product_detail/widget/delivery_info.dart';
-import 'package:bidu_demo/modules/product_detail/widget/group_content.dart';
+import 'package:bidu_demo/modules/product_detail/widget/evaluation.dart';
 import 'package:bidu_demo/modules/product_detail/widget/product_price.dart';
+import 'package:bidu_demo/modules/product_detail/widget/second_appbar.dart';
 import 'package:bidu_demo/modules/product_detail/widget/shop_name.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -19,39 +21,62 @@ class ProductDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     context.read<ProductDetailBloc>().initLoad(product);
     return Scaffold(
-      body: StreamBuilder<bool>(
-          stream: context.read<ProductDetailBloc>().isDataNullStream,
+      body: StreamBuilder<ProductDetail>(
+          stream: context.read<ProductDetailBloc>().productDetailStream,
           builder: (context, snapshot) {
-            if (snapshot.hasData && snapshot.data!) {
-              return const Center(
-                child: Text('No data'),
-              );
-            }
-            return CustomScrollView(
-              slivers: [
-                const ProductDetailAppBar(),
-                SliverList(
-                  delegate: SliverChildListDelegate(
-                    [
-                      const GroupContent(
-                        child: ShopName(),
-                        padding:
-                            EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-                        borderType: BorderType.thin,
+            if (snapshot.hasData) {
+              return DefaultTabController(
+                length: 3,
+                child: CustomScrollView(
+                  slivers: [
+                    ProductDetailAppBar(snapshot.data!),
+                    SliverList(
+                      delegate: SliverChildListDelegate(
+                        [
+                          ShopName(snapshot.data!),
+                          _thinDivider(),
+                          ProductPrice(snapshot.data!),
+                          _thinDivider(),
+                          const Evaluation(),
+                          _boldDivider(),
+                          DeliveryInfo(snapshot.data!),
+                          _boldDivider(),
+                        ],
                       ),
-                      const GroupContent(
-                        child: ProductPrice(),
-                        borderType: BorderType.thin,
+                    ),
+                    const SecondAppbar(),
+                    ...[],
+                    const SliverFillRemaining(
+                      child: TabBarView(
+                        children: [
+                          Text("Tab 1"),
+                          Text("Tab 2"),
+                          Text("Tab 3"),
+                        ],
                       ),
-                      // const GroupContent(child: Evaluation()),
-                      const GroupContent(child: DeliveryInfo()),
-                    ],
-                  ),
+                    )//TODO: thu xem
+                  ],
                 ),
-              ],
-            );
+              );
+            } else {
+              return const Center(child: CircularProgressIndicator());
+            }
           }),
-      bottomNavigationBar: const BottmAppBar(),
+      bottomNavigationBar: const MyBottomAppBar(),
+    );
+  }
+
+  Widget _thinDivider() {
+    return const Divider(
+      color: Color(0xffF1F1F1),
+      thickness: 1,
+    );
+  }
+
+  Widget _boldDivider() {
+    return const Divider(
+      thickness: 4,
+      color: Color(0xffF6F7F7),
     );
   }
 }

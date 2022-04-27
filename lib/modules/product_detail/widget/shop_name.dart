@@ -1,34 +1,40 @@
 import 'package:bidu_demo/common/assets_path.dart';
 import 'package:bidu_demo/data/models/product_detail.dart';
 import 'package:bidu_demo/logic/blocs/product_detail_bloc.dart';
+import 'package:bidu_demo/modules/product_detail/widget/constant.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 class ShopName extends StatelessWidget {
-  const ShopName({Key? key}) : super(key: key);
+  final ProductDetail productDetail;
+  const ShopName(this.productDetail, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<ProductDetail>(
-      stream: context.read<ProductDetailBloc>().productDetailStream,
-      builder: (context, snapshot) {
-        final String? avatar = snapshot.data?.shop?.user?.avatar;
-        final String? name = snapshot.data?.shop?.name;
-        final double? avgRating = snapshot.data?.shop?.avgRating;
-        final int? chatResponseByPercent =
-            snapshot.data?.shop?.rankPolicy?.data.chatResponseByPercent;
-        final int? ranking = snapshot.data?.shop?.ranking;
-        return Row(
-          children: [
-            _avatar(avatar),
-            _info(name, avgRating, chatResponseByPercent),
-            const Spacer(),
-            _ranking(ranking),
-          ],
-        );
-      },
+    final String? avatar = productDetail.shop?.user?.avatar;
+    final String? name = productDetail.shop?.name;
+    final double? avgRating = productDetail.shop?.avgRating;
+    final int? chatResponseByPercent =
+        productDetail.shop?.rankPolicy?.data.chatResponseByPercent;
+    final int? ranking = productDetail.shop?.ranking;
+    const double kWidgetVerticalPadding = 20;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: kHorizontalPadding,
+        vertical: kWidgetVerticalPadding,
+      ),
+      child: Row(
+        children: [
+          _avatar(avatar),
+          Flexible(
+              child: _info(name, avgRating, chatResponseByPercent), flex: 5),
+          const Spacer(),
+          _ranking(ranking),
+        ],
+      ),
     );
   }
 
@@ -64,6 +70,8 @@ class ShopName extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
               maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              softWrap: true,
             ),
             Row(
               children: [
@@ -104,7 +112,7 @@ class ShopName extends StatelessWidget {
       return Column(
         children: [
           SvgPicture.asset(
-            iconHeartAsset,
+            iconHeartOutlineAsset,
             color: const Color(0xffE812A4),
           ),
           Text(
