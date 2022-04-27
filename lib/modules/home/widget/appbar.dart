@@ -1,3 +1,4 @@
+import 'package:bidu_demo/common/assets_path.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -6,26 +7,26 @@ AppBar appBar() {
     leading: Padding(
       padding: const EdgeInsets.only(left: 10),
       child: SvgPicture.asset(
-        'assets/icons/logo.svg',
+        biduLogoAsset,
         // color: Colors.white,
         // height: 24,
       ),
     ),
     actions: [
       _appBarButton(
-        child: SvgPicture.asset('assets/icons/icon_search.svg'),
+        child: SvgPicture.asset(iconSearchAsset),
         onPressed: () {},
       ),
       _appBarButton(
-        child: SvgPicture.asset('assets/icons/icon_send.svg'),
+        child: SvgPicture.asset(iconSendAsset),
         onPressed: () {},
       ),
       _appBarButton(
-        child: SvgPicture.asset('assets/icons/icon_bell.svg'),
+        child: SvgPicture.asset(iconBellAsset),
         onPressed: () {},
       ),
       _appBarButton(
-        child: SvgPicture.asset('assets/icons/icon_cart.svg'),
+        child: SvgPicture.asset(iconCartAsset),
         onPressed: () {},
       ),
     ],

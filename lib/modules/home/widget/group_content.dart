@@ -1,10 +1,14 @@
+import 'package:bidu_demo/common/assets_path.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+
+const String _kSeeAllText = 'Xem tất cả';
 
 class HomeGroupContent extends StatelessWidget {
   final String title;
   final Widget child;
   final VoidCallback? seeMore;
+
   const HomeGroupContent({
     Key? key,
     required this.title,
@@ -42,7 +46,7 @@ class HomeGroupContent extends StatelessWidget {
                     child: Row(
                       children: [
                         const Text(
-                          'Xem tất cả',
+                          _kSeeAllText,
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.normal,
@@ -52,7 +56,7 @@ class HomeGroupContent extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(left: 5),
                           child: SvgPicture.asset(
-                            'assets/icons/icon_seemore.svg',
+                            iconSeemoreAsset,
                           ),
                         ),
                       ],

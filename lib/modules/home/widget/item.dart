@@ -1,3 +1,4 @@
+import 'package:bidu_demo/common/assets_path.dart';
 import 'package:bidu_demo/common/formatter.dart';
 import 'package:bidu_demo/data/models/keyword.dart';
 import 'package:bidu_demo/data/models/product.dart';
@@ -7,6 +8,12 @@ import 'package:bidu_demo/modules/product_detail/product_detail_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+
+const String _kGuaranteedText = 'Đảm bảo';
+const String _kGenuineText = 'Chính hãng';
+const String _kSoldText = 'Đã bán';
+const String _kFlollowText = 'lượt theo dõi';
+const String _kSeeShopText = 'Xem shop';
 
 abstract class ListItem extends StatelessWidget {
   const ListItem({Key? key}) : super(key: key);
@@ -93,9 +100,9 @@ abstract class ListItem extends StatelessWidget {
     } else {
       final String txt;
       if (isGuaranteedItem) {
-        txt = 'Đảm bảo';
+        txt = _kGuaranteedText;
       } else {
-        txt = 'Chính hãng';
+        txt = _kGenuineText;
       }
       const color = Color(0xffFD37AE);
       child = Container(
@@ -121,7 +128,7 @@ abstract class ListItem extends StatelessWidget {
   Widget productSold(int? sold) {
     sold ??= 0;
     return Text(
-      'Đã bán $sold',
+      '$_kSoldText $sold',
       style: const TextStyle(
         fontSize: 10,
         color: Color(0xffC9C9C9),
@@ -183,7 +190,7 @@ class NewestProductItem extends ListItem {
 
 class TopSearchItem extends ListItem {
   final Keyword keyword;
-
+  final String kProductText = 'sản phẩm';
   const TopSearchItem({Key? key, required this.keyword}) : super(key: key);
 
   @override
@@ -217,7 +224,7 @@ class TopSearchItem extends ListItem {
 
   Widget totalProduct(int totalProduct) {
     return Text(
-      '$totalProduct sản phẩm',
+      '$totalProduct $kProductText',
       style: const TextStyle(
         fontSize: 12,
       ),
@@ -366,7 +373,7 @@ class TopSellerItem extends ListItem {
                   Positioned(child: _rankIcon(rank), top: 0, right: 9),
                   Align(
                     child: Container(
-                      child: SvgPicture.asset('assets/icons/icon_add.svg'),
+                      child: SvgPicture.asset(iconAddAsset),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         boxShadow: [
@@ -400,7 +407,7 @@ class TopSellerItem extends ListItem {
                   Row(
                     children: [
                       SvgPicture.asset(
-                        'assets/icons/icon-heart-2.svg',
+                        iconHeartAsset,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 3.69),
@@ -413,17 +420,17 @@ class TopSellerItem extends ListItem {
                         height: 11,
                       ),
                       Text(
-                        shop.user!.followCount.toString() + ' lượt theo dõi',
+                        shop.user!.followCount.toString() + ' $_kFlollowText',
                       ),
                     ],
                   ),
                   Row(
                     children: [
-                      const Text('Xem shop'),
+                      const Text(_kSeeShopText),
                       Padding(
                         padding: const EdgeInsets.only(left: 8),
                         child: SvgPicture.asset(
-                          'assets/icons/icon_seemore.svg',
+                          iconSeemoreAsset,
                           color: Colors.black,
                         ),
                       ),
@@ -443,11 +450,11 @@ class TopSellerItem extends ListItem {
   Widget _rankIcon(int rank) {
     String path;
     if (rank == 1) {
-      path = 'assets/icons/icon_no1.svg';
+      path = iconNo1Asset;
     } else if (rank == 2) {
-      path = 'assets/icons/icon_no2.svg';
+      path = iconNo2Asset;
     } else {
-      path = 'assets/icons/icon_no3.svg';
+      path = iconNo3Asset;
     }
     return SvgPicture.asset(
       path,

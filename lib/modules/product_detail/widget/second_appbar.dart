@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+const String _kProductInfoText = 'Thông tin sản phẩm';
+const String _kReviewText = 'Đánh giá (40)';
+const String _kChatText = 'Trò chuyện';
+
 class SecondAppbar extends StatefulWidget {
   const SecondAppbar({Key? key}) : super(key: key);
 
@@ -36,7 +40,7 @@ class _SecondAppbarState extends State<SecondAppbar> {
         tabs: [
           Tab(
             child: Text(
-              'Thông tin sản phẩm',
+              _kProductInfoText,
               textAlign: TextAlign.center,
               style: _currentIndex == _infoIndex
                   ? const TextStyle(
@@ -46,7 +50,7 @@ class _SecondAppbarState extends State<SecondAppbar> {
           ),
           Tab(
             child: Text(
-              'Đánh giá (40)',
+              _kReviewText,
               style: _currentIndex == _reviewIndex
                   ? const TextStyle(
                       fontWeight: FontWeight.bold, color: Color(0xff1A1A1A))
@@ -55,7 +59,7 @@ class _SecondAppbarState extends State<SecondAppbar> {
           ),
           Tab(
             child: Text(
-              'Trò chuyện',
+              _kChatText,
               style: _currentIndex == _chatIndex
                   ? const TextStyle(
                       fontWeight: FontWeight.bold, color: Color(0xff1A1A1A))

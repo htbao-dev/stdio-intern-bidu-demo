@@ -49,12 +49,12 @@ class ProductDetailsScreen extends StatelessWidget {
                     const SliverFillRemaining(
                       child: TabBarView(
                         children: [
-                          Text("Tab 1"),
+                          Text("Tab 1"), //demo
                           Text("Tab 2"),
                           Text("Tab 3"),
                         ],
                       ),
-                    )//TODO: thu xem
+                    ) //TODO: thu xem
                   ],
                 ),
               );

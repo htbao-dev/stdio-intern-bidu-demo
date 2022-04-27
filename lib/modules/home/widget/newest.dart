@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 const double kHomeNewestItemHeight = 220;
+const String _kNewProductText = 'Sản phẩm mới';
 
 class HomeNewest extends StatefulWidget {
   const HomeNewest({Key? key}) : super(key: key);
@@ -18,10 +19,9 @@ class _HomeNewestState extends State<HomeNewest>
     with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
-    String title = 'Sản phẩm mới';
     super.build(context);
     return HomeGroupContent(
-      title: title,
+      title: _kNewProductText,
       seeMore: () {
         debugPrint('seemore');
       },

@@ -3,9 +3,10 @@ import 'package:bidu_demo/modules/common_widget/gradient_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+const String _kAddToCartText = 'Thêm vào giỏ';
+const String _kBuyNowText = 'Mua ngay';
+
 class MyBottomAppBar extends StatelessWidget {
-  final String addToCartText = 'Thêm vào giỏ';
-  final String buyNowText = 'Mua ngay';
   const MyBottomAppBar({
     Key? key,
   }) : super(key: key);
@@ -32,9 +33,9 @@ class MyBottomAppBar extends StatelessWidget {
                       height: 24,
                       width: 24,
                     ),
-                    Text(
-                      addToCartText,
-                      style: const TextStyle(fontSize: 14, color: Colors.white),
+                    const Text(
+                      _kAddToCartText,
+                      style: TextStyle(fontSize: 14, color: Colors.white),
                     )
                   ],
                 ),
@@ -44,16 +45,15 @@ class MyBottomAppBar extends StatelessWidget {
                 height: 28,
                 color: const Color(0xffC9C9C9),
               ),
-              Expanded(
+              const Expanded(
                 flex: 1,
                 child: Align(
                   heightFactor: 1,
                   child: GradientText(
-                    buyNowText,
-                    gradient: const LinearGradient(
+                    _kBuyNowText,
+                    gradient: LinearGradient(
                         colors: [Color(0xffFD374F), Color(0xffFD37AE)]),
-                    style: const TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
               )

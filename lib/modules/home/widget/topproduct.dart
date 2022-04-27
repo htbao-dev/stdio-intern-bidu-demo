@@ -5,6 +5,8 @@ import 'package:bidu_demo/modules/home/widget/item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+const String _kTopProductText = 'Top Sản Phẩm';
+
 class HomeTopProduct extends StatefulWidget {
   const HomeTopProduct({Key? key}) : super(key: key);
 
@@ -18,7 +20,7 @@ class _HomeTopProductState extends State<HomeTopProduct>
   Widget build(BuildContext context) {
     super.build(context);
     return HomeGroupContent(
-      title: 'Top Sản Phẩm',
+      title: _kTopProductText,
       child: StreamBuilder<List<Product>>(
         stream: Provider.of<HomeBloc>(context).topProductStream,
         builder: (BuildContext context, AsyncSnapshot<List<Product>> snapshot) {

@@ -1,3 +1,4 @@
+import 'package:bidu_demo/common/assets_path.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -29,7 +30,7 @@ class HomeFloatingButton extends StatelessWidget {
             )),
             Align(
                 child: SvgPicture.asset(
-                  'assets/icons/icon-bidu.svg',
+                  iconBiduAsset,
                   color: Colors.white,
                   width: 30,
                 ),

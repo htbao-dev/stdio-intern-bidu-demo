@@ -1,5 +1,10 @@
+import 'package:bidu_demo/common/assets_path.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+
+const String _kSeemoreText = 'Xem thêm';
+const String _kSellOffText = 'Sale off 30% to 50% for 21/04 - Fo...';
+const String _kUsernameLiveText = 'Phương Lê';
 
 class BiduLive extends StatelessWidget {
   const BiduLive({Key? key}) : super(key: key);
@@ -14,7 +19,7 @@ class BiduLive extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 16, bottom: 20),
-            child: SvgPicture.asset('assets/icons/icon_bidulive.svg'),
+            child: SvgPicture.asset(iconBiduLiveAsset),
           ),
           SizedBox(
             height: 200,
@@ -46,10 +51,10 @@ class _SeeMoreButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        SvgPicture.asset('assets/icons/icon_live_seemore.svg'),
+        SvgPicture.asset(iconLiveSeemoreAsset),
         const SizedBox(width: 12),
-        const Text(
-          'Xem thêm',
+        Text(
+          _kSeemoreText,
         ),
         const SizedBox(width: 15),
       ],
@@ -69,7 +74,7 @@ class _LiveItem extends StatelessWidget {
           width: 140,
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/images/img_bidulive.jpg'),
+              image: AssetImage(imgBiduliveAsset),
               fit: BoxFit.fill,
             ),
           ),
@@ -84,7 +89,7 @@ class _LiveItem extends StatelessWidget {
               end: Alignment.bottomCenter,
               colors: [
                 Colors.transparent,
-                Colors.red,
+                Colors.black,
               ],
             ),
           ),
@@ -118,22 +123,21 @@ class _LiveItem extends StatelessWidget {
                             ),
                             borderRadius: BorderRadius.circular(50),
                             image: const DecorationImage(
-                              image:
-                                  AssetImage('assets/images/img_live_avt.jpg'),
+                              image: AssetImage(imgBiduliveAvtAsset),
                               fit: BoxFit.cover,
                             ),
                           ),
                         ),
-                        const Text('Phương Lê',
-                            style: TextStyle(
+                        Text(_kUsernameLiveText,
+                            style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 12,
                                 color: Colors.white)),
                       ],
                     ),
-                    const Text(
-                      'Sale off 30% to 50% for 21/04 - Fo...',
-                      style: TextStyle(
+                    Text(
+                      _kSellOffText,
+                      style: const TextStyle(
                           fontWeight: FontWeight.normal,
                           fontSize: 12,
                           color: Colors.white),

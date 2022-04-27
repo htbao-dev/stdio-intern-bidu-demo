@@ -5,6 +5,9 @@ import 'package:bidu_demo/modules/home/widget/item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+const String _kSeemoreText = 'Xem thêm';
+const String _kTopSellerText = 'Top Người Bán';
+
 //TODO: padding, const data,//TODO: button full width
 class HomeTopSeller extends StatefulWidget {
   const HomeTopSeller({Key? key}) : super(key: key);
@@ -19,7 +22,7 @@ class _HomeTopSellerState extends State<HomeTopSeller>
   Widget build(BuildContext context) {
     super.build(context);
     return HomeGroupContent(
-      title: 'Top Người Bán',
+      title: _kTopSellerText,
       seeMore: () {},
       child: StreamBuilder<List<Shop>>(
         stream: context.read<HomeBloc>().topSellerStream,
@@ -139,7 +142,7 @@ class _SeemoreSellerState extends State<_SeemoreSeller> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: const [
-        Text('Xem thêm',
+        Text(_kSeemoreText,
             style: TextStyle(
                 // color: Colors.blue,
                 )),

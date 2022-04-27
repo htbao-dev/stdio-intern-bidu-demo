@@ -1,3 +1,4 @@
+import 'package:bidu_demo/common/assets_path.dart';
 import 'package:bidu_demo/modules/product_detail/widget/constant.dart';
 import 'package:flutter/material.dart';
 
@@ -81,7 +82,7 @@ class Evaluation extends StatelessWidget {
       child: Row(
         children: [
           Image.asset(
-            'assets/images/img_bidulive.jpg',
+            imgBiduliveAsset,
             height: 48,
             width: 48,
           ),
@@ -89,7 +90,7 @@ class Evaluation extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: const [
-                Text('Hài lòng',
+                Text('Hài lòng', // khong const vi demo
                     style:
                         TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
                 Flexible(

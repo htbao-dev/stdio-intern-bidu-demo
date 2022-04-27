@@ -1,3 +1,4 @@
+import 'package:bidu_demo/common/assets_path.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -17,13 +18,11 @@ class _HomeNavBarState extends State<HomeNavBar> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _button('assets/icons/icon-shopping.svg',
-                index: 0, onPressed: () {}),
-            _button('assets/icons/icon-bidu.svg', index: 1, onPressed: () {}),
-            _button('assets/icons/icon-heart.svg', index: 2, onPressed: () {}),
-            _button('assets/icons/icon-categories.svg',
-                index: 3, onPressed: () {}),
-            _button('assets/icons/icon-person.svg', index: 4, onPressed: () {}),
+            _button(iconShoppingAsset, index: 0, onPressed: () {}),
+            _button(iconBiduAsset, index: 1, onPressed: () {}),
+            _button(iconHeartOutlineAsset, index: 2, onPressed: () {}),
+            _button(iconCategoriesAsset, index: 3, onPressed: () {}),
+            _button(iconPersonAsset, index: 4, onPressed: () {}),
             const SizedBox(width: 90),
           ],
         ));

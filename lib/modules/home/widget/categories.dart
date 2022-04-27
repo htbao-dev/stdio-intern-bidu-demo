@@ -1,3 +1,4 @@
+import 'package:bidu_demo/common/assets_path.dart';
 import 'package:bidu_demo/data/models/banner_category.dart';
 import 'package:bidu_demo/data/models/category.dart';
 import 'package:bidu_demo/logic/blocs/home_bloc.dart';
@@ -6,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+
+const String _kSeemoreText = 'Xem thêm';
 
 class HomeCategories extends StatefulWidget {
   final ScrollController scrollController;
@@ -19,7 +22,6 @@ class HomeCategories extends StatefulWidget {
 class _HomeCategoriesState extends State<HomeCategories>
     with AutomaticKeepAliveClientMixin {
   bool isExpanded = false;
-
   @override
   initState() {
     super.initState();
@@ -99,8 +101,8 @@ class _HomeCategoriesState extends State<HomeCategories>
   }
 
   Widget _seemore() {
-    final _seemore = Category(
-        name: 'Xem thêm', avatar: 'assets/icons/icon_category_seemore.svg');
+    final _seemore =
+        Category(name: _kSeemoreText, avatar: iconCategorySeemoreAsset);
     return _categoryItem(_seemore, isSeemreBtn: true, onTap: () {
       setState(() {
         isExpanded = !isExpanded;

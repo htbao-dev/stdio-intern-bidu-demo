@@ -6,6 +6,11 @@ import 'package:bidu_demo/modules/product_detail/widget/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+const String _kPrepareText = 'Thời gian chuẩn bị hàng';
+const String _kDeliveryInfoText = 'Thông tin giao hàng';
+const String _kDeliveryTimeText = 'Thời gian vận chuyển';
+const String _kShippingTimeText = 'Trung bình ';
+
 class DeliveryInfo extends StatelessWidget {
   final ProductDetail productDetail;
   const DeliveryInfo(this.productDetail, {Key? key, required})
@@ -45,7 +50,6 @@ class DeliveryInfo extends StatelessWidget {
 
 class _InfoChart extends StatelessWidget {
   final List<TimePrepareOrder>? timePrepareOrders;
-  final String kPrepareText = 'Thời gian chuẩn bị hàng';
   const _InfoChart({Key? key, required this.timePrepareOrders})
       : super(key: key);
 
@@ -55,7 +59,7 @@ class _InfoChart extends StatelessWidget {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(kPrepareText),
+          const Text(_kPrepareText),
           const SizedBox(
             height: 10,
           ),
@@ -191,9 +195,6 @@ class _InfoChart extends StatelessWidget {
 class _InfoText extends StatelessWidget {
   final AvgShippingTime? avgShippingTime;
   final String? country;
-
-  final String deliveryInfoText = 'Thông tin giao hàng';
-  final String deliveryTimeText = 'Thời gian vận chuyển';
   const _InfoText({Key? key, this.avgShippingTime, this.country})
       : super(key: key);
 
@@ -218,8 +219,8 @@ class _InfoText extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          deliveryInfoText,
+        const Text(
+          _kDeliveryInfoText,
         ),
         const SizedBox(
           height: 4,
@@ -272,12 +273,11 @@ class _InfoText extends StatelessWidget {
 
   Widget shippingTime(BuildContext context,
       {required AvgShippingTime? avgShippingTime, required String? country}) {
-    const String shippingTimeText = 'Trung bình ';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          deliveryTimeText,
+        const Text(
+          _kDeliveryTimeText,
         ),
         const SizedBox(
           height: 4,
@@ -288,7 +288,7 @@ class _InfoText extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyText2!,
               children: [
                 const TextSpan(
-                  text: shippingTimeText,
+                  text: _kShippingTimeText,
                 ),
                 TextSpan(
                   text: '${avgShippingTime.min}-${avgShippingTime.max} ngày',

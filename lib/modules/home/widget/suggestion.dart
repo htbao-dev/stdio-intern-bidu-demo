@@ -5,6 +5,8 @@ import 'package:bidu_demo/modules/home/widget/item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+const String _kSuggestText = 'Gợi Ý Cho Bạn';
+
 class HomeSuggestion extends StatefulWidget {
   const HomeSuggestion({Key? key}) : super(key: key);
 
@@ -18,7 +20,7 @@ class _HomeSuggestionState extends State<HomeSuggestion>
   Widget build(BuildContext context) {
     super.build(context);
     return HomeGroupContent(
-      title: 'Gợi Ý Cho Bạn',
+      title: _kSuggestText,
       seeMore: () {
         // ignore: avoid_print
         print('see more');

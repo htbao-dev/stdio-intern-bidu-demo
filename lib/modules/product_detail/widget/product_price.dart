@@ -9,12 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
+const String _kDiscountInputText = 'Nhập mã khuyến mãi giảm giá tối đa 200k';
+const String _kRefundText = 'Đổi trả trong vòng 3 ngày';
+
 class ProductPrice extends StatelessWidget {
   final ProductDetail productDetail;
   const ProductPrice(this.productDetail, {Key? key}) : super(key: key);
-
-  final String discountInputText = 'Nhập mã khuyến mãi giảm giá tối đa 200k';
-  final String refundText = 'Đổi trả trong vòng 3 ngày';
 
   @override
   Widget build(BuildContext context) {
@@ -35,15 +35,15 @@ class ProductPrice extends StatelessWidget {
               discountPercent: discountPercent),
           TextButton.icon(
             onPressed: () {},
-            label: GradientText(
-              refundText,
-              gradient: const LinearGradient(
+            label: const GradientText(
+              _kRefundText,
+              gradient: LinearGradient(
                 colors: [
                   Color(0xffFD37AE),
                   Color(0xffFD374F),
                 ],
               ),
-              style: const TextStyle(
+              style: TextStyle(
                 decoration: TextDecoration.underline,
               ),
             ),
@@ -162,9 +162,9 @@ class ProductPrice extends StatelessWidget {
       ).createShader(bounds),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Text(
-          discountInputText,
-          style: const TextStyle(
+        child: const Text(
+          _kDiscountInputText,
+          style: TextStyle(
             fontSize: 14,
           ),
         ),

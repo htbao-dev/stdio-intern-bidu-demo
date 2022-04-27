@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+const String _kBackToTopText = 'Về đàu trang';
+
 class BackTopTop extends StatelessWidget {
   final VoidCallback onPressed;
   const BackTopTop({Key? key, required this.onPressed}) : super(key: key);
@@ -22,7 +24,7 @@ class BackTopTop extends StatelessWidget {
         children: const [
           Icon(Icons.arrow_upward_outlined, color: Color(0xffE812A4)),
           Text(
-            'Về đàu trang',
+            _kBackToTopText,
             style: TextStyle(
                 color: Colors.black, fontWeight: FontWeight.w300, fontSize: 12),
           )
