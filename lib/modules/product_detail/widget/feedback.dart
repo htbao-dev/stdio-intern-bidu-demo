@@ -2,8 +2,8 @@ import 'package:bidu_demo/common/assets_path.dart';
 import 'package:bidu_demo/common/constant.dart';
 import 'package:flutter/material.dart';
 
-class Evaluation extends StatelessWidget {
-  const Evaluation({Key? key}) : super(key: key);
+class FeedBack extends StatelessWidget {
+  const FeedBack({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

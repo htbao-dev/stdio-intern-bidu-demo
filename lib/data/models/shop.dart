@@ -156,13 +156,13 @@ class RankingCriteria {
   int totalVenue;
   int totalOrder;
   double rating;
-  int mark;
+  double mark;
   RankingCriteria.fromMap(Map<String, dynamic> json)
       : this(
           totalVenue: json["total_venue"],
           totalOrder: json["total_order"],
           rating: json["rating"].toDouble(),
-          mark: json["mark"],
+          mark: json["mark"].toDouble(),
         );
 
   Map<String, dynamic> toMap() => {

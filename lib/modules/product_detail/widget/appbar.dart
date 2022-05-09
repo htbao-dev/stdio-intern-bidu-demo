@@ -16,7 +16,6 @@ class ProductDetailAppBar extends StatefulWidget {
 
 class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
   late List<String> images;
-  int _indicatorIndex = 0;
   @override
   void initState() {
     super.initState();

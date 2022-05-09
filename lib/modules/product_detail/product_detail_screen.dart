@@ -1,11 +1,12 @@
 import 'package:bidu_demo/data/models/product.dart';
 import 'package:bidu_demo/data/models/product_detail.dart';
 import 'package:bidu_demo/logic/blocs/product_detail_bloc.dart';
-import 'package:bidu_demo/modules/product_detail/product_info_screen.dart';
+import 'package:bidu_demo/modules/product_detail/widget/product_info_tab.dart';
 import 'package:bidu_demo/modules/product_detail/widget/appbar.dart';
 import 'package:bidu_demo/modules/product_detail/widget/bottom_appbar.dart';
 import 'package:bidu_demo/modules/product_detail/widget/delivery_info.dart';
-import 'package:bidu_demo/modules/product_detail/widget/evaluation.dart';
+import 'package:bidu_demo/modules/product_detail/widget/divider.dart';
+import 'package:bidu_demo/modules/product_detail/widget/feedback.dart';
 import 'package:bidu_demo/modules/product_detail/widget/product_price.dart';
 import 'package:bidu_demo/modules/product_detail/widget/second_appbar.dart';
 import 'package:bidu_demo/modules/product_detail/widget/shop_name.dart';
@@ -34,6 +35,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
 
   @override
   Widget build(BuildContext context) {
+    // ScrollPhysics physics = const AlwaysScrollableScrollPhysics();
     context.read<ProductDetailBloc>().initLoad(widget.product);
     return Scaffold(
       body: StreamBuilder<ProductDetail>(
@@ -41,19 +43,20 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return CustomScrollView(
+                // physics: physics,
                 slivers: [
                   ProductDetailAppBar(snapshot.data!),
                   SliverList(
                     delegate: SliverChildListDelegate(
                       [
                         ShopName(snapshot.data!),
-                        _thinDivider(),
+                        const ThinDivider(),
                         ProductPrice(snapshot.data!),
-                        _thinDivider(),
-                        const Evaluation(),
-                        _boldDivider(),
+                        const ThinDivider(),
+                        const FeedBack(),
+                        const BoldDivider(),
                         DeliveryInfo(snapshot.data!),
-                        _boldDivider(),
+                        const BoldDivider(),
                       ],
                     ),
                   ),
@@ -64,7 +67,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                     child: TabBarView(
                       controller: controller,
                       children: [
-                        ProductInfoScreen(productDetail: snapshot.data!),
+                        ProductInfoTab(
+                          productDetail: snapshot.data!,
+                          // physics: physics,
+                        ),
                         const Text("Tab 2"), //demo
                         const Text("Tab 3"),
                       ],
@@ -77,20 +83,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
             }
           }),
       bottomNavigationBar: const MyBottomAppBar(),
-    );
-  }
-
-  Widget _thinDivider() {
-    return const Divider(
-      color: Color(0xffF1F1F1),
-      thickness: 1,
-    );
-  }
-
-  Widget _boldDivider() {
-    return const Divider(
-      thickness: 4,
-      color: Color(0xffF6F7F7),
     );
   }
 }

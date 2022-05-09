@@ -42,9 +42,9 @@ class _HomeSuggestionState extends State<HomeSuggestion>
               children: List.generate(listProduct.length, (index) {
                 return SizedBox(
                     width: itemSize,
-                    child: SuggestProductItem(
+                    child: ProductItem2(
                       product: listProduct[index],
-                      itemSize: itemSize,
+                      imageSize: itemSize,
                     ));
               }),
             );

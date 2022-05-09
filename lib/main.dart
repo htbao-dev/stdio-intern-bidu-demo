@@ -70,11 +70,14 @@ class BiduApp extends StatelessWidget {
               ),
               fontFamily: 'Lexend',
               textTheme: const TextTheme(
-                bodyText2: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w400,
-                    color: kPrimaryBlackColor),
-              )),
+                  bodyText2: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: kPrimaryBlackColor),
+                  headline6: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: kPrimaryBlackColor))),
         ));
   }
 }

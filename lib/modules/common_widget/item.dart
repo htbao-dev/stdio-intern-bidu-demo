@@ -272,11 +272,10 @@ class TopProductItem extends ListItem {
   }
 }
 
-class SuggestProductItem extends ListItem {
+class ProductItem2 extends ListItem {
   final Product product;
-  final double itemSize;
-  const SuggestProductItem(
-      {Key? key, required this.product, required this.itemSize})
+  final double imageSize;
+  const ProductItem2({Key? key, required this.product, required this.imageSize})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -292,7 +291,7 @@ class SuggestProductItem extends ListItem {
           Stack(
             children: [
               imageWithBookmark(product.images?[0],
-                  height: itemSize, width: itemSize),
+                  height: imageSize, width: imageSize),
             ],
           ),
           const SizedBox(height: 5),

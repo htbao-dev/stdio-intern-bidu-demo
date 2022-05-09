@@ -12,7 +12,11 @@ class ProductDetailBloc {
       StreamController<ProductDetail>.broadcast();
   final StreamController<List<Product>> _suggestProductController =
       StreamController<List<Product>>.broadcast();
+  final StreamController<List<Product>> _similarProductController =
+      StreamController<List<Product>>.broadcast();
 
+  Stream<List<Product>> get similarProductStream =>
+      _similarProductController.stream;
   Stream<List<Product>> get suggestProductStream =>
       _suggestProductController.stream;
 
@@ -35,8 +39,15 @@ class ProductDetailBloc {
     _suggestProductController.sink.add(suggestProduct?.listProduct ?? []);
   }
 
+  void loadSimilarProduct() async {
+    final similarProduct =
+        await productRepository.loadSuggestProducts(page: 1, limit: 9);
+    _similarProductController.sink.add(similarProduct?.listProduct ?? []);
+  }
+
   void dispose() {
     _productDetailController.close();
+    _similarProductController.close();
     _suggestProductController.close();
   }
 }
