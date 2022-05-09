@@ -1,11 +1,12 @@
 import 'package:bidu_demo/data/models/keyword.dart';
 import 'package:bidu_demo/logic/blocs/home_bloc.dart';
 import 'package:bidu_demo/modules/home/widget/group_content.dart';
-import 'package:bidu_demo/modules/home/widget/item.dart';
+import 'package:bidu_demo/modules/common_widget/item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 const String _kTopSearchText = 'Top Tìm Kiếm';
+const double _kTopSearchItemHeight = 200;
 
 class HomeTopSearch extends StatefulWidget {
   const HomeTopSearch({Key? key}) : super(key: key);
@@ -23,7 +24,7 @@ class _HomeTopSearchState extends State<HomeTopSearch>
       title: _kTopSearchText,
       seeMore: () {},
       child: SizedBox(
-        height: 200,
+        height: _kTopSearchItemHeight,
         child: StreamBuilder<List<Keyword>>(
             stream: Provider.of<HomeBloc>(context).topSearchStream,
             builder:

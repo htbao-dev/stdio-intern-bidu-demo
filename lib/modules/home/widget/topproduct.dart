@@ -1,11 +1,12 @@
 import 'package:bidu_demo/data/models/product.dart';
 import 'package:bidu_demo/logic/blocs/home_bloc.dart';
 import 'package:bidu_demo/modules/home/widget/group_content.dart';
-import 'package:bidu_demo/modules/home/widget/item.dart';
+import 'package:bidu_demo/modules/common_widget/item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 const String _kTopProductText = 'Top Sản Phẩm';
+const double kHomeNewestItemHeight = 275;
 
 class HomeTopProduct extends StatefulWidget {
   const HomeTopProduct({Key? key}) : super(key: key);
@@ -27,7 +28,7 @@ class _HomeTopProductState extends State<HomeTopProduct>
           final List<Product> listProduct = snapshot.data ?? [];
 
           return SizedBox(
-            height: 245,
+            height: kHomeNewestItemHeight,
             child: MyListView(
               itemCount: listProduct.length,
               itemBuilder: (context, index) {

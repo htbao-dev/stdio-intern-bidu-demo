@@ -1,10 +1,8 @@
 import 'package:bidu_demo/data/models/product_detail.dart';
 import 'package:bidu_demo/data/models/shop.dart';
-import 'package:bidu_demo/logic/blocs/product_detail_bloc.dart';
 import 'package:bidu_demo/modules/common_widget/gradient_text.dart';
-import 'package:bidu_demo/modules/product_detail/widget/constant.dart';
+import 'package:bidu_demo/common/constant.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 const String _kPrepareText = 'Thời gian chuẩn bị hàng';
 const String _kDeliveryInfoText = 'Thông tin giao hàng';
@@ -25,7 +23,7 @@ class DeliveryInfo extends StatelessWidget {
       style: Theme.of(context).textTheme.bodyText2!,
       child: Padding(
         padding: const EdgeInsets.symmetric(
-          horizontal: kHorizontalPadding,
+          horizontal: kHalfHorizontalPadding,
           vertical: kVerticalPadding,
         ),
         child: Column(
@@ -110,12 +108,8 @@ class _InfoChart extends StatelessWidget {
                               width: constraints.maxWidth * value / 100,
                               height: 8,
                               decoration: BoxDecoration(
-                                // color: const Color(0xffC9C9C9),
                                 gradient: const LinearGradient(
-                                    colors: [
-                                      Color(0xffFF7C79),
-                                      Color(0xffE812A4)
-                                    ],
+                                    colors: kPrimaryGradientColor,
                                     begin: Alignment.centerLeft,
                                     end: Alignment.centerRight),
                                 borderRadius: BorderRadius.circular(10),
@@ -150,7 +144,7 @@ class _InfoChart extends StatelessWidget {
                               width: constraints.maxWidth * value / 100,
                               height: 8,
                               decoration: BoxDecoration(
-                                color: const Color(0xffC9C9C9),
+                                color: kPrimaryGreyColor,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),

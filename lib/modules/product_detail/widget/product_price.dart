@@ -1,13 +1,11 @@
 import 'package:bidu_demo/common/assets_path.dart';
 import 'package:bidu_demo/common/formatter.dart';
 import 'package:bidu_demo/data/models/product_detail.dart';
-import 'package:bidu_demo/logic/blocs/product_detail_bloc.dart';
 import 'package:bidu_demo/modules/common_widget/bookmark.dart';
 import 'package:bidu_demo/modules/common_widget/gradient_text.dart';
-import 'package:bidu_demo/modules/product_detail/widget/constant.dart';
+import 'package:bidu_demo/common/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
 
 const String _kDiscountInputText = 'Nhập mã khuyến mãi giảm giá tối đa 200k';
 const String _kRefundText = 'Đổi trả trong vòng 3 ngày';
@@ -24,7 +22,7 @@ class ProductPrice extends StatelessWidget {
     final discountPercent = productDetail.discountPercent;
     return Padding(
       padding: const EdgeInsets.symmetric(
-          vertical: kVerticalPadding, horizontal: kHorizontalPadding),
+          vertical: kVerticalPadding, horizontal: kHalfHorizontalPadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -34,7 +32,9 @@ class ProductPrice extends StatelessWidget {
               price: price,
               discountPercent: discountPercent),
           TextButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              debugPrint('Bookmark');
+            },
             label: const GradientText(
               _kRefundText,
               gradient: LinearGradient(
@@ -50,7 +50,7 @@ class ProductPrice extends StatelessWidget {
             icon: SvgPicture.asset(iconExclamation),
             style: ButtonStyle(
               padding: MaterialStateProperty.all<EdgeInsets>(
-                const EdgeInsets.only(bottom: 24),
+                const EdgeInsets.only(bottom: kVerticalPadding),
               ),
             ),
           ),
@@ -81,7 +81,7 @@ class ProductPrice extends StatelessWidget {
             ),
             const Spacer(),
             const BookMark(
-              color: Color(0xff1A1A1A),
+              color: kPrimaryBlackColor,
             )
           ],
         ),

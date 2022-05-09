@@ -1,15 +1,18 @@
 import 'package:bidu_demo/common/assets_path.dart';
+import 'package:bidu_demo/common/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+const double _leadingWidth = 70;
+const double _splashRadiusAppbarButton = 25;
+
 AppBar appBar() {
   return AppBar(
+    leadingWidth: _leadingWidth,
     leading: Padding(
-      padding: const EdgeInsets.only(left: 10),
+      padding: const EdgeInsets.only(left: kHalfHorizontalPadding),
       child: SvgPicture.asset(
         biduLogoAsset,
-        // color: Colors.white,
-        // height: 24,
       ),
     ),
     actions: [
@@ -30,7 +33,6 @@ AppBar appBar() {
         onPressed: () {},
       ),
     ],
-    backgroundColor: Colors.white,
     elevation: 1,
   );
 }
@@ -38,7 +40,7 @@ AppBar appBar() {
 Widget _appBarButton({required Widget child, required VoidCallback onPressed}) {
   return IconButton(
     icon: child,
-    splashRadius: 25,
+    splashRadius: _splashRadiusAppbarButton,
     onPressed: onPressed,
   );
 }

@@ -1,3 +1,4 @@
+import 'package:bidu_demo/common/constant.dart';
 import 'package:flutter/material.dart';
 
 const String _kProductInfoText = 'Thông tin sản phẩm';
@@ -5,7 +6,8 @@ const String _kReviewText = 'Đánh giá (40)';
 const String _kChatText = 'Trò chuyện';
 
 class SecondAppbar extends StatefulWidget {
-  const SecondAppbar({Key? key}) : super(key: key);
+  final TabController controller;
+  const SecondAppbar({Key? key, required this.controller}) : super(key: key);
 
   @override
   State<SecondAppbar> createState() => _SecondAppbarState();
@@ -22,52 +24,47 @@ class _SecondAppbarState extends State<SecondAppbar> {
     return SliverAppBar(
       pinned: true,
       automaticallyImplyLeading: false,
-      backgroundColor: Colors.red,
-      collapsedHeight: 20,
-      toolbarHeight: 20,
-      expandedHeight: 20,
+      toolbarHeight: 0,
+      expandedHeight: 0,
+      collapsedHeight: 0,
       flexibleSpace: TabBar(
-        indicatorColor: const Color(0xff1A1A1A),
+        indicatorColor: kPrimaryBlackColor,
         onTap: (index) {
           setState(() {
             _currentIndex = index;
           });
         },
         labelStyle: const TextStyle(
-          color: Color(0xffC9C9C9),
+          color: kPrimaryGreyColor,
           fontWeight: FontWeight.w400,
         ),
+        controller: widget.controller,
         tabs: [
           Tab(
-            child: Text(
-              _kProductInfoText,
-              textAlign: TextAlign.center,
-              style: _currentIndex == _infoIndex
-                  ? const TextStyle(
-                      fontWeight: FontWeight.bold, color: Color(0xff1A1A1A))
-                  : null,
-            ),
+            child: Text(_kProductInfoText,
+                textAlign: TextAlign.center, style: _tabStyle(_infoIndex)),
           ),
           Tab(
             child: Text(
               _kReviewText,
-              style: _currentIndex == _reviewIndex
-                  ? const TextStyle(
-                      fontWeight: FontWeight.bold, color: Color(0xff1A1A1A))
-                  : null,
+              style: _tabStyle(_reviewIndex),
             ),
           ),
           Tab(
-            child: Text(
-              _kChatText,
-              style: _currentIndex == _chatIndex
-                  ? const TextStyle(
-                      fontWeight: FontWeight.bold, color: Color(0xff1A1A1A))
-                  : null,
-            ),
+            child: Text(_kChatText, style: _tabStyle(_chatIndex)),
           ),
         ],
       ),
     );
+  }
+
+  TextStyle _tabStyle(int itemIndex) {
+    return _currentIndex == itemIndex
+        ? const TextStyle(
+            fontWeight: FontWeight.bold, color: kPrimaryBlackColor)
+        : const TextStyle(
+            fontWeight: FontWeight.w400,
+            color: kPrimaryGreyColor,
+            fontSize: 14);
   }
 }

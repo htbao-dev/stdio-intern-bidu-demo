@@ -1,4 +1,5 @@
 import 'package:bidu_demo/common/assets_path.dart';
+import 'package:bidu_demo/common/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -8,18 +9,21 @@ class HomeGroupContent extends StatelessWidget {
   final String title;
   final Widget child;
   final VoidCallback? seeMore;
+  final EdgeInsets? padding;
 
   const HomeGroupContent({
     Key? key,
     required this.title,
     required this.child,
     this.seeMore,
+    this.padding,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding:
+          padding ?? const EdgeInsets.symmetric(vertical: kVerticalPadding),
       decoration: BoxDecoration(
         border: Border(
           top: BorderSide(
@@ -31,7 +35,7 @@ class HomeGroupContent extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
+            padding: const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -45,16 +49,11 @@ class HomeGroupContent extends StatelessWidget {
                     onTap: seeMore,
                     child: Row(
                       children: [
-                        const Text(
-                          _kSeeAllText,
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.normal,
-                            // color: Colors.grey,
-                          ),
-                        ),
+                        Text(_kSeeAllText,
+                            style: Theme.of(context).textTheme.bodyText2!),
                         Padding(
-                          padding: const EdgeInsets.only(left: 5),
+                          padding: const EdgeInsets.only(
+                              left: kHalfHorizontalPadding),
                           child: SvgPicture.asset(
                             iconSeemoreAsset,
                           ),
@@ -66,7 +65,7 @@ class HomeGroupContent extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 10),
+            padding: const EdgeInsets.only(top: 20),
             child: child,
           ),
         ],
@@ -84,12 +83,15 @@ class MyListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: ListView.builder(
-          itemBuilder: itemBuilder,
-          itemCount: itemCount,
-          shrinkWrap: true,
-          scrollDirection: Axis.horizontal),
+    return ListView.separated(
+      padding: const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
+      itemBuilder: itemBuilder,
+      itemCount: itemCount,
+      shrinkWrap: true,
+      scrollDirection: Axis.horizontal,
+      separatorBuilder: (BuildContext context, int index) => const SizedBox(
+        width: kHalfHorizontalPadding,
+      ),
     );
   }
 }

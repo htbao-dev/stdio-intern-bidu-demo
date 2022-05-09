@@ -1,4 +1,5 @@
 import 'package:bidu_demo/common/assets_path.dart';
+import 'package:bidu_demo/common/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -18,7 +19,8 @@ class BiduLive extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 16, bottom: 20),
+            padding:
+                const EdgeInsets.only(left: kHalfHorizontalPadding, bottom: 20),
             child: SvgPicture.asset(iconBiduLiveAsset),
           ),
           SizedBox(
@@ -53,7 +55,7 @@ class _SeeMoreButton extends StatelessWidget {
       children: [
         SvgPicture.asset(iconLiveSeemoreAsset),
         const SizedBox(width: 12),
-        Text(
+        const Text(
           _kSeemoreText,
         ),
         const SizedBox(width: 15),
@@ -118,7 +120,7 @@ class _LiveItem extends StatelessWidget {
                           margin: const EdgeInsets.only(right: 5, bottom: 3),
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: const Color(0xffE812A4),
+                              color: kPrimaryPinkColor,
                               width: 1,
                             ),
                             borderRadius: BorderRadius.circular(50),
@@ -128,16 +130,16 @@ class _LiveItem extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Text(_kUsernameLiveText,
-                            style: const TextStyle(
+                        const Text(_kUsernameLiveText,
+                            style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 12,
                                 color: Colors.white)),
                       ],
                     ),
-                    Text(
+                    const Text(
                       _kSellOffText,
-                      style: const TextStyle(
+                      style: TextStyle(
                           fontWeight: FontWeight.normal,
                           fontSize: 12,
                           color: Colors.white),

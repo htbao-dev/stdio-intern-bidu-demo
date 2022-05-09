@@ -1,4 +1,5 @@
 import 'package:bidu_demo/common/assets_path.dart';
+import 'package:bidu_demo/common/constant.dart';
 import 'package:bidu_demo/common/formatter.dart';
 import 'package:bidu_demo/data/models/keyword.dart';
 import 'package:bidu_demo/data/models/product.dart';
@@ -15,16 +16,16 @@ const String _kSoldText = 'Đã bán';
 const String _kFlollowText = 'lượt theo dõi';
 const String _kSeeShopText = 'Xem shop';
 
+const double _kItemWidth = 150;
+
 abstract class ListItem extends StatelessWidget {
   const ListItem({Key? key}) : super(key: key);
-
   Widget productImage(String src, {double? width, double? height}) {
-    double _width = width ?? 120;
-    double _height = height ?? 120;
-    return Container(
+    double _width = width ?? _kItemWidth;
+    double _height = height ?? 150;
+    return SizedBox(
       height: _height,
       width: _width,
-      padding: const EdgeInsets.only(bottom: 5),
       child: CachedNetworkImage(
         imageUrl: src, fit: BoxFit.cover,
         // height: ,
@@ -32,33 +33,24 @@ abstract class ListItem extends StatelessWidget {
     );
   }
 
-  Widget productName(String? name) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 5.0),
-      child: Text(
-        name ?? '',
-        style: const TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.normal,
-        ),
-        softWrap: true,
-        maxLines: 2,
-        textAlign: TextAlign.left,
-        overflow: TextOverflow.ellipsis,
-      ),
+  Widget productName(BuildContext context, String? name) {
+    return Text(
+      name ?? '',
+      style: Theme.of(context).textTheme.bodyText2,
+      softWrap: true,
+      maxLines: 2,
+      textAlign: TextAlign.left,
+      overflow: TextOverflow.ellipsis,
     );
   }
 
   Widget productPrice(int? salePrice) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 4),
-      child: Text(
-        Formatter.currency(salePrice),
-        // '${product.salePrice} đ',
-        style: const TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-        ),
+    return Text(
+      Formatter.currency(salePrice),
+      // '${product.salePrice} đ',
+      style: const TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.bold,
       ),
     );
   }
@@ -69,7 +61,7 @@ abstract class ListItem extends StatelessWidget {
         const Icon(
           Icons.location_on,
           size: 10,
-          color: Color(0xffC9C9C9),
+          color: kPrimaryGreyColor,
         ),
         Text(
           country ?? '',
@@ -104,25 +96,21 @@ abstract class ListItem extends StatelessWidget {
       } else {
         txt = _kGenuineText;
       }
-      const color = Color(0xffFD37AE);
       child = Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
         decoration: BoxDecoration(
-          border: Border.all(color: color, width: 1),
+          border: Border.all(color: kPrimaryPinkColor, width: 1),
         ),
         child: Text(
           txt,
           style: const TextStyle(
             fontSize: 10,
-            color: color,
+            color: kPrimaryPinkColor,
           ),
         ),
       );
     }
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 5),
-      child: child,
-    );
+    return child;
   }
 
   Widget productSold(int? sold) {
@@ -131,7 +119,7 @@ abstract class ListItem extends StatelessWidget {
       '$_kSoldText $sold',
       style: const TextStyle(
         fontSize: 10,
-        color: Color(0xffC9C9C9),
+        color: kPrimaryGreyColor,
       ),
     );
   }
@@ -148,7 +136,7 @@ class _Rank extends StatelessWidget {
       height: 20,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: const Color(0xff1A1A1A),
+        color: kPrimaryBlackColor,
         borderRadius: BorderRadius.circular(5),
       ),
       child: Text('$index',
@@ -167,19 +155,22 @@ class NewestProductItem extends ListItem {
         Navigator.of(context)
             .pushNamed(ProductDetailsScreen.routeName, arguments: product);
       },
-      child: Container(
-        width: 120,
-        margin: const EdgeInsets.only(left: 15),
+      child: SizedBox(
+        width: _kItemWidth,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
             imageWithBookmark(product.images?[0]),
+            const SizedBox(height: 5),
             productTag(
                 isGenuineItem: product.isGenuineItem,
                 isGuaranteedItem: product.isGuaranteedItem),
-            productName(product.name),
+            const SizedBox(height: 5),
+            productName(context, product.name),
+            const SizedBox(height: 5),
             productPrice(product.salePrice),
+            const SizedBox(height: 4),
             productLocation(product.shop?.country)
           ],
         ),
@@ -191,26 +182,30 @@ class NewestProductItem extends ListItem {
 class TopSearchItem extends ListItem {
   final Keyword keyword;
   final String kProductText = 'sản phẩm';
+  final double topSearchItemWidth = 150;
   const TopSearchItem({Key? key, required this.keyword}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 120,
-      margin: const EdgeInsets.only(left: 15),
+    return SizedBox(
+      width: topSearchItemWidth,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          productImage(keyword.avatar),
-          productName(keyword.keyword),
-          totalProduct(keyword.totalProduct),
+          productImage(keyword.avatar,
+              height: topSearchItemWidth, width: topSearchItemWidth),
+          const SizedBox(height: 6),
+          productName(context, keyword.keyword),
+          const SizedBox(height: 4),
+          totalProduct(context, keyword.totalProduct),
         ],
       ),
     );
   }
 
   @override
-  Widget productName(String? name) {
+  Widget productName(BuildContext context, String? name) {
     return Text(
       name ?? '',
       style: const TextStyle(
@@ -222,19 +217,16 @@ class TopSearchItem extends ListItem {
     );
   }
 
-  Widget totalProduct(int totalProduct) {
-    return Text(
-      '$totalProduct $kProductText',
-      style: const TextStyle(
-        fontSize: 12,
-      ),
-    );
+  Widget totalProduct(BuildContext context, int totalProduct) {
+    return Text('$totalProduct $kProductText',
+        style: Theme.of(context).textTheme.bodyText2!);
   }
 }
 
 class TopProductItem extends ListItem {
   final Product product;
   final int? index;
+  final double topProductItemWidth = 150;
   const TopProductItem({Key? key, required this.product, this.index})
       : super(key: key);
 
@@ -245,9 +237,8 @@ class TopProductItem extends ListItem {
         Navigator.of(context)
             .pushNamed(ProductDetailsScreen.routeName, arguments: product);
       },
-      child: Container(
-        width: 120,
-        margin: const EdgeInsets.only(left: 15),
+      child: SizedBox(
+        width: topProductItemWidth,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -262,12 +253,17 @@ class TopProductItem extends ListItem {
                   ),
               ],
             ),
+            const SizedBox(height: 5),
             productTag(
                 isGenuineItem: product.isGenuineItem,
                 isGuaranteedItem: product.isGuaranteedItem),
-            productName(product.name),
+            const SizedBox(height: 5),
+            productName(context, product.name),
+            const SizedBox(height: 5),
             productPrice(product.salePrice),
+            const SizedBox(height: 4),
             productLocation(product.shop?.country),
+            const SizedBox(height: 4),
             productSold(product.sold),
           ],
         ),
@@ -278,11 +274,12 @@ class TopProductItem extends ListItem {
 
 class SuggestProductItem extends ListItem {
   final Product product;
-  const SuggestProductItem({Key? key, required this.product}) : super(key: key);
+  final double itemSize;
+  const SuggestProductItem(
+      {Key? key, required this.product, required this.itemSize})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-    var width = (screenSize.width - 30) / 2;
     return GestureDetector(
       onTap: () {
         Navigator.of(context)
@@ -295,16 +292,20 @@ class SuggestProductItem extends ListItem {
           Stack(
             children: [
               imageWithBookmark(product.images?[0],
-                  height: width, width: width),
+                  height: itemSize, width: itemSize),
             ],
           ),
+          const SizedBox(height: 5),
           productTag(
               isGenuineItem: product.isGenuineItem,
               isGuaranteedItem: product.isGuaranteedItem),
-          productName(product.name),
+          const SizedBox(height: 5),
+          productName(context, product.name),
+          const SizedBox(height: 5),
           productPrice(product.salePrice),
-          productLocation(product.shop?.country),
+          const SizedBox(height: 5),
           productSold(product.sold),
+          const SizedBox(height: 5),
           productLocation(product.shop?.country),
         ],
       ),
@@ -323,10 +324,7 @@ class TopSellerItem extends ListItem {
   @override
   Widget build(BuildContext context) {
     return DefaultTextStyle(
-      style: const TextStyle(
-        fontSize: 12,
-        color: Color(0xff1A1A1A),
-      ),
+      style: Theme.of(context).textTheme.bodyText2!,
       child: Container(
         decoration: const BoxDecoration(
             border: Border(
@@ -415,7 +413,7 @@ class TopSellerItem extends ListItem {
                       ),
                       Container(
                         margin: const EdgeInsets.symmetric(horizontal: 6),
-                        color: const Color(0xff1A1A1A),
+                        color: kPrimaryBlackColor,
                         width: 1,
                         height: 11,
                       ),
@@ -462,18 +460,20 @@ class TopSellerItem extends ListItem {
   }
 
   Widget _rankChange(int oldRank, int newRank) {
-    int change = newRank - oldRank;
+    const Color redColor = Color(0xffFF3232);
+    const Color greenColor = Color(0xff12B74A);
+    final int change = newRank - oldRank;
     if (change > 0) {
       return Row(
         children: [
           const Icon(
             Icons.arrow_drop_up,
-            color: Color(0xff12B74A),
+            color: greenColor,
           ),
           Text(
             change.abs().toString(),
             style: const TextStyle(
-              color: Color(0xff12B74A),
+              color: greenColor,
             ),
           ),
         ],
@@ -481,10 +481,10 @@ class TopSellerItem extends ListItem {
     } else if (change < 0) {
       return Row(
         children: [
-          const Icon(Icons.arrow_drop_down, color: Color(0xffFF3232)),
+          const Icon(Icons.arrow_drop_down, color: redColor),
           Text(
             change.abs().toString(),
-            style: const TextStyle(color: Color(0xffFF3232)),
+            style: const TextStyle(color: redColor),
           ),
         ],
       );

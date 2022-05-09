@@ -1,11 +1,9 @@
 import 'package:bidu_demo/common/assets_path.dart';
 import 'package:bidu_demo/data/models/product_detail.dart';
-import 'package:bidu_demo/logic/blocs/product_detail_bloc.dart';
-import 'package:bidu_demo/modules/product_detail/widget/constant.dart';
+import 'package:bidu_demo/common/constant.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
 
 class ShopName extends StatelessWidget {
   final ProductDetail productDetail;
@@ -23,7 +21,7 @@ class ShopName extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(
-        horizontal: kHorizontalPadding,
+        horizontal: kHalfHorizontalPadding,
         vertical: kWidgetVerticalPadding,
       ),
       child: Row(
@@ -113,13 +111,13 @@ class ShopName extends StatelessWidget {
         children: [
           SvgPicture.asset(
             iconHeartOutlineAsset,
-            color: const Color(0xffE812A4),
+            color: kPrimaryPinkColor,
           ),
           Text(
             '$ranking',
             style: const TextStyle(
               fontSize: 12,
-              color: Color(0xffE812A4),
+              color: kPrimaryPinkColor,
             ),
           ),
         ],

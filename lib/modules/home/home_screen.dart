@@ -4,7 +4,6 @@ import 'package:bidu_demo/modules/home/widget/back_to_top.dart';
 import 'package:bidu_demo/modules/home/widget/banner.dart';
 import 'package:bidu_demo/modules/home/widget/bidu_live.dart';
 import 'package:bidu_demo/modules/home/widget/categories.dart';
-import 'package:bidu_demo/modules/home/widget/fab.dart';
 import 'package:bidu_demo/modules/home/widget/navbar.dart';
 import 'package:bidu_demo/modules/home/widget/newest.dart';
 import 'package:bidu_demo/modules/home/widget/suggestion.dart';
@@ -38,45 +37,49 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       extendBody: true,
       appBar: appBar(),
-      body: Stack(children: [
-        SmartRefresher(
-          enablePullDown: true,
-          header: const MaterialClassicHeader(
-            color: Colors.black,
-          ),
-          controller: _refreshController,
-          onRefresh: () => _onRefresh(),
-          child: ListView(
-            controller: _scrollController,
-            children: [
-              const HomeBanner(),
-              HomeCategories(
-                scrollController: _scrollController,
-              ),
-              const BiduLive(),
-              const HomeNewest(),
-              const HomeTopSearch(),
-              const HomeTopSeller(),
-              const HomeTopProduct(),
-              const HomeSuggestion()
-            ],
-          ),
-        ),
-        StreamBuilder(
-          stream: context.read<HomeBloc>().backToTopStream,
-          builder: (context, snapshot) {
-            if (snapshot.data == true) {
-              return Align(
-                alignment: const Alignment(0, 0.8),
-                child: BackTopTop(
-                  onPressed: _scrollToTop,
+      body: Stack(
+        children: [
+          SmartRefresher(
+            enablePullDown: true,
+            header: const MaterialClassicHeader(
+              color: Colors.black,
+            ),
+            controller: _refreshController,
+            onRefresh: () => _onRefresh(),
+            child: ListView(
+              controller: _scrollController,
+              children: [
+                const HomeBanner(),
+                HomeCategories(
+                  scrollController: _scrollController,
                 ),
-              );
-            }
-            return const SizedBox();
-          },
-        )
-      ]),
+                const BiduLive(),
+                const HomeNewest(),
+                const HomeTopSearch(),
+                const HomeTopSeller(),
+                const HomeTopProduct(),
+                const HomeSuggestion(
+                  numberItemInRow: 2,
+                )
+              ],
+            ),
+          ),
+          StreamBuilder(
+            stream: context.read<HomeBloc>().backToTopStream,
+            builder: (context, snapshot) {
+              if (snapshot.data == true) {
+                return Align(
+                  alignment: const Alignment(0, 0.8),
+                  child: BackTopTop(
+                    onPressed: _scrollToTop,
+                  ),
+                );
+              }
+              return const SizedBox();
+            },
+          )
+        ],
+      ),
       bottomNavigationBar: const HomeNavBar(),
       floatingActionButton: const HomeFloatingButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,

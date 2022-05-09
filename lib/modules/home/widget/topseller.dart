@@ -1,14 +1,15 @@
+import 'package:bidu_demo/common/constant.dart';
 import 'package:bidu_demo/data/models/shop.dart';
 import 'package:bidu_demo/logic/blocs/home_bloc.dart';
 import 'package:bidu_demo/modules/home/widget/group_content.dart';
-import 'package:bidu_demo/modules/home/widget/item.dart';
+import 'package:bidu_demo/modules/common_widget/item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 const String _kSeemoreText = 'Xem thêm';
 const String _kTopSellerText = 'Top Người Bán';
+const String _kCollapseText = 'Rút gọn';
 
-//TODO: padding, const data,//TODO: button full width
 class HomeTopSeller extends StatefulWidget {
   const HomeTopSeller({Key? key}) : super(key: key);
 
@@ -23,6 +24,7 @@ class _HomeTopSellerState extends State<HomeTopSeller>
     super.build(context);
     return HomeGroupContent(
       title: _kTopSellerText,
+      padding: const EdgeInsets.only(top: kVerticalPadding),
       seeMore: () {},
       child: StreamBuilder<List<Shop>>(
         stream: context.read<HomeBloc>().topSellerStream,
@@ -81,12 +83,10 @@ class _SeemoreSeller extends StatefulWidget {
 
 class _SeemoreSellerState extends State<_SeemoreSeller> {
   late bool _isSeeMore;
-  late Widget _buttonContent;
 
   @override
   void initState() {
     super.initState();
-    _buttonContent = _buttonSeemore();
     _isSeeMore = false;
   }
 
@@ -103,22 +103,20 @@ class _SeemoreSellerState extends State<_SeemoreSeller> {
           secondChild: _listRank(),
           duration: const Duration(milliseconds: 300),
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 25),
-          child: GestureDetector(
-            child: _buttonContent,
-            onTap: () {
-              setState(() {
-                if (_isSeeMore) {
-                  _buttonContent = _buttonSeemore();
-                  _isSeeMore = false;
-                } else {
-                  _buttonContent = _buttonHide();
-                  _isSeeMore = true;
-                }
-              });
-            },
+        InkWell(
+          child: Padding(
+            padding: const EdgeInsets.only(top: kVerticalPadding, bottom: 26),
+            child: _isSeeMore ? _buttonHide(context) : _buttonSeemore(context),
           ),
+          onTap: () {
+            setState(() {
+              if (_isSeeMore) {
+                _isSeeMore = false;
+              } else {
+                _isSeeMore = true;
+              }
+            });
+          },
         ),
       ],
     );
@@ -138,33 +136,27 @@ class _SeemoreSellerState extends State<_SeemoreSeller> {
         });
   }
 
-  Widget _buttonSeemore() {
+  Widget _buttonSeemore(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: const [
-        Text(_kSeemoreText,
-            style: TextStyle(
-                // color: Colors.blue,
-                )),
-        Icon(
+      children: [
+        Text(_kSeemoreText, style: Theme.of(context).textTheme.bodyText2!),
+        const Icon(
           Icons.keyboard_arrow_down,
-          color: Color(0xffFD37AE),
+          color: kPrimaryPinkColor,
         )
       ],
     );
   }
 
-  Widget _buttonHide() {
+  Widget _buttonHide(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: const [
-        Text('Rút gọn',
-            style: TextStyle(
-                // color: Colors.blue,
-                )),
-        Icon(
+      children: [
+        Text(_kCollapseText, style: Theme.of(context).textTheme.bodyText2!),
+        const Icon(
           Icons.keyboard_arrow_up,
-          color: Color(0xffFD37AE),
+          color: kPrimaryPinkColor,
         )
       ],
     );

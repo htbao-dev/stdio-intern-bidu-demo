@@ -1,4 +1,5 @@
 import 'package:bidu_demo/common/assets_path.dart';
+import 'package:bidu_demo/common/constant.dart';
 import 'package:bidu_demo/modules/common_widget/gradient_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -16,7 +17,7 @@ class MyBottomAppBar extends StatelessWidget {
     return BottomAppBar(
       child: Container(
         decoration: const BoxDecoration(
-          color: Color(0xff1A1A1A),
+          color: kPrimaryBlackColor,
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 17),
@@ -43,7 +44,7 @@ class MyBottomAppBar extends StatelessWidget {
               Container(
                 width: 1,
                 height: 28,
-                color: const Color(0xffC9C9C9),
+                color: kPrimaryGreyColor,
               ),
               const Expanded(
                 flex: 1,

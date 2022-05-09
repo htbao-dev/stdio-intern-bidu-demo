@@ -9,6 +9,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 const String _kSeemoreText = 'Xem thêm';
+const double _kItemCategoryWidth = 50;
 
 class HomeCategories extends StatefulWidget {
   final ScrollController scrollController;
@@ -68,7 +69,7 @@ class _HomeCategoriesState extends State<HomeCategories>
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 50,
+        width: _kItemCategoryWidth,
         margin: const EdgeInsets.symmetric(horizontal: 12.5),
         child: Column(
           children: [

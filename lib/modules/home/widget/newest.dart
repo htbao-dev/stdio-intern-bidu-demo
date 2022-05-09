@@ -1,11 +1,11 @@
 import 'package:bidu_demo/data/models/product.dart';
 import 'package:bidu_demo/logic/blocs/home_bloc.dart';
 import 'package:bidu_demo/modules/home/widget/group_content.dart';
-import 'package:bidu_demo/modules/home/widget/item.dart';
+import 'package:bidu_demo/modules/common_widget/item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-const double kHomeNewestItemHeight = 220;
+const double kHomeNewestItemHeight = 250;
 const String _kNewProductText = 'Sản phẩm mới';
 
 class HomeNewest extends StatefulWidget {

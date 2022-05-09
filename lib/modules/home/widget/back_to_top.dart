@@ -1,3 +1,4 @@
+import 'package:bidu_demo/common/constant.dart';
 import 'package:flutter/material.dart';
 
 const String _kBackToTopText = 'Về đàu trang';
@@ -21,13 +22,9 @@ class BackTopTop extends StatelessWidget {
 
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        children: const [
-          Icon(Icons.arrow_upward_outlined, color: Color(0xffE812A4)),
-          Text(
-            _kBackToTopText,
-            style: TextStyle(
-                color: Colors.black, fontWeight: FontWeight.w300, fontSize: 12),
-          )
+        children: [
+          const Icon(Icons.arrow_upward_outlined, color: kPrimaryPinkColor),
+          Text(_kBackToTopText, style: Theme.of(context).textTheme.bodyText2!)
         ],
       ),
       // style: ,

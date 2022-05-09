@@ -1,4 +1,3 @@
-//TODO: assets path
 const String iconCartAsset = 'assets/icons/icon_cart.svg';
 const String iconHeartOutlineAsset = 'assets/icons/icon-heart.svg';
 const String iconExclamation = 'assets/icons/icon_exclamation.svg';
@@ -19,8 +18,10 @@ const String iconAddAsset = 'assets/icons/icon_add.svg';
 const String iconShoppingAsset = 'assets/icons/icon-shopping.svg';
 const String iconCategoriesAsset = 'assets/icons/icon-categories.svg';
 const String iconPersonAsset = 'assets/icons/icon-person.svg';
+const String iconFullScreenAsset = 'assets/icons/icon_fullscreen.svg';
 const String iconCategorySeemoreAsset =
     'assets/icons/icon_category_seemore.svg';
 
 const String imgBiduliveAsset = 'assets/images/img_bidulive.jpg';
 const String imgBiduliveAvtAsset = 'assets/images/img_live_avt.jpg';
+const String imgMiniBannerAsset = 'assets/images/img_mini_banner.jpg';

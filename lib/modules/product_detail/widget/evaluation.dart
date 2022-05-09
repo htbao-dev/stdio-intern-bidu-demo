@@ -1,5 +1,5 @@
 import 'package:bidu_demo/common/assets_path.dart';
-import 'package:bidu_demo/modules/product_detail/widget/constant.dart';
+import 'package:bidu_demo/common/constant.dart';
 import 'package:flutter/material.dart';
 
 class Evaluation extends StatelessWidget {
@@ -13,7 +13,7 @@ class Evaluation extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
-            padding: EdgeInsets.symmetric(horizontal: kHorizontalPadding),
+            padding: EdgeInsets.symmetric(horizontal: kHalfHorizontalPadding),
             child: Text(
               '40 đánh giá',
               style: TextStyle(
@@ -27,7 +27,8 @@ class Evaluation extends StatelessWidget {
             height: 5,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
+            padding:
+                const EdgeInsets.symmetric(horizontal: kHalfHorizontalPadding),
             child: Row(
               // children: [SvgPicture.asset(iconHeartAsset)],
               children: const [
@@ -76,7 +77,7 @@ class Evaluation extends StatelessWidget {
           blurRadius: 5,
           spreadRadius: 0,
           offset: const Offset(0, 1),
-          blurStyle: BlurStyle.outer,
+          blurStyle: BlurStyle.normal,
         ),
       ], color: Colors.white),
       child: Row(

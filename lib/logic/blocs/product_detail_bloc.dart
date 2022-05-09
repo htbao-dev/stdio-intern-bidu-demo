@@ -10,26 +10,33 @@ class ProductDetailBloc {
 
   final StreamController<ProductDetail> _productDetailController =
       StreamController<ProductDetail>.broadcast();
-  // final StreamController<bool> _isDataNullController =
-  // StreamController<bool>.broadcast();
+  final StreamController<List<Product>> _suggestProductController =
+      StreamController<List<Product>>.broadcast();
+
+  Stream<List<Product>> get suggestProductStream =>
+      _suggestProductController.stream;
+
   Stream<ProductDetail> get productDetailStream =>
       _productDetailController.stream;
-  // Stream<bool> get isDataNullStream => _isDataNullController.stream;
   ProductDetailBloc({required this.productRepository});
 
   void initLoad(Product product) async {
     _productDetail =
         await productRepository.loadProductDetail(product.id ?? '');
     if (_productDetail == null) {
-      // _isDataNullController.add(true);
     } else {
-      // _isDataNullController.add(false);
       _productDetailController.sink.add(_productDetail!);
     }
   }
 
+  void loadSuggestion() async {
+    final suggestProduct =
+        await productRepository.loadSuggestProducts(page: 1, limit: 9);
+    _suggestProductController.sink.add(suggestProduct?.listProduct ?? []);
+  }
+
   void dispose() {
     _productDetailController.close();
-    // _isDataNullController.close();
+    _suggestProductController.close();
   }
 }

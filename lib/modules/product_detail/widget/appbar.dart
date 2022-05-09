@@ -1,4 +1,5 @@
 import 'package:bidu_demo/common/assets_path.dart';
+import 'package:bidu_demo/common/constant.dart';
 import 'package:bidu_demo/data/models/product_detail.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -25,101 +26,135 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
 
   @override
   Widget build(BuildContext context) {
+    double expandedHeight = MediaQuery.of(context).size.width - kToolbarHeight;
     return SliverAppBar(
-      pinned: true,
-      snap: false,
-      floating: false,
-      expandedHeight: 375.0, // TODO: dung width man hinh, fix giong app
-      elevation: 0,
-      actions: [
-        Padding(
-          padding: const EdgeInsets.only(left: 8),
-          child: CircleAvatar(
-            child: IconButton(
-              icon: const Icon(
-                Icons.arrow_back_ios_new,
-                color: Colors.black,
-                size: 20,
+        pinned: true,
+        snap: false,
+        floating: false,
+        expandedHeight: expandedHeight,
+        elevation: 0,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(left: kHalfHorizontalPadding),
+            child: CircleAvatar(
+              child: IconButton(
+                icon: const Icon(
+                  Icons.arrow_back_ios_new,
+                  color: Colors.black,
+                  size: 20,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               ),
-              onPressed: () {
-                Navigator.pop(context);
+              backgroundColor: Colors.white,
+            ),
+          ),
+          const Spacer(),
+          Padding(
+            padding: const EdgeInsets.only(right: kHalfHorizontalPadding),
+            child: CircleAvatar(
+              child: SvgPicture.asset(iconShareAsset),
+              backgroundColor: Colors.white,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: kHalfHorizontalPadding),
+            child: CircleAvatar(
+                child: SvgPicture.asset(
+                  iconCartAsset,
+                ),
+                backgroundColor: Colors.white),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: kHalfHorizontalPadding),
+            child: CircleAvatar(
+              child: IconButton(
+                icon: const Icon(
+                  Icons.more_horiz,
+                  color: Colors.black,
+                ),
+                onPressed: () {},
+              ),
+              backgroundColor: Colors.white,
+            ),
+          ),
+        ],
+        automaticallyImplyLeading: false,
+        flexibleSpace: _CarouselAppbar(
+          images: images,
+        ));
+  }
+}
+
+class _CarouselAppbar extends StatefulWidget {
+  final List<String> images;
+  const _CarouselAppbar({Key? key, required this.images}) : super(key: key);
+
+  @override
+  State<_CarouselAppbar> createState() => _CarouselAppbarState();
+}
+
+class _CarouselAppbarState extends State<_CarouselAppbar> {
+  int _indicatorIndex = 0;
+  late final bool isMultiImage;
+
+  @override
+  void initState() {
+    super.initState();
+    isMultiImage = widget.images.length != 1;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        FlexibleSpaceBar(
+          collapseMode: CollapseMode.pin,
+          background: CarouselSlider.builder(
+            itemCount: widget.images.length,
+            options: CarouselOptions(
+              viewportFraction: 1.0,
+              height: double.infinity,
+              enlargeCenterPage: true,
+              autoPlay: isMultiImage,
+              enableInfiniteScroll: isMultiImage,
+              autoPlayInterval: const Duration(seconds: 3),
+              autoPlayAnimationDuration: const Duration(milliseconds: 800),
+              onPageChanged: (index, reason) {
+                setState(() {
+                  _indicatorIndex = index;
+                });
               },
+              autoPlayCurve: Curves.fastOutSlowIn,
             ),
-            backgroundColor: Colors.white,
+            itemBuilder: (context, index, _) {
+              return widget.images.isNotEmpty
+                  ? CachedNetworkImage(
+                      imageUrl: widget.images[index],
+                      fit: BoxFit.cover,
+                    )
+                  : const SizedBox();
+            },
           ),
         ),
-        const Spacer(),
-        Padding(
-          padding: const EdgeInsets.only(right: 8),
-          child: CircleAvatar(
-            child: SvgPicture.asset(iconShareAsset),
-            backgroundColor: Colors.white,
-          ),
+        Positioned.fill(
+          child: Align(
+              child: _indicator(context, widget.images),
+              alignment: Alignment.bottomCenter),
+          bottom: 18,
         ),
-        Padding(
-          padding: const EdgeInsets.only(right: 8),
-          child: CircleAvatar(
-              child: SvgPicture.asset(
-                iconCartAsset,
-              ),
-              backgroundColor: Colors.white),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(right: 8),
-          child: CircleAvatar(
-            child: IconButton(
-              icon: const Icon(
-                Icons.more_horiz,
-                color: Colors.black,
-              ),
-              onPressed: () {},
-            ),
-            backgroundColor: Colors.white,
-          ),
+        Positioned(
+          child: SvgPicture.asset(iconFullScreenAsset),
+          bottom: kHorizontalPadding,
+          right: kVerticalPadding,
         ),
       ],
-      automaticallyImplyLeading: false,
-      flexibleSpace: Stack(
-        children: [
-          FlexibleSpaceBar(
-            background: CarouselSlider.builder(
-              itemCount: images.length,
-              options: CarouselOptions(
-                viewportFraction: 1.0,
-                height: double.infinity,
-                enlargeCenterPage: true,
-                autoPlay: true,
-                autoPlayInterval: const Duration(seconds: 3),
-                autoPlayAnimationDuration: const Duration(milliseconds: 800),
-                onPageChanged: (index, reason) {
-                  setState(() {
-                    _indicatorIndex = index;
-                  });
-                },
-                autoPlayCurve: Curves.fastOutSlowIn,
-              ),
-              itemBuilder: (context, index, _) {
-                return images.isNotEmpty
-                    ? CachedNetworkImage(
-                        imageUrl: images[index],
-                        fit: BoxFit.cover,
-                      )
-                    : const SizedBox();
-              },
-            ),
-          ),
-          Positioned.fill(
-            child: Align(
-                child: _indicator(context, images),
-                alignment: Alignment.bottomCenter),
-            bottom: 18,
-          )
-        ],
-      ),
     );
   }
 
   Widget _indicator(BuildContext context, List<String> images) {
+    if (images.isEmpty || images.length == 1) return const SizedBox();
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: images.asMap().entries.map((entry) {

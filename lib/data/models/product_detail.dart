@@ -3,6 +3,7 @@ import 'package:bidu_demo/data/models/shop.dart';
 
 class ProductDetail extends Product {
   List<TimePrepareOrder>? timePrepareOrder;
+  String? description;
   ProductDetail({
     String? id,
     String? name,
@@ -20,22 +21,24 @@ class ProductDetail extends Product {
     int? beforeSalePrice,
     int? salePrice,
     this.timePrepareOrder,
+    this.description,
   }) : super(
-            id: id,
-            name: name,
-            images: images,
-            isGuaranteedItem: isGuaranteedItem,
-            isGenuineItem: isGenuineItem,
-            isBookmarked: isBookmarked,
-            createdAt: createdAt,
-            sold: sold,
-            quantity: quantity,
-            shopId: shopId,
-            discountPercent: discountPercent,
-            priceMinMax: priceMinMax,
-            shop: shop,
-            beforeSalePrice: beforeSalePrice,
-            salePrice: salePrice);
+          id: id,
+          name: name,
+          images: images,
+          isGuaranteedItem: isGuaranteedItem,
+          isGenuineItem: isGenuineItem,
+          isBookmarked: isBookmarked,
+          createdAt: createdAt,
+          sold: sold,
+          quantity: quantity,
+          shopId: shopId,
+          discountPercent: discountPercent,
+          priceMinMax: priceMinMax,
+          shop: shop,
+          beforeSalePrice: beforeSalePrice,
+          salePrice: salePrice,
+        );
 
   ProductDetail.fromMap(Map<String, dynamic> json)
       : this(
@@ -54,6 +57,7 @@ class ProductDetail extends Product {
           shop: Shop.fromMap(
             json["shop"],
           ),
+          description: json['description'],
           salePrice: json["sale_price"],
           beforeSalePrice: json["before_sale_price"],
           timePrepareOrder: json["time_prepare_order"] == null

@@ -1,3 +1,4 @@
+import 'package:bidu_demo/common/constant.dart';
 import 'package:bidu_demo/data/models/product.dart';
 import 'package:bidu_demo/data/repositories/category_repository.dart';
 import 'package:bidu_demo/data/repositories/product_repository.dart';
@@ -62,28 +63,17 @@ class BiduApp extends StatelessWidget {
             }
           },
           theme: ThemeData(
-              //TODO: edit iconTheme,...
-              primaryColor: Colors.white,
-              colorScheme: ColorScheme.fromSwatch(
-                accentColor: Colors.grey,
+              scaffoldBackgroundColor: Colors.white,
+              colorScheme: const ColorScheme.light(
+                secondary: Colors.grey,
+                primary: Colors.white,
               ),
               fontFamily: 'Lexend',
-              iconTheme: const IconThemeData(
-                color: Colors.grey,
-              ),
-              appBarTheme: const AppBarTheme(
-                color: Colors.white,
-                //   elevation: 0,
-                //   brightness: Brightness.light,
-                //   iconTheme: IconThemeData(
-                //     color: Colors.grey,
-                //   ),
-              ),
               textTheme: const TextTheme(
                 bodyText2: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                ),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                    color: kPrimaryBlackColor),
               )),
         ));
   }
