@@ -42,42 +42,40 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
           stream: context.read<ProductDetailBloc>().productDetailStream,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return CustomScrollView(
-                // physics: physics,
-                slivers: [
-                  ProductDetailAppBar(snapshot.data!),
-                  SliverList(
-                    delegate: SliverChildListDelegate(
-                      [
-                        ShopName(snapshot.data!),
-                        const ThinDivider(),
-                        ProductPrice(snapshot.data!),
-                        const ThinDivider(),
-                        const FeedBack(),
-                        const BoldDivider(),
-                        DeliveryInfo(snapshot.data!),
-                        const BoldDivider(),
-                      ],
+              return NestedScrollView(
+                headerSliverBuilder: (context, innerBoxIsScrolled) {
+                  return [
+                    ProductDetailAppBar(snapshot.data!),
+                    SliverList(
+                      delegate: SliverChildListDelegate(
+                        [
+                          ShopName(snapshot.data!),
+                          const ThinDivider(),
+                          ProductPrice(snapshot.data!),
+                          const ThinDivider(),
+                          const FeedBack(),
+                          const BoldDivider(),
+                          DeliveryInfo(snapshot.data!),
+                          const BoldDivider(),
+                        ],
+                      ),
                     ),
-                  ),
-                  SecondAppbar(
-                    controller: controller,
-                  ),
-                  SliverFillRemaining(
-                    //TODO: nested scroll
-                    child: TabBarView(
+                    SecondAppbar(
                       controller: controller,
-                      children: [
-                        ProductInfoTab(
-                          productDetail: snapshot.data!,
-                          // physics: physics,
-                        ),
-                        const Text("Tab 2"), //demo
-                        const Text("Tab 3"),
-                      ],
                     ),
-                  )
-                ],
+                  ];
+                },
+                body: TabBarView(
+                  controller: controller,
+                  children: [
+                    ProductInfoTab(
+                      productDetail: snapshot.data!,
+                      // physics: physics,
+                    ),
+                    const Text("Tab 2"), //demo
+                    const Text("Tab 3"),
+                  ],
+                ),
               );
             } else {
               return const Center(child: CircularProgressIndicator());

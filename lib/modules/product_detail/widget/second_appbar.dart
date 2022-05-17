@@ -20,41 +20,45 @@ class _SecondAppbarState extends State<SecondAppbar> {
 
   @override
   Widget build(BuildContext context) {
-    return SliverAppBar(
-      pinned: true,
-      automaticallyImplyLeading: false,
-      toolbarHeight: 0,
-      expandedHeight: 0,
-      collapsedHeight: 0,
-      flexibleSpace: TabBar(
-        indicatorColor: kPrimaryBlackColor,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        labelStyle: const TextStyle(
-          color: kPrimaryGreyColor,
-          fontWeight: FontWeight.w400,
-        ),
-        controller: widget.controller,
-        tabs: [
-          Tab(
-            child: Text(Strings.productInfo,
-                textAlign: TextAlign.center, style: _tabStyle(_infoIndex)),
-          ),
-          Tab(
-            child: Text(
-              _kReviewText,
-              style: _tabStyle(_reviewIndex),
+    return SliverPersistentHeader(
+        pinned: true,
+        delegate: _SliverHeaderDelegate(
+          child: PreferredSize(
+            preferredSize: const Size.fromHeight(40),
+            child: Container(
+              color: Colors.white,
+              child: TabBar(
+                indicatorColor: kPrimaryBlackColor,
+                onTap: (index) {
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                },
+                labelStyle: const TextStyle(
+                  color: kPrimaryGreyColor,
+                  fontWeight: FontWeight.w400,
+                ),
+                controller: widget.controller,
+                tabs: [
+                  Tab(
+                    child: Text(Strings.productInfo,
+                        textAlign: TextAlign.center,
+                        style: _tabStyle(_infoIndex)),
+                  ),
+                  Tab(
+                    child: Text(
+                      _kReviewText,
+                      style: _tabStyle(_reviewIndex),
+                    ),
+                  ),
+                  Tab(
+                    child: Text(Strings.chat, style: _tabStyle(_chatIndex)),
+                  ),
+                ],
+              ),
             ),
           ),
-          Tab(
-            child: Text(Strings.chat, style: _tabStyle(_chatIndex)),
-          ),
-        ],
-      ),
-    );
+        ));
   }
 
   TextStyle _tabStyle(int itemIndex) {
@@ -65,5 +69,30 @@ class _SecondAppbarState extends State<SecondAppbar> {
             fontWeight: FontWeight.w400,
             color: kPrimaryGreyColor,
             fontSize: 14);
+  }
+}
+
+class _SliverHeaderDelegate extends SliverPersistentHeaderDelegate {
+  final PreferredSize child;
+
+  _SliverHeaderDelegate({
+    required this.child,
+  });
+
+  @override
+  double get maxExtent => child.preferredSize.height;
+
+  @override
+  double get minExtent => child.preferredSize.height;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    return true;
+  }
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return child;
   }
 }
