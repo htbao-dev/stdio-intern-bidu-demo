@@ -110,7 +110,7 @@ class ShopName extends StatelessWidget {
       return Column(
         children: [
           SvgPicture.asset(
-            iconHeartOutlineAsset,
+            Assets.iconHeartOutlineAsset,
             color: kPrimaryPinkColor,
           ),
           Text(

@@ -1,9 +1,8 @@
 import 'package:bidu_demo/common/assets_path.dart';
 import 'package:bidu_demo/common/constant.dart';
+import 'package:bidu_demo/common/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
-const String _kSeeAllText = 'Xem tất cả';
 
 class HomeGroupContent extends StatelessWidget {
   final String title;
@@ -49,13 +48,13 @@ class HomeGroupContent extends StatelessWidget {
                     onTap: seeMore,
                     child: Row(
                       children: [
-                        Text(_kSeeAllText,
+                        Text(Strings.seeAll,
                             style: Theme.of(context).textTheme.bodyText2!),
                         Padding(
                           padding: const EdgeInsets.only(
                               left: kHalfHorizontalPadding),
                           child: SvgPicture.asset(
-                            iconSeemoreAsset,
+                            Assets.iconSeemoreAsset,
                           ),
                         ),
                       ],

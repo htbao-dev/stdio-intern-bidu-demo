@@ -53,7 +53,7 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
           Padding(
             padding: const EdgeInsets.only(right: kHalfHorizontalPadding),
             child: CircleAvatar(
-              child: SvgPicture.asset(iconShareAsset),
+              child: SvgPicture.asset(Assets.iconShareAsset),
               backgroundColor: Colors.white,
             ),
           ),
@@ -61,7 +61,7 @@ class _ProductDetailAppBarState extends State<ProductDetailAppBar> {
             padding: const EdgeInsets.only(right: kHalfHorizontalPadding),
             child: CircleAvatar(
                 child: SvgPicture.asset(
-                  iconCartAsset,
+                  Assets.iconCartAsset,
                 ),
                 backgroundColor: Colors.white),
           ),
@@ -144,7 +144,7 @@ class _CarouselAppbarState extends State<_CarouselAppbar> {
           bottom: 18,
         ),
         Positioned(
-          child: SvgPicture.asset(iconFullScreenAsset),
+          child: SvgPicture.asset(Assets.iconFullScreenAsset),
           bottom: kHorizontalPadding,
           right: kVerticalPadding,
         ),

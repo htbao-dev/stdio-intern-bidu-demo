@@ -1,11 +1,9 @@
 import 'package:bidu_demo/common/assets_path.dart';
 import 'package:bidu_demo/common/constant.dart';
+import 'package:bidu_demo/common/strings.dart';
 import 'package:bidu_demo/modules/common_widget/gradient_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-const String _kAddToCartText = 'Thêm vào giỏ';
-const String _kBuyNowText = 'Mua ngay';
 
 class MyBottomAppBar extends StatelessWidget {
   const MyBottomAppBar({
@@ -29,13 +27,13 @@ class MyBottomAppBar extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SvgPicture.asset(
-                      iconCartAsset,
+                      Assets.iconCartAsset,
                       color: Colors.white,
                       height: 24,
                       width: 24,
                     ),
                     const Text(
-                      _kAddToCartText,
+                      Strings.addToCart,
                       style: TextStyle(fontSize: 14, color: Colors.white),
                     )
                   ],
@@ -51,7 +49,7 @@ class MyBottomAppBar extends StatelessWidget {
                 child: Align(
                   heightFactor: 1,
                   child: GradientText(
-                    _kBuyNowText,
+                    Strings.buyNow,
                     gradient: LinearGradient(
                         colors: [Color(0xffFD374F), Color(0xffFD37AE)]),
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),

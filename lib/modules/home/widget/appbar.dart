@@ -12,24 +12,24 @@ AppBar appBar() {
     leading: Padding(
       padding: const EdgeInsets.only(left: kHalfHorizontalPadding),
       child: SvgPicture.asset(
-        biduLogoAsset,
+        Assets.biduLogoAsset,
       ),
     ),
     actions: [
       _appBarButton(
-        child: SvgPicture.asset(iconSearchAsset),
+        child: SvgPicture.asset(Assets.iconSearchAsset),
         onPressed: () {},
       ),
       _appBarButton(
-        child: SvgPicture.asset(iconSendAsset),
+        child: SvgPicture.asset(Assets.iconSendAsset),
         onPressed: () {},
       ),
       _appBarButton(
-        child: SvgPicture.asset(iconBellAsset),
+        child: SvgPicture.asset(Assets.iconBellAsset),
         onPressed: () {},
       ),
       _appBarButton(
-        child: SvgPicture.asset(iconCartAsset),
+        child: SvgPicture.asset(Assets.iconCartAsset),
         onPressed: () {},
       ),
     ],

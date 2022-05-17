@@ -1,3 +1,4 @@
+import 'package:bidu_demo/common/strings.dart';
 import 'package:bidu_demo/data/models/keyword.dart';
 import 'package:bidu_demo/logic/blocs/home_bloc.dart';
 import 'package:bidu_demo/modules/home/widget/group_content.dart';
@@ -5,7 +6,6 @@ import 'package:bidu_demo/modules/common_widget/item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-const String _kTopSearchText = 'Top Tìm Kiếm';
 const double _kTopSearchItemHeight = 200;
 
 class HomeTopSearch extends StatefulWidget {
@@ -21,7 +21,7 @@ class _HomeTopSearchState extends State<HomeTopSearch>
   Widget build(BuildContext context) {
     super.build(context);
     return HomeGroupContent(
-      title: _kTopSearchText,
+      title: Strings.topSearch,
       seeMore: () {},
       child: SizedBox(
         height: _kTopSearchItemHeight,

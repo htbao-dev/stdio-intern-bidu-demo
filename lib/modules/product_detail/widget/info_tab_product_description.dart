@@ -1,8 +1,6 @@
 import 'package:bidu_demo/common/constant.dart';
+import 'package:bidu_demo/common/strings.dart';
 import 'package:flutter/material.dart';
-
-const String descriptionText = 'Mô tả sản phẩm';
-const String _kSeemoreText = 'Xem thêm';
 
 class ProductDescription extends StatefulWidget {
   const ProductDescription(this.description, {Key? key}) : super(key: key);
@@ -23,7 +21,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
           // clipBehavior: isCollapse ? Clip.hardEdge : Clip.none,
           children: [
             Text(
-              descriptionText,
+              Strings.descriptionText,
               style:
                   Theme.of(context).textTheme.headline6!.copyWith(fontSize: 16),
             ),
@@ -127,7 +125,7 @@ class _ProductDescriptionWithSeemoreState
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            _kSeemoreText,
+                            Strings.seemore,
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText2!

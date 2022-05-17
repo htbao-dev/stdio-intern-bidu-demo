@@ -1,9 +1,9 @@
 import 'package:bidu_demo/common/assets_path.dart';
 import 'package:bidu_demo/common/constant.dart';
+import 'package:bidu_demo/common/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-const String _kSeemoreText = 'Xem thêm';
 const String _kSellOffText = 'Sale off 30% to 50% for 21/04 - Fo...';
 const String _kUsernameLiveText = 'Phương Lê';
 
@@ -21,7 +21,7 @@ class BiduLive extends StatelessWidget {
           Padding(
             padding:
                 const EdgeInsets.only(left: kHalfHorizontalPadding, bottom: 20),
-            child: SvgPicture.asset(iconBiduLiveAsset),
+            child: SvgPicture.asset(Assets.iconBiduLiveAsset),
           ),
           SizedBox(
             height: 200,
@@ -53,10 +53,10 @@ class _SeeMoreButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        SvgPicture.asset(iconLiveSeemoreAsset),
+        SvgPicture.asset(Assets.iconLiveSeemoreAsset),
         const SizedBox(width: 12),
         const Text(
-          _kSeemoreText,
+          Strings.seeShop,
         ),
         const SizedBox(width: 15),
       ],
@@ -76,7 +76,7 @@ class _LiveItem extends StatelessWidget {
           width: 140,
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage(imgBiduliveAsset),
+              image: AssetImage(Assets.imgBiduliveAsset),
               fit: BoxFit.fill,
             ),
           ),
@@ -125,7 +125,7 @@ class _LiveItem extends StatelessWidget {
                             ),
                             borderRadius: BorderRadius.circular(50),
                             image: const DecorationImage(
-                              image: AssetImage(imgBiduliveAvtAsset),
+                              image: AssetImage(Assets.imgBiduliveAvtAsset),
                               fit: BoxFit.cover,
                             ),
                           ),

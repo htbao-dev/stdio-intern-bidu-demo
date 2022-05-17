@@ -1,7 +1,6 @@
 import 'package:bidu_demo/common/constant.dart';
+import 'package:bidu_demo/common/strings.dart';
 import 'package:flutter/material.dart';
-
-const String _kBackToTopText = 'Về đàu trang';
 
 class BackTopTop extends StatelessWidget {
   final VoidCallback onPressed;
@@ -24,7 +23,7 @@ class BackTopTop extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           const Icon(Icons.arrow_upward_outlined, color: kPrimaryPinkColor),
-          Text(_kBackToTopText, style: Theme.of(context).textTheme.bodyText2!)
+          Text(Strings.backToTop, style: Theme.of(context).textTheme.bodyText2!)
         ],
       ),
       // style: ,

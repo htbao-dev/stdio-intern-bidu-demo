@@ -22,11 +22,11 @@ class _HomeNavBarState extends State<HomeNavBar> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _button(iconShoppingAsset, index: 0, onPressed: () {}),
-              _button(iconBiduAsset, index: 1, onPressed: () {}),
-              _button(iconHeartOutlineAsset, index: 2, onPressed: () {}),
-              _button(iconCategoriesAsset, index: 3, onPressed: () {}),
-              _button(iconPersonAsset, index: 4, onPressed: () {}),
+              _button(Assets.iconShoppingAsset, index: 0, onPressed: () {}),
+              _button(Assets.iconBiduAsset, index: 1, onPressed: () {}),
+              _button(Assets.iconHeartOutlineAsset, index: 2, onPressed: () {}),
+              _button(Assets.iconCategoriesAsset, index: 3, onPressed: () {}),
+              _button(Assets.iconPersonAsset, index: 4, onPressed: () {}),
               fabSpace, //fab size
             ],
           ),
@@ -74,7 +74,7 @@ class HomeFloatingButton extends StatelessWidget {
             )),
             Align(
                 child: SvgPicture.asset(
-                  iconBiduAsset,
+                  Assets.iconBiduAsset,
                   color: Colors.white,
                   width: 30,
                 ),

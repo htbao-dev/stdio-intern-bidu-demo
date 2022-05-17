@@ -1,13 +1,9 @@
+import 'package:bidu_demo/common/strings.dart';
 import 'package:bidu_demo/data/models/product_detail.dart';
 import 'package:bidu_demo/data/models/shop.dart';
 import 'package:bidu_demo/modules/common_widget/gradient_text.dart';
 import 'package:bidu_demo/common/constant.dart';
 import 'package:flutter/material.dart';
-
-const String _kPrepareText = 'Thời gian chuẩn bị hàng';
-const String _kDeliveryInfoText = 'Thông tin giao hàng';
-const String _kDeliveryTimeText = 'Thời gian vận chuyển';
-const String _kShippingTimeText = 'Trung bình ';
 
 class DeliveryInfo extends StatelessWidget {
   final ProductDetail productDetail;
@@ -57,7 +53,7 @@ class _InfoChart extends StatelessWidget {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(_kPrepareText),
+          const Text(Strings.timePrepareProduct),
           const SizedBox(
             height: 10,
           ),
@@ -214,7 +210,7 @@ class _InfoText extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          _kDeliveryInfoText,
+          Strings.deliveryInfo,
         ),
         const SizedBox(
           height: 4,
@@ -271,7 +267,7 @@ class _InfoText extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          _kDeliveryTimeText,
+          Strings.deliveryInfo,
         ),
         const SizedBox(
           height: 4,
@@ -282,7 +278,7 @@ class _InfoText extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyText2!,
               children: [
                 const TextSpan(
-                  text: _kShippingTimeText,
+                  text: Strings.average,
                 ),
                 TextSpan(
                   text: '${avgShippingTime.min}-${avgShippingTime.max} ngày',

@@ -1,4 +1,5 @@
 import 'package:bidu_demo/common/assets_path.dart';
+import 'package:bidu_demo/common/strings.dart';
 import 'package:bidu_demo/data/models/banner_category.dart';
 import 'package:bidu_demo/data/models/category.dart';
 import 'package:bidu_demo/logic/blocs/home_bloc.dart';
@@ -8,7 +9,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
-const String _kSeemoreText = 'Xem thêm';
 const double _kItemCategoryWidth = 50;
 
 class HomeCategories extends StatefulWidget {
@@ -102,8 +102,8 @@ class _HomeCategoriesState extends State<HomeCategories>
   }
 
   Widget _seemore() {
-    final _seemore =
-        Category(name: _kSeemoreText, avatar: iconCategorySeemoreAsset);
+    final _seemore = Category(
+        name: Strings.seemore, avatar: Assets.iconCategorySeemoreAsset);
     return _categoryItem(_seemore, isSeemreBtn: true, onTap: () {
       setState(() {
         isExpanded = !isExpanded;

@@ -1,9 +1,8 @@
 import 'package:bidu_demo/common/constant.dart';
+import 'package:bidu_demo/common/strings.dart';
 import 'package:flutter/material.dart';
 
-const String _kProductInfoText = 'Thông tin sản phẩm';
 const String _kReviewText = 'Đánh giá (40)';
-const String _kChatText = 'Trò chuyện';
 
 class SecondAppbar extends StatefulWidget {
   final TabController controller;
@@ -41,7 +40,7 @@ class _SecondAppbarState extends State<SecondAppbar> {
         controller: widget.controller,
         tabs: [
           Tab(
-            child: Text(_kProductInfoText,
+            child: Text(Strings.productInfo,
                 textAlign: TextAlign.center, style: _tabStyle(_infoIndex)),
           ),
           Tab(
@@ -51,7 +50,7 @@ class _SecondAppbarState extends State<SecondAppbar> {
             ),
           ),
           Tab(
-            child: Text(_kChatText, style: _tabStyle(_chatIndex)),
+            child: Text(Strings.chat, style: _tabStyle(_chatIndex)),
           ),
         ],
       ),

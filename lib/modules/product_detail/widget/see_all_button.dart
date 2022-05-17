@@ -1,13 +1,13 @@
 import 'dart:developer';
 
 import 'package:bidu_demo/common/constant.dart';
+import 'package:bidu_demo/common/strings.dart';
 import 'package:flutter/material.dart';
 
 class SeeAllButton extends StatelessWidget {
   const SeeAllButton({Key? key}) : super(key: key);
   final double _verticalPadding = 12;
   final double _height = 40;
-  final String seeAllText = 'Xem tất cả';
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -22,8 +22,8 @@ class SeeAllButton extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border.all(color: kPrimaryBlackColor, width: 1),
           ),
-          child: Text(
-            seeAllText,
+          child: const Text(
+            Strings.seeAll,
           )),
     );
   }

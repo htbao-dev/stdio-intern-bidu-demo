@@ -1,5 +1,6 @@
 import 'package:bidu_demo/common/assets_path.dart';
 import 'package:bidu_demo/common/constant.dart';
+import 'package:bidu_demo/common/strings.dart';
 import 'package:flutter/material.dart';
 
 class FeedBack extends StatelessWidget {
@@ -15,7 +16,7 @@ class FeedBack extends StatelessWidget {
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: kHalfHorizontalPadding),
             child: Text(
-              '40 đánh giá',
+              '40 ${Strings.feedback}',
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w500,
@@ -83,7 +84,7 @@ class FeedBack extends StatelessWidget {
       child: Row(
         children: [
           Image.asset(
-            imgBiduliveAsset,
+            Assets.imgBiduliveAsset,
             height: 48,
             width: 48,
           ),

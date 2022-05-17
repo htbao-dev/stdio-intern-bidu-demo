@@ -1,6 +1,7 @@
 import 'package:bidu_demo/common/assets_path.dart';
 import 'package:bidu_demo/common/constant.dart';
 import 'package:bidu_demo/common/formatter.dart';
+import 'package:bidu_demo/common/strings.dart';
 import 'package:bidu_demo/data/models/keyword.dart';
 import 'package:bidu_demo/data/models/product.dart';
 import 'package:bidu_demo/data/models/shop.dart';
@@ -9,12 +10,6 @@ import 'package:bidu_demo/modules/product_detail/product_detail_screen.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
-const String _kGuaranteedText = 'Đảm bảo';
-const String _kGenuineText = 'Chính hãng';
-const String _kSoldText = 'Đã bán';
-const String _kFlollowText = 'lượt theo dõi';
-const String _kSeeShopText = 'Xem shop';
 
 const double _kItemWidth = 150;
 
@@ -92,9 +87,9 @@ abstract class ListItem extends StatelessWidget {
     } else {
       final String txt;
       if (isGuaranteedItem) {
-        txt = _kGuaranteedText;
+        txt = Strings.guaranteed;
       } else {
-        txt = _kGenuineText;
+        txt = Strings.genuine;
       }
       child = Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
@@ -116,7 +111,7 @@ abstract class ListItem extends StatelessWidget {
   Widget productSold(int? sold) {
     sold ??= 0;
     return Text(
-      '$_kSoldText $sold',
+      '${Strings.sold} $sold',
       style: const TextStyle(
         fontSize: 10,
         color: kPrimaryGreyColor,
@@ -370,7 +365,7 @@ class TopSellerItem extends ListItem {
                   Positioned(child: _rankIcon(rank), top: 0, right: 9),
                   Align(
                     child: Container(
-                      child: SvgPicture.asset(iconAddAsset),
+                      child: SvgPicture.asset(Assets.iconAddAsset),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         boxShadow: [
@@ -404,7 +399,7 @@ class TopSellerItem extends ListItem {
                   Row(
                     children: [
                       SvgPicture.asset(
-                        iconHeartAsset,
+                        Assets.iconHeartAsset,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 3.69),
@@ -417,17 +412,18 @@ class TopSellerItem extends ListItem {
                         height: 11,
                       ),
                       Text(
-                        shop.user!.followCount.toString() + ' $_kFlollowText',
+                        shop.user!.followCount.toString() +
+                            ' ${Strings.flollow}',
                       ),
                     ],
                   ),
                   Row(
                     children: [
-                      const Text(_kSeeShopText),
+                      const Text(Strings.seeShop),
                       Padding(
                         padding: const EdgeInsets.only(left: 8),
                         child: SvgPicture.asset(
-                          iconSeemoreAsset,
+                          Assets.iconSeemoreAsset,
                           color: Colors.black,
                         ),
                       ),
@@ -447,11 +443,11 @@ class TopSellerItem extends ListItem {
   Widget _rankIcon(int rank) {
     String path;
     if (rank == 1) {
-      path = iconNo1Asset;
+      path = Assets.iconNo1Asset;
     } else if (rank == 2) {
-      path = iconNo2Asset;
+      path = Assets.iconNo2Asset;
     } else {
-      path = iconNo3Asset;
+      path = Assets.iconNo3Asset;
     }
     return SvgPicture.asset(
       path,

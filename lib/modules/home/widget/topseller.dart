@@ -1,14 +1,11 @@
 import 'package:bidu_demo/common/constant.dart';
+import 'package:bidu_demo/common/strings.dart';
 import 'package:bidu_demo/data/models/shop.dart';
 import 'package:bidu_demo/logic/blocs/home_bloc.dart';
 import 'package:bidu_demo/modules/home/widget/group_content.dart';
 import 'package:bidu_demo/modules/common_widget/item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-const String _kSeemoreText = 'Xem thêm';
-const String _kTopSellerText = 'Top Người Bán';
-const String _kCollapseText = 'Rút gọn';
 
 class HomeTopSeller extends StatefulWidget {
   const HomeTopSeller({Key? key}) : super(key: key);
@@ -23,7 +20,7 @@ class _HomeTopSellerState extends State<HomeTopSeller>
   Widget build(BuildContext context) {
     super.build(context);
     return HomeGroupContent(
-      title: _kTopSellerText,
+      title: Strings.topSeller,
       padding: const EdgeInsets.only(top: kVerticalPadding),
       seeMore: () {},
       child: StreamBuilder<List<Shop>>(
@@ -140,7 +137,7 @@ class _SeemoreSellerState extends State<_SeemoreSeller> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(_kSeemoreText, style: Theme.of(context).textTheme.bodyText2!),
+        Text(Strings.seemore, style: Theme.of(context).textTheme.bodyText2!),
         const Icon(
           Icons.keyboard_arrow_down,
           color: kPrimaryPinkColor,
@@ -153,7 +150,7 @@ class _SeemoreSellerState extends State<_SeemoreSeller> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text(_kCollapseText, style: Theme.of(context).textTheme.bodyText2!),
+        Text(Strings.collapse, style: Theme.of(context).textTheme.bodyText2!),
         const Icon(
           Icons.keyboard_arrow_up,
           color: kPrimaryPinkColor,

@@ -47,7 +47,7 @@ class ProductPrice extends StatelessWidget {
                 decoration: TextDecoration.underline,
               ),
             ),
-            icon: SvgPicture.asset(iconExclamation),
+            icon: SvgPicture.asset(Assets.iconExclamation),
             style: ButtonStyle(
               padding: MaterialStateProperty.all<EdgeInsets>(
                 const EdgeInsets.only(bottom: kVerticalPadding),

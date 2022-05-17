@@ -1,3 +1,4 @@
+import 'package:bidu_demo/common/strings.dart';
 import 'package:bidu_demo/data/models/product.dart';
 import 'package:bidu_demo/logic/blocs/home_bloc.dart';
 import 'package:bidu_demo/modules/home/widget/group_content.dart';
@@ -6,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 const double kHomeNewestItemHeight = 250;
-const String _kNewProductText = 'Sản phẩm mới';
 
 class HomeNewest extends StatefulWidget {
   const HomeNewest({Key? key}) : super(key: key);
@@ -21,7 +21,7 @@ class _HomeNewestState extends State<HomeNewest>
   Widget build(BuildContext context) {
     super.build(context);
     return HomeGroupContent(
-      title: _kNewProductText,
+      title: Strings.newProduct,
       seeMore: () {
         debugPrint('seemore');
       },

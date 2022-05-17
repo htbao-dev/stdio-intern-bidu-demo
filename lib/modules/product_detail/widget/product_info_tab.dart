@@ -1,5 +1,6 @@
 import 'package:bidu_demo/common/assets_path.dart';
 import 'package:bidu_demo/common/constant.dart';
+import 'package:bidu_demo/common/strings.dart';
 import 'package:bidu_demo/data/models/product.dart';
 import 'package:bidu_demo/data/models/product_detail.dart';
 import 'package:bidu_demo/logic/blocs/product_detail_bloc.dart';
@@ -12,10 +13,6 @@ import 'package:bidu_demo/modules/product_detail/widget/info_tab_list_product.da
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-const String suggestionText = 'Gợi Ý Cho Bạn';
-const String similarProductText = 'Sản phẩm tương tự';
-const String basicInformationProductText = 'Thông tin sản phẩm cơ bản';
-const String kLaundryInstructionsText = 'Hướng dẫn giặt ủi';
 const data = {
   'Thương hiệu': 'Hàn Quốc',
   'Chất liệu': 'cotton 100%',
@@ -44,14 +41,14 @@ class ProductInfoTab extends StatelessWidget {
             width: double.infinity,
             margin: const EdgeInsets.only(top: 20, bottom: kVerticalPadding),
             child: Image.asset(
-              imgMiniBannerAsset,
+              Assets.imgMiniBannerAsset,
               fit: BoxFit.fitWidth,
             ),
           ),
           ProductDescriptionWithSeemore(description: productDetail.description),
           const SizedBox(height: 30),
           InfoTabExpansion(
-            title: basicInformationProductText,
+            title: Strings.basicInformationProduct,
             body: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: data.entries.map((e) {
@@ -76,7 +73,7 @@ class ProductInfoTab extends StatelessWidget {
             ),
           ),
           const InfoTabExpansion(
-              title: kLaundryInstructionsText, body: SizedBox()),
+              title: Strings.laundryInstructions, body: SizedBox()),
           const ExpansionDivider(
             indent: kHorizontalPadding,
             endIndent: kHorizontalPadding,
@@ -86,14 +83,14 @@ class ProductInfoTab extends StatelessWidget {
               builder: (context, snapshot) {
                 final listProduct = snapshot.data;
                 return InfoTabListProduct(
-                    title: similarProductText, listProduct: listProduct);
+                    title: Strings.similarProduct, listProduct: listProduct);
               }),
           StreamBuilder<List<Product>>(
               stream: context.read<ProductDetailBloc>().suggestProductStream,
               builder: (context, snapshot) {
                 final listProduct = snapshot.data;
                 return InfoTabListProduct(
-                  title: suggestionText,
+                  title: Strings.suggestForYou,
                   listProduct: listProduct,
                 );
               }),
