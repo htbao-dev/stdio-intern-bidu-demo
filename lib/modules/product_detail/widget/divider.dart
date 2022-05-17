@@ -1,25 +1,29 @@
 import 'package:flutter/material.dart';
 
 class ThinDivider extends StatelessWidget {
-  const ThinDivider({Key? key}) : super(key: key);
+  final double? height;
+  const ThinDivider({Key? key, this.height}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Divider(
-      color: Color(0xffF1F1F1),
+    return Divider(
+      color: const Color(0xffF1F1F1),
       thickness: 1,
+      height: height,
     );
   }
 }
 
 class BoldDivider extends StatelessWidget {
-  const BoldDivider({Key? key}) : super(key: key);
+  final double? height;
+  const BoldDivider({Key? key, this.height}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Divider(
+    return Divider(
       thickness: 4,
-      color: Color(0xffF6F7F7),
+      height: height,
+      color: const Color(0xffF6F7F7),
     );
   }
 }

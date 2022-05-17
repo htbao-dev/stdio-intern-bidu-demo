@@ -64,6 +64,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                     controller: controller,
                   ),
                   SliverFillRemaining(
+                    //TODO: nested scroll
                     child: TabBarView(
                       controller: controller,
                       children: [

@@ -22,7 +22,6 @@ class InfoTabListProduct extends StatelessWidget {
     if (listProduct != null) {
       return Column(
         children: [
-          const BoldDivider(),
           Padding(
             padding: const EdgeInsets.symmetric(
                 horizontal: kHorizontalPadding, vertical: kVerticalPadding),
@@ -48,6 +47,7 @@ class InfoTabListProduct extends StatelessWidget {
               ],
             ),
           ),
+          const BoldDivider(),
         ],
       );
     } else {
