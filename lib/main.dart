@@ -30,6 +30,7 @@ class BiduApp extends StatelessWidget {
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           onGenerateRoute: (settings) {
+            //TODO: tach file
             switch (settings.name) {
               case HomeScreen.routeName:
                 return MaterialPageRoute(

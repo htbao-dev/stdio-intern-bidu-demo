@@ -6,7 +6,7 @@ import 'package:bidu_demo/data/models/shop.dart';
 import 'package:bidu_demo/data/models/suggest_product.dart';
 import 'package:flutter/widgets.dart';
 
-abstract class IProductRepository {
+abstract class  IProductRepository {
   Future<List<Product>> loadNewestProduct();
   Future<List<Product>> loadTopProduct();
   Future<List<Keyword>> loadTopSearch();

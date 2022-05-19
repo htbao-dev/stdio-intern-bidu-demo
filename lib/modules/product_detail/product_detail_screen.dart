@@ -1,12 +1,13 @@
 import 'package:bidu_demo/data/models/product.dart';
 import 'package:bidu_demo/data/models/product_detail.dart';
 import 'package:bidu_demo/logic/blocs/product_detail_bloc.dart';
+import 'package:bidu_demo/modules/product_detail/widget/feedback_tab.dart';
 import 'package:bidu_demo/modules/product_detail/widget/product_info_tab.dart';
 import 'package:bidu_demo/modules/product_detail/widget/appbar.dart';
 import 'package:bidu_demo/modules/product_detail/widget/bottom_appbar.dart';
 import 'package:bidu_demo/modules/product_detail/widget/delivery_info.dart';
 import 'package:bidu_demo/modules/product_detail/widget/divider.dart';
-import 'package:bidu_demo/modules/product_detail/widget/feedback.dart';
+import 'package:bidu_demo/modules/product_detail/widget/feedback_widget.dart';
 import 'package:bidu_demo/modules/product_detail/widget/product_price.dart';
 import 'package:bidu_demo/modules/product_detail/widget/second_appbar.dart';
 import 'package:bidu_demo/modules/product_detail/widget/shop_name.dart';
@@ -36,32 +37,37 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
   @override
   Widget build(BuildContext context) {
     // ScrollPhysics physics = const AlwaysScrollableScrollPhysics();
+
     context.read<ProductDetailBloc>().initLoad(widget.product);
     return Scaffold(
       body: StreamBuilder<ProductDetail>(
           stream: context.read<ProductDetailBloc>().productDetailStream,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
+              final productDetail = snapshot.data!;
               return NestedScrollView(
                 headerSliverBuilder: (context, innerBoxIsScrolled) {
                   return [
-                    ProductDetailAppBar(snapshot.data!),
+                    ProductDetailAppBar(productDetail),
                     SliverList(
                       delegate: SliverChildListDelegate(
                         [
-                          ShopName(snapshot.data!),
+                          ShopName(productDetail),
                           const ThinDivider(),
-                          ProductPrice(snapshot.data!),
+                          ProductPrice(productDetail),
                           const ThinDivider(),
-                          const FeedBack(),
+                          FeedBackWidget(
+                            feedbacks: productDetail.feedbacks,
+                          ),
                           const BoldDivider(),
-                          DeliveryInfo(snapshot.data!),
+                          DeliveryInfo(productDetail),
                           const BoldDivider(),
                         ],
                       ),
                     ),
                     SecondAppbar(
                       controller: controller,
+                      feedbacks: productDetail.feedbacks,
                     ),
                   ];
                 },
@@ -72,7 +78,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen>
                       productDetail: snapshot.data!,
                       // physics: physics,
                     ),
-                    const Text("Tab 2"), //demo
+                    const FeedBackTab(), //demo
                     const Text("Tab 3"),
                   ],
                 ),

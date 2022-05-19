@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bidu_demo/common/server.dart';
+import 'package:bidu_demo/data/cloud_data/fake_feedbacks.dart';
 import 'package:bidu_demo/data/models/keyword.dart';
 import 'package:bidu_demo/data/models/product.dart';
 import 'package:bidu_demo/data/models/product_detail.dart';
@@ -25,7 +26,8 @@ class ProductCloudDataSource {
         //       'Bidu eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNTI5YWEyMzU4M2E5MDAxOTBiMTg0ZSIsImlhdCI6MTY0NTY5NjEyNCwiZXhwIjoxNjc3MjMyMTI0fQ.1dkYz3sf1KxxciFBLoamHO0Y_5XDRn5L9kCipmV7F-w',
         // },
       );
-      final dataDecode = json.decode(response.body);
+      var dataDecode = json.decode(response.body);
+      dataDecode['data']['feedbacks'] = json.decode(fake);
       if (dataDecode['success'] == true) {
         final productDetail = ProductDetail.fromMap(dataDecode['data']);
         productDetail.timePrepareOrder = [

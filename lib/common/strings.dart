@@ -1,4 +1,5 @@
 class Strings {
+  //rename AppString
   static const String guaranteed = 'Đảm bảo';
   static const String genuine = 'Chính hãng';
   static const String sold = 'Đã bán';

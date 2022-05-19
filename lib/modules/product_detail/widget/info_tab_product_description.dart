@@ -1,67 +1,13 @@
 import 'package:bidu_demo/common/constant.dart';
 import 'package:bidu_demo/common/strings.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-class ProductDescription extends StatefulWidget {
-  const ProductDescription(this.description, {Key? key}) : super(key: key);
-  final String? description;
-
-  @override
-  State<ProductDescription> createState() => _ProductDescriptionState();
-}
-
-class _ProductDescriptionState extends State<ProductDescription> {
-  // bool isCollapse = true;
-  @override
-  Widget build(BuildContext context) {
-    if (widget.description != null) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
-        child: Column(
-          // clipBehavior: isCollapse ? Clip.hardEdge : Clip.none,
-          children: [
-            Text(
-              Strings.descriptionText,
-              style:
-                  Theme.of(context).textTheme.headline6!.copyWith(fontSize: 16),
-            ),
-            Text(
-              widget.description!,
-              style:
-                  Theme.of(context).textTheme.bodyText2!.copyWith(fontSize: 14),
-            ),
-            Text(
-              widget.description!,
-              style:
-                  Theme.of(context).textTheme.bodyText2!.copyWith(fontSize: 14),
-            ),
-            Text(
-              widget.description!,
-              style:
-                  Theme.of(context).textTheme.bodyText2!.copyWith(fontSize: 14),
-            ),
-            Text(
-              widget.description!,
-              style:
-                  Theme.of(context).textTheme.bodyText2!.copyWith(fontSize: 14),
-            ),
-            Text(
-              widget.description!,
-              style:
-                  Theme.of(context).textTheme.bodyText2!.copyWith(fontSize: 14),
-            ),
-          ],
-        ),
-      );
-    }
-    return const SizedBox();
-  }
-}
-
 class ProductDescriptionWithSeemore extends StatefulWidget {
-  const ProductDescriptionWithSeemore({Key? key, this.description})
+  const ProductDescriptionWithSeemore({Key? key, this.description, this.images})
       : super(key: key);
   final String? description;
+  final List<String>? images;
 
   @override
   State<ProductDescriptionWithSeemore> createState() =>
@@ -69,24 +15,45 @@ class ProductDescriptionWithSeemore extends StatefulWidget {
 }
 
 class _ProductDescriptionWithSeemoreState
-    extends State<ProductDescriptionWithSeemore> {
-  bool isCollapse = true;
+    extends State<ProductDescriptionWithSeemore>
+    with AutomaticKeepAliveClientMixin {
+  bool isCollapse = false;
+  final double _heightCollapse = 400;
   final _key = GlobalKey();
-  // late final Size size;
+
+  @override
+  void initState() {
+    //wait for column render
+    final instance = WidgetsBinding.instance!;
+    instance.addPostFrameCallback((_) {
+      final widgetHeight = _getDescriptionHeight();
+      if (widgetHeight > _heightCollapse) {
+        setState(() {
+          isCollapse = true;
+        });
+      }
+    });
+    super.initState();
+  }
+
+  double _getDescriptionHeight() {
+    return _key.currentContext!.size!.height;
+  }
 
   @override
   Widget build(BuildContext context) {
-    // Widget description = ProductDescription(widget.description, key: _key);
+    super.build(context);
     return Stack(
       alignment: AlignmentDirectional.bottomCenter,
       children: [
         SizedBox(
-          height: isCollapse ? 400 : null,
+          height: isCollapse ? _heightCollapse : null,
           child: Wrap(
             clipBehavior: Clip.hardEdge,
             children: [
-              ProductDescription(
-                widget.description,
+              _ProductDescription(
+                description: widget.description,
+                images: widget.images,
                 key: _key,
               ),
             ],
@@ -94,7 +61,7 @@ class _ProductDescriptionWithSeemoreState
         ),
         isCollapse
             ? Container(
-                height: 93,
+                height: 93, //height of see more button
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
@@ -145,6 +112,49 @@ class _ProductDescriptionWithSeemoreState
               )
             : const SizedBox(),
       ],
+    );
+  }
+
+  @override
+  bool get wantKeepAlive => true;
+}
+
+class _ProductDescription extends StatelessWidget {
+  const _ProductDescription({Key? key, this.description, this.images})
+      : super(key: key);
+
+  final String? description;
+  final List<String>? images;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: kHorizontalPadding),
+      child: Column(
+        // clipBehavior: isCollapse ? Clip.hardEdge : Clip.none,
+        children: [
+          if (description != null)
+            Column(
+              children: [
+                Text(
+                  Strings.descriptionText,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline6!
+                      .copyWith(fontSize: 16),
+                ),
+                Text(
+                  description!,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2!
+                      .copyWith(fontSize: 14),
+                ),
+              ],
+            ),
+          if (images != null) CachedNetworkImage(imageUrl: images![0]),
+        ],
+      ),
     );
   }
 }

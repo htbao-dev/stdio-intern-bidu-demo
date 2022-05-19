@@ -1,13 +1,17 @@
 import 'package:bidu_demo/common/constant.dart';
 import 'package:bidu_demo/common/strings.dart';
+import 'package:bidu_demo/data/models/product_detail.dart';
 import 'package:flutter/material.dart';
 
-const String _kReviewText = 'Đánh giá (40)';
+const String _kReviewText = 'Đánh giá';
 
 class SecondAppbar extends StatefulWidget {
-  final TabController controller;
-  const SecondAppbar({Key? key, required this.controller}) : super(key: key);
+  const SecondAppbar(
+      {Key? key, required this.controller, required this.feedbacks})
+      : super(key: key);
 
+  final TabController controller;
+  final Feedbacks feedbacks;
   @override
   State<SecondAppbar> createState() => _SecondAppbarState();
 }
@@ -17,7 +21,6 @@ class _SecondAppbarState extends State<SecondAppbar> {
   final int _reviewIndex = 1;
   final int _chatIndex = 2;
   int _currentIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return SliverPersistentHeader(
@@ -47,7 +50,7 @@ class _SecondAppbarState extends State<SecondAppbar> {
                   ),
                   Tab(
                     child: Text(
-                      _kReviewText,
+                      '$_kReviewText ${widget.feedbacks.totalByComment ?? 0}',
                       style: _tabStyle(_reviewIndex),
                     ),
                   ),

@@ -42,7 +42,9 @@ class ProductInfoTab extends StatelessWidget {
               fit: BoxFit.fitWidth,
             ),
           ),
-          ProductDescriptionWithSeemore(description: productDetail.description),
+          ProductDescriptionWithSeemore(
+              description: productDetail.description,
+              images: productDetail.images),
           const SizedBox(height: 30),
           InfoTabExpansion(
             title: Strings.basicInformationProduct,
